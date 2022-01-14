@@ -1,0 +1,10 @@
+<form>
+	<img [src]="lenguageImg" class="lenguage_choosen" [(ngModel)]="seleccionado" name="a">
+	<select >
+		<option *ngFor="let state of states" [value]="state.name">
+			{{ state.abbreviation }}
+		</option>
+	</select>
+	<!-- <input type="text" > -->
+</form>
+<!-- <p>Form value: {{ form.value | json }}</p> -->

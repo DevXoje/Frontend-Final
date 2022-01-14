@@ -1,0 +1,41 @@
+<div class="pre_nav">
+	<div class="left">
+		<div class="pre_nav__mail">
+			<fa-icon [icon]="mailIcon"></fa-icon><a href="mailto:mail@mail.com">mail@defaul.com</a>
+		</div>
+		<div class="pre_nav__slogan">
+			<h1>Slogan Jaja</h1>
+		</div>
+	</div>
+	<div class="rigth">
+		<div class="pre_nav__social">
+			<ul>
+				<li *ngFor="let socialLink of socialLinks">
+					<fa-icon class="pre_nav__social_item" [icon]="socialLink.icon"></fa-icon>
+				</li>
+			</ul>
+		</div>
+		<div class="pre_nav__language">
+			<app-lenguage-form></app-lenguage-form>
+		</div>
+		<div class="pre_nav__user">
+			<fa-icon [icon]="userIcon"></fa-icon><a href="">Login</a>
+		</div>
+	</div>
+
+</div>
+
+<nav class="nav">
+	<div class="nav__logo"><img src="https://via.placeholder.com/468x120?text=Logo" alt="LOGO"></div>
+	<ul class="nav__links">
+		<li class="nav__links_item" *ngFor="let navLink of navLinks">
+			<!-- <a [routerLink]="navLink.link">{{navLink.name|uppercase}}a</a> -->
+			<a href="{{navLink.link}}">{{navLink.name|uppercase}}</a>
+		</li>
+	</ul>
+	<ul class="nav__user_data">
+		<li><a href=""><fa-icon [icon]="heartIcon"></fa-icon>{{userData.num_whises}}</a></li>
+		<li><a href=""><fa-icon [icon]="bagIcon"></fa-icon>{{userData.num_items_cart}}</a></li>
+		<li><a href="">total:{{userData.tota_cart|currency:'EUR'}}</a></li>
+	</ul>
+</nav>
