@@ -37,10 +37,13 @@ export class NavComponent implements OnInit {
 	];
 
 	@Input() userData = { num_whises: 0, num_items_cart: 0, isLogged: false, tota_cart: 0 };
+	@Input() logo?: HTMLDivElement;
+
+
 	mailIcon = faEnvelope;
 	userIcon = faUser;
-	heartIcon=faHeart;
-	bagIcon=faShoppingBag;
+	heartIcon = faHeart;
+	bagIcon = faShoppingBag;
 	constructor() { }
 
 	ngOnInit(): void {

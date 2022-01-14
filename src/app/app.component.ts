@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { faFacebook, faLinkedin, faPinterest, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { } from '@fortawesome/fontawesome-svg-core';
 
 @Component({
 	selector: 'app-root',
@@ -13,7 +12,7 @@ export class AppComponent {
 	contactData = {
 		phone: '+34 922 022 022',
 		email: 'supermy@mail.com',
-		address: 'Calle la pinta Villa Domrach'
+		address: 'Calle la pinta Villa Domrach', city: 'Madrid'
 	};
 	socialLinks = [
 		{
@@ -38,5 +37,9 @@ export class AppComponent {
 		}
 	];
 	userData = { num_whises: 1, num_items_cart: 2, isLogged: false, tota_cart: 0 };
-
+	/* 	logo = `<div class="nav__logo"><img src="https://via.placeholder.com/468x120?text=Logo" alt="LOGO"></div>`; */
+	logo: HTMLDivElement=document.createElement('div');
+	constructor() {
+		/* this.logo.innerHTML = `<div class="nav__logo"><img src="https://via.placeholder.com/468x120?text=Logo" alt="LOGO"></div>`; */
+	}
 }

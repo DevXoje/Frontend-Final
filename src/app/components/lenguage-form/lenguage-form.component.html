@@ -1,5 +1,6 @@
 <form>
-	<img [src]="lenguageImg" class="lenguage_choosen" [(ngModel)]="seleccionado" name="a">
+	<img [src]="lenguageImg" class="lenguage_choosen" name="firts" >
+	<!-- <img [src]="lenguageImg" class="lenguage_choosen" [(ngModel)]="seleccionado" name="lenguage_choosen"> -->
 	<select >
 		<option *ngFor="let state of states" [value]="state.name">
 			{{ state.abbreviation }}
