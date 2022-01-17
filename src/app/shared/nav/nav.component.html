@@ -77,6 +77,7 @@
 		</div>
 	</div>
 </nav>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light nav_main">
 	<div class="container-fluid">
 		<a class="navbar-brand col-3" href="#"><img src="https://via.placeholder.com/119x50" alt="Logo" width="119"
@@ -104,7 +105,6 @@
 							<span
 								class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
 								{{userData.num_whises}}
-								<span class="visually-hidden">unread messages</span>
 							</span>
 						</button>
 					</li>
@@ -114,7 +114,6 @@
 							<span
 								class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
 								{{userData.num_items_cart}}
-								<span class="visually-hidden">unread messages</span>
 							</span>
 						</button>
 				</ul>
@@ -124,14 +123,25 @@
 	</div>
 </nav>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-	<a class="navbar-brand" href="#">Navbar</a>
+	<div class="row">
+		<div class="col">
+			<div ngbDropdown class="d-inline-block">
+				<button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
+				<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+					<button *ngFor="let category of categories" ngbDropdownItem
+						(click)="ruta(category.link)">{{category.name|titlecase}}</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
 		aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
 	</button>
 
 	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<ul class="navbar-nav mr-auto">
+		<!-- <ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
 				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
 			</li>
@@ -153,16 +163,16 @@
 			<li class="nav-item">
 				<a class="nav-link disabled" href="#">Disabled</a>
 			</li>
-		</ul>
+		</ul> -->
 		<form class="form-inline my-2 my-lg-0">
 			<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 		</form>
-		<div class="contact">
-			icon
+		<div class="contact d-flex">
+			<fa-icon [icon]="phoneIcon"></fa-icon>
 			<div class="contact__data">
-				<span>number</span>
-				<span>support 24/7 time</span>
+				<div>{{num_phone}}</div>
+				<div>support 24/7 time</div>
 			</div>
 		</div>
 	</div>

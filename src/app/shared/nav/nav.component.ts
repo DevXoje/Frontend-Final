@@ -1,5 +1,8 @@
+import { Route } from '@angular/compiler/src/core';
 import { Component, Input, OnInit } from '@angular/core';
-import { faEnvelope, faHeart, faShoppingBag, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faHeart, faPhoneAlt, faShoppingBag, faUser } from '@fortawesome/free-solid-svg-icons';
+import { CategoryService } from 'src/app/core/categories/app/category.service';
+import { Category } from 'src/app/core/categories/domain/category';
 
 @Component({
 	selector: 'app-nav',
@@ -8,6 +11,10 @@ import { faEnvelope, faHeart, faShoppingBag, faUser } from '@fortawesome/free-so
 })
 export class NavComponent implements OnInit {
 	@Input() socialLinks: any[] = [];
+	@Input() userData = { num_whises: 0, num_items_cart: 0, isLogged: false, total_cart: 0, user_name: '' };
+	@Input() logo?: HTMLDivElement;
+	@Input() num_phone?: string;
+	categories: Category[] = [];
 	navLinks = [
 		{
 			name: 'Home',
@@ -41,17 +48,21 @@ export class NavComponent implements OnInit {
 		}
 	];
 
-	@Input() userData = { num_whises: 0, num_items_cart: 0, isLogged: false, total_cart: 0, user_name: '' };
-	@Input() logo?: HTMLDivElement;
-
-
 	mailIcon = faEnvelope;
 	userIcon = faUser;
 	heartIcon = faHeart;
 	bagIcon = faShoppingBag;
-	constructor() { }
+	phoneIcon = faPhoneAlt;
+
+
+	constructor(private servicioCategorias: CategoryService) {
+		this.servicioCategorias.getCategories()
+			.then(categories => this.categories = categories);
+	}
 
 	ngOnInit(): void {
 	}
+	ruta(param:Route) {
 
+	}
 }

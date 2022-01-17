@@ -9,6 +9,7 @@ import { LenguageFormComponent } from './components/lenguage-form/lenguage-form.
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
 	declarations: [
@@ -20,7 +21,7 @@ import { RouterModule } from '@angular/router';
 	imports: [
 		BrowserModule,
 		FormsModule, ReactiveFormsModule,
-		FontAwesomeModule,RouterModule
+		FontAwesomeModule,RouterModule, NgbModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

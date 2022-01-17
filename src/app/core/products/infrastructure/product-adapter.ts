@@ -1,2 +1,4 @@
-export class ProductAdapter {
+/* export class ProductAdapter {
 }
+ */
+export const products = [];
