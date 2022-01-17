@@ -1,11 +1,10 @@
-<form>
-	<img [src]="lenguageImg" class="lenguage_choosen" name="firts" >
+<form class="d-flex justify-content-around">
+	<img [src]="lenguageImg" class="lenguage_choosen" style="aspect-ratio:2/1; width: 3em;">
 	<!-- <img [src]="lenguageImg" class="lenguage_choosen" [(ngModel)]="seleccionado" name="lenguage_choosen"> -->
-	<select >
+	<select class="form-control bg-light border-0 rounded-0 w-50">
 		<option *ngFor="let state of states" [value]="state.name">
 			{{ state.abbreviation }}
 		</option>
 	</select>
-	<!-- <input type="text" > -->
 </form>
 <!-- <p>Form value: {{ form.value | json }}</p> -->

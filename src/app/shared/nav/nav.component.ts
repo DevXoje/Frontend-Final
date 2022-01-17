@@ -12,31 +12,36 @@ export class NavComponent implements OnInit {
 		{
 			name: 'Home',
 			link: '/home',
-			icon: 'home'
+			icon: 'home',
+			isActive: true
 		},
 		{
 			name: 'Shop',
 			link: '/shop',
-			icon: 'Shop'
+			icon: 'Shop',
+			isActive: false
 		},
 		{
 			name: 'Pages',
 			link: '/pages',
-			icon: 'Pages'
+			icon: 'Pages',
+			isActive: false
 		},
 		{
 			name: 'Blog',
 			link: '/blog',
-			icon: 'blog'
+			icon: 'blog',
+			isActive: false
 		},
 		{
 			name: 'Contact',
 			link: '/contact',
-			icon: 'Contact'
+			icon: 'Contact',
+			isActive: false
 		}
 	];
 
-	@Input() userData = { num_whises: 0, num_items_cart: 0, isLogged: false, tota_cart: 0 };
+	@Input() userData = { num_whises: 0, num_items_cart: 0, isLogged: false, total_cart: 0, user_name: '' };
 	@Input() logo?: HTMLDivElement;
 
 

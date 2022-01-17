@@ -8,7 +8,6 @@ import { faFacebook, faLinkedin, faPinterest, faTwitter } from '@fortawesome/fre
 })
 export class AppComponent {
 	title = 'Frontend-Final';
-	isLogged: boolean = false;
 	contactData = {
 		phone: '+34 922 022 022',
 		email: 'supermy@mail.com',
@@ -36,7 +35,7 @@ export class AppComponent {
 			icon: faPinterest
 		}
 	];
-	userData = { num_whises: 1, num_items_cart: 2, isLogged: false, tota_cart: 0 };
+	userData = { num_whises: 2, num_items_cart: 1, isLogged: false, total_cart: 150.4, user_name: ''};
 	/* 	logo = `<div class="nav__logo"><img src="https://via.placeholder.com/468x120?text=Logo" alt="LOGO"></div>`; */
 	logo: HTMLDivElement=document.createElement('div');
 	constructor() {
