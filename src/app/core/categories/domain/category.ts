@@ -1,10 +1,11 @@
-import { Route } from "@angular/compiler/src/core"
+import { Route } from '@angular/router';
 
 export interface Category {
 	id: number;
 	name: string;
 	link: Route;
-	
+	image: string;
+
 }
 
 export interface CategoryMethods {

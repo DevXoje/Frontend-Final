@@ -36,9 +36,9 @@ export class AppComponent {
 		}
 	];
 	userData = { num_whises: 2, num_items_cart: 1, isLogged: false, total_cart: 150.4, user_name: ''};
-	/* 	logo = `<div class="nav__logo"><img src="https://via.placeholder.com/468x120?text=Logo" alt="LOGO"></div>`; */
-	logo: HTMLDivElement=document.createElement('div');
+	/* 	logo = `<div class="nav__logo"><img src="https://via.placeholder.com/468x120?text=Logo" alt="LOGO"></div>`;
+	logo: HTMLDivElement=document.createElement('div');*/
 	constructor() {
-		/* this.logo.innerHTML = `<div class="nav__logo"><img src="https://via.placeholder.com/468x120?text=Logo" alt="LOGO"></div>`; */
+		
 	}
 }

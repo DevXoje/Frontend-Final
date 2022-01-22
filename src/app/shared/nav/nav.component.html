@@ -43,11 +43,10 @@
 	</ul>
 </nav> -->
 
-<nav class="d-none d-sm-flex navbar navbar-expand-lg navbar-light bg-light"
-	style="height: 3em; background-color: #f5f5f5 !important;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 3em; background-color: #f5f5f5 !important;">
 	<div class="container-fluid">
-		<div class="navbar-brand d-flex align-items-center justify-content-between col-5">
-			<div class="">
+		<div class="d-flex align-items-center justify-content-between col-5">
+			<div class="d-flex" style="width: 40%;">
 				<fa-icon [icon]="mailIcon"></fa-icon><a href="mailto:mail@mail.com">mail@defaul.com</a>
 			</div>
 			<div class="vr"></div>
@@ -77,8 +76,7 @@
 		</div>
 	</div>
 </nav>
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light nav_main">
+<nav class="navbar navbar-expand-lg navbar-light nav_main">
 	<div class="container-fluid">
 		<a class="navbar-brand col-3" href="#"><img src="https://via.placeholder.com/119x50" alt="Logo" width="119"
 				height="50"></a>
@@ -122,48 +120,37 @@
 		</div>
 	</div>
 </nav>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light">
 	<div class="row">
-		<div class="col">
-			<div ngbDropdown class="d-inline-block">
-				<button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Toggle dropdown</button>
-				<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-					<button *ngFor="let category of categories" ngbDropdownItem
-						(click)="ruta(category.link)">{{category.name|titlecase}}</button>
+		<div class="col-4 position-absolute">
+			<div class="card">
+				<div class="card-body">
+
+					<!-- ngb Accordion starts -->
+
+					<ngb-accordion #acc="ngbAccordion">
+						<ngb-panel class="">
+							<ng-template ngbPanelTitle class="">
+								<fa-icon [icon]="burgerIcon"></fa-icon>All departaments
+							</ng-template>
+							<ng-template ngbPanelContent>
+								<div class="" *ngFor="let category of categories">
+									<a [href]="category.link.path">{{category.name|titlecase}}</a>
+								</div>
+
+							</ng-template>
+						</ngb-panel>
+
+					</ngb-accordion>
+
+					<!-- ngb Accordion ends -->
+
 				</div>
 			</div>
 		</div>
-
 	</div>
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-		aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
 
-	<div class="collapse navbar-collapse" id="navbarSupportedContent">
-		<!-- <ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
-				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#">Link</a>
-			</li>
-			<li class="nav-item dropdown">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-					aria-haspopup="true" aria-expanded="false">
-					Dropdown
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="#">Action</a>
-					<a class="dropdown-item" href="#">Another action</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Something else here</a>
-				</div>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link disabled" href="#">Disabled</a>
-			</li>
-		</ul> -->
+	<div class="collapse navbar-collapse col-8" id="navbarSupportedContent">
 		<form class="form-inline my-2 my-lg-0">
 			<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
 			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

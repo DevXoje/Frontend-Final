@@ -1,6 +1,6 @@
-import { Route } from '@angular/compiler/src/core';
+import { Route } from '@angular/router';
 import { Component, Input, OnInit } from '@angular/core';
-import { faEnvelope, faHeart, faPhoneAlt, faShoppingBag, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faEnvelope, faHeart, faPhoneAlt, faShoppingBag, faUser } from '@fortawesome/free-solid-svg-icons';
 import { CategoryService } from 'src/app/core/categories/app/category.service';
 import { Category } from 'src/app/core/categories/domain/category';
 
@@ -53,16 +53,19 @@ export class NavComponent implements OnInit {
 	heartIcon = faHeart;
 	bagIcon = faShoppingBag;
 	phoneIcon = faPhoneAlt;
-
+	burgerIcon = faBars;
 
 	constructor(private servicioCategorias: CategoryService) {
 		this.servicioCategorias.getCategories()
-			.then(categories => this.categories = categories);
+			.then(categories => {
+				this.categories = categories;
+				console.log(this.categories[0].link.path);
+			});
+
+
 	}
 
 	ngOnInit(): void {
 	}
-	ruta(param:Route) {
 
-	}
 }
