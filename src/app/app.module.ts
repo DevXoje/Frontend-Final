@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NavComponent } from './shared/nav/nav.component';
@@ -10,6 +11,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ListUsersComponent } from './components/list-users/list-users.component';
 
 @NgModule({
 	declarations: [
@@ -17,11 +19,12 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 		NavComponent,
 		FooterComponent,
 		LenguageFormComponent,
+		ListUsersComponent,
 	],
 	imports: [
 		BrowserModule,
 		FormsModule, ReactiveFormsModule,
-		FontAwesomeModule,RouterModule, NgbModule
+		FontAwesomeModule, RouterModule, NgbModule, HttpClientModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]
