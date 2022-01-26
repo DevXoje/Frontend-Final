@@ -5,8 +5,7 @@ import { User } from 'src/app/core/users/domain/User';
 @Component({
 	selector: 'app-list-users',
 	templateUrl: './list-users.component.html',
-	styleUrls: ['./list-users.component.scss'],
-	providers: [ UserService ]
+	styleUrls: ['./list-users.component.scss']
 })
 export class ListUsersComponent implements OnInit {
 	users: User[] = [
@@ -21,9 +20,12 @@ export class ListUsersComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
+
 		this.userService.getEventos().subscribe(
-			(users) => this.users = users,
-			(error) => console.log('salto1', error),
+			(users) => {
+				this.users = users
+			},
+			(error) => console.log(error),
 			() => console.log('completed')
 		);
 	}

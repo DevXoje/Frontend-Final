@@ -9,7 +9,9 @@ import { HttpErrorHandler, HandleError } from '../../../http-error-handler.servi
 import { UserResponse } from '../domain/User-response';
 
 
-@Injectable()
+@Injectable({
+	providedIn: 'root'
+})
 export class UserService {
 	/* private users: User[] = users; */
 	private users: User[] = users;
@@ -23,16 +25,8 @@ export class UserService {
 			console.log(error);
 		})
 	}
-	getEventos(): Observable<User[]> {
-
-		return this.http.get<UserResponse>(this.eventoUrl).pipe(
-			map((response: UserResponse) => response.users),
-			catchError((resp: HttpErrorResponse) => {
-				console.log(resp)
-				return throwError(`Error obteniendo users. Código de servidor: ${resp.status}. Mensaje: ${resp.message}`)
-			}
-			)
-		);
+	getEventos(): Observable<any> {
+		return this.http.get<UserResponse>(this.eventoUrl)
 
 		// return this.http.get<UserResponse>(this.eventoUrl, { headers }).pipe(
 		// 	map((response: UserResponse) => response.users),
