@@ -1,16 +1,12 @@
-/* export class ProductAdapter {
-}
- */
-export const products = [];
 import { HttpClient } from "@angular/common/http";
-import { Product } from "../domain/Product";
-import { ProductServiceInterface } from "../domain/ProductServiceInterface";
+import { Auth } from "../domain/Auth";
+import { AuthServiceInterface } from "../domain/AuthServiceInterface";
 
-export class HttpProductAdapter implements ProductServiceInterface {
+export class HttpClientAdapter implements AuthServiceInterface {
 	constructor(private http: HttpClient, private url: string) { }
-	async getUsers(): Promise<Product[]> {
+	async getUsers(): Promise<Auth[]> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.get<Product>(this.url).subscribe(
+			this.http.get<Auth>(this.url).subscribe(
 				(users) => {
 					resolve(users)
 				},
@@ -21,11 +17,11 @@ export class HttpProductAdapter implements ProductServiceInterface {
 			);
 		});
 		console.log('PAYLOAD', payload);
-		return payload as Product[]
+		return payload as Auth[]
 	}
-	async getUser(id: number): Promise<Product> {
+	async getUser(id: number): Promise<Auth> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.get<Product>(this.url + id).subscribe(
+			this.http.get<Auth>(this.url + id).subscribe(
 				(user) => {
 					resolve(user)
 				},
@@ -36,11 +32,11 @@ export class HttpProductAdapter implements ProductServiceInterface {
 			);
 		});
 		console.log('PAYLOAD', payload);
-		return payload as Product;
+		return payload as Auth;
 	}
-	async createUser(user: Product): Promise<Product> {
+	async createUser(user: Auth): Promise<Auth> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.post<Product>(this.url, user).subscribe(
+			this.http.post<Auth>(this.url, user).subscribe(
 				(user) => resolve(user),
 				(error) => {
 					console.log('Error: ', error);
@@ -48,11 +44,11 @@ export class HttpProductAdapter implements ProductServiceInterface {
 				});
 		});
 		console.log('PAYLOAD', payload);
-		return payload as Product;
+		return payload as Auth;
 	}
-	async updateUser(user: Product): Promise<Product> {
+	async updateUser(user: Auth): Promise<Auth> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.put<Product>(this.url + '/' + user.id, user).subscribe(
+			this.http.put<Auth>(this.url + '/' + user.id, user).subscribe(
 				(user) => resolve(user),
 				(error) => {
 					console.log('Error: ', error);
@@ -60,11 +56,11 @@ export class HttpProductAdapter implements ProductServiceInterface {
 				});
 		});
 		console.log('PAYLOAD', payload);
-		return payload as Product;
+		return payload as Auth;
 	}
-	async deleteUser(id: number): Promise<Product> {
+	async deleteUser(id: number): Promise<Auth> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.delete<Product>(this.url + '/' + id).subscribe(
+			this.http.delete<Auth>(this.url + '/' + id).subscribe(
 				(user) => resolve(user),
 				(error) => {
 					console.log('Error: ', error);
@@ -72,6 +68,6 @@ export class HttpProductAdapter implements ProductServiceInterface {
 				});
 		});
 		console.log('PAYLOAD', payload);
-		return payload as Product;
+		return payload as Auth;
 	}
 }

@@ -12,6 +12,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListUsersComponent } from './components/list-users/list-users.component';
+import { AppRoutingModule } from './app-routing.module';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { SortableHeaderDirective } from './directives/sortable-header.directive';
+import { ListProductsComponent } from './components/list-products/list-products.component';
+import { ListComponent } from './shared/list/list.component';
 
 @NgModule({
 	declarations: [
@@ -20,11 +26,21 @@ import { ListUsersComponent } from './components/list-users/list-users.component
 		FooterComponent,
 		LenguageFormComponent,
 		ListUsersComponent,
+		HomeComponent,
+		LoginComponent,
+  SortableHeaderDirective,
+  ListProductsComponent,
+  ListComponent,
 	],
 	imports: [
 		BrowserModule,
-		FormsModule, ReactiveFormsModule,
-		FontAwesomeModule, RouterModule, NgbModule, HttpClientModule
+		FormsModule,
+		ReactiveFormsModule,
+		FontAwesomeModule,
+		RouterModule,
+		NgbModule,
+		HttpClientModule,
+		AppRoutingModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]
