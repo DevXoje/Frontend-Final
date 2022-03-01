@@ -1,21 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 
 import { HomeComponent } from './components/home/home.component';
+import { ListProductsComponent } from './components/list-products/list-products.component';
+import { ListUsersComponent } from './components/list-users/list-users.component';
+import { FormAuthComponent } from './shared/form-auth/form-auth.component';
+import { FormProductComponent } from './shared/form-product/form-product.component';
 
 
 export const routes: Routes = [
 	{ path: '', component: HomeComponent, data: { title: 'Home' } },
-	/* { path: 'eventos', component: EventShowComponent, data: { title: 'Listado de Eventos' } },
-	{ path: 'eventos/add', component: EventoAddComponent, canDeactivate: [SaveChangesGuard], data: { title: 'Creator' } },
-	{ path: 'eventos/:id', resolve: { evento: EventDetailResolver }, component: EventoItemDetailsComponent },
-	{ path: 'payment/:id', resolve: { evento: EventDetailResolver }, canDeactivate: [SaveChangesGuard], component: PaymentComponent },
-	{ path: 'checkout/success/:session_id', component: CheckoutSuccessComponent },
-	{ path: 'checkout/cancel', component: CheckoutCancelComponent }, */
-	//{ path: 'eventos/edit/:id', resolve: { evento: EventDetailResolver }, component: EventoEditComponent },
-	/* { path: '', redirectTo: '', pathMatch: 'full' },
-	{ path: '**', redirectTo: '', pathMatch: 'full' } */
-	/* 	{ path: 'buy/:id', component: EventoItemBuyComponent }, */
+	{
+		path: 'admin', component: HomeAdminComponent, children: [
+			{ path: 'auth', component: ListUsersComponent },
+			{ path: 'products', component: ListProductsComponent },
+		]
+	},
+	{ path: '/product/crear', component: FormProductComponent, data: { title: 'Producto Cliente' } },
+
 ];
 
 @NgModule({

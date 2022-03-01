@@ -38,6 +38,7 @@
 		"bootstrap": "^4.5.0",
 		"cors": "^2.8.5",
 		"express": "^4.17.2",
+		"ng-bootstrap-form-validation": "^9.0.1",
 		"path": "^0.12.7",
 		"rxjs": "~6.6.0",
 		"tslib": "^2.2.0",

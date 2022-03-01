@@ -3,31 +3,29 @@ import { compare, SortableHeaderDirective, SortColumn, SortEvent } from 'src/app
 
 @Component({
 	selector: 'app-list',
-	template: `
-<table class="table table-striped">
-	<caption>{{title}}</caption>
-	<thead>
-		<tr>
-			<th scope="col">#</th>
-			<th scope="col" *ngFor="let titulo of titulos" [sortable]="titulo" (sort)="onSort($event)"
-				style="cursor: pointer;">{{titulo}}</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr *ngFor="let item of data; index as i" class="col">
-			<th scope="row">{{ i + 1 }}</th>
-			<td *ngFor="let titulo of titulos">{{item[titulo]}}</td>
-		</tr>
-	</tbody>
-</table>`})
-export class ListComponent implements OnInit {
+	template: `<table class="table table-striped" *ngIf="data.length<1">
+			<caption>{{title}}</caption>
+			<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col" *ngFor="let titulo of titulos" [sortable]="titulo" (sort)="onSort($event)"
+						style="cursor: pointer;">{{titulo}}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let item of data; index as i" class="col">
+					<th scope="row">{{ i + 1 }}</th>
+					<td *ngFor="let titulo of titulos">{{item[titulo]}}</td>
+				</tr>
+			</tbody>
+		</table>`
+})
+export class ListComponent{
 	@Input() titulos: SortColumn[] = [];
 	DATA_DEFAULT: any[] = [];
 	@Input() data: any[] = [];
 	@Input() title: string = 'Lista';
 
-	ngOnInit(): void {
-	}
 	@ViewChildren(SortableHeaderDirective) headers?: QueryList<SortableHeaderDirective>;
 
 	onSort({ column, direction }: SortEvent) {
@@ -49,6 +47,5 @@ export class ListComponent implements OnInit {
 			});
 		}
 	}
-
 
 }

@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { faBars, faEnvelope, faHeart, faPhoneAlt, faShoppingBag, faUser } from '@fortawesome/free-solid-svg-icons';
 import { CategoryService } from 'src/app/core/categories/app/category.service';
 import { Category } from 'src/app/core/categories/domain/category';
+import { NavLink } from 'src/app/interfaces/nav-link';
 
 @Component({
 	selector: 'app-nav',
@@ -15,35 +16,35 @@ export class NavComponent implements OnInit {
 	@Input() logo?: HTMLDivElement;
 	@Input() num_phone?: string;
 	categories: Category[] = [];
-	navLinks = [
+	navLinks: NavLink[] = [
 		{
 			name: 'Home',
-			link: '/home',
-			icon: 'home',
+			path: '/home',
+			icon: faBars,
 			isActive: true
 		},
 		{
 			name: 'Shop',
-			link: '/shop',
-			icon: 'Shop',
+			path: '/shop',
+			icon: faBars,
 			isActive: false
 		},
 		{
 			name: 'Pages',
-			link: '/pages',
-			icon: 'Pages',
+			path: '/pages',
+			icon: faBars,
 			isActive: false
 		},
 		{
 			name: 'Blog',
-			link: '/blog',
-			icon: 'blog',
+			path: '/blog',
+			icon: faBars,
 			isActive: false
 		},
 		{
 			name: 'Contact',
-			link: '/contact',
-			icon: 'Contact',
+			path: '/contact',
+			icon: faBars,
 			isActive: false
 		}
 	];
@@ -54,6 +55,8 @@ export class NavComponent implements OnInit {
 	bagIcon = faShoppingBag;
 	phoneIcon = faPhoneAlt;
 	burgerIcon = faBars;
+
+	public isMenuCollapsed = false;
 
 	constructor(private servicioCategorias: CategoryService) {
 		this.servicioCategorias.getCategories()
