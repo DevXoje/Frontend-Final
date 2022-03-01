@@ -11,7 +11,7 @@ import { Input } from 'src/app/interfaces/input';
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 		<form (validSubmit)="onSubmit()">
-			<app-form [inputs]="inputs"></app-form>
+			<!-- <app-form [inputs]="inputs"></app-form> -->
 
 		</form>
 	</div>

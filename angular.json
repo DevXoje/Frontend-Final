@@ -10,9 +10,6 @@
 					"style": "scss",
 					"skipTests": true
 				},
-				"@schematics/angular:module": {
-					"skipTests": true
-				},
 				"@schematics/angular:service": {
 					"skipTests": true
 				},

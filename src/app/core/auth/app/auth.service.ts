@@ -34,7 +34,7 @@ export class AuthService {
 			id: 0,
 			name: '',
 			email: '',
-			email_verified_at: false,
+			email_verified_at: new Date(),
 			password: '',
 			remenber_token: '',
 			created_at: '',

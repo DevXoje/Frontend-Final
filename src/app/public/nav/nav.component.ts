@@ -19,10 +19,18 @@ export class NavComponent implements OnInit {
 	navLinks: NavLink[] = [
 		{
 			name: 'Home',
-			path: '/home',
+			path: '/',
 			icon: faBars,
 			isActive: true
 		},
+		{
+			name: 'Login',
+			path: '/login',
+			icon: faBars,
+			isActive: true
+		},
+
+		/* ,
 		{
 			name: 'Shop',
 			path: '/shop',
@@ -46,7 +54,7 @@ export class NavComponent implements OnInit {
 			path: '/contact',
 			icon: faBars,
 			isActive: false
-		}
+		} */
 	];
 
 	mailIcon = faEnvelope;

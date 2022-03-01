@@ -1,10 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { faFacebook, faLinkedin, faPinterest, faTwitter } from '@fortawesome/free-brands-svg-icons';
+
+
 @Component({
-	selector: 'app-home',
-	templateUrl: './home.component.html',
+	selector: 'app-public',
+	template: `
+	<app-nav [socialLinks]="socialLinks" [userData]="userData" [num_phone]="contactData.phone"></app-nav>
+	<div class="container text-center">
+		<router-outlet></router-outlet>
+	</div>`
 })
-export class HomeComponent implements OnInit {
+export class PublicComponent implements OnInit {
 
 	constructor() { }
 
@@ -38,5 +44,4 @@ export class HomeComponent implements OnInit {
 		}
 	];
 	userData = { num_whises: 2, num_items_cart: 1, isLogged: false, total_cart: 150.4, user_name: '' };
-
 }

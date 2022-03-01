@@ -13,7 +13,7 @@ export class ListUsersComponent implements OnInit {
 		email: '',
 		name: '',
 		password: '',
-		email_verified_at: false,
+		email_verified_at: new Date(),
 		remenber_token: '',
 		created_at: '',
 		updated_at: ''
