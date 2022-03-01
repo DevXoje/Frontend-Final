@@ -7,7 +7,14 @@
 			"projectType": "application",
 			"schematics": {
 				"@schematics/angular:component": {
-					"style": "scss"
+					"style": "scss",
+					"skipTests": true
+				},
+				"@schematics/angular:module": {
+					"skipTests": true
+				},
+				"@schematics/angular:service": {
+					"skipTests": true
 				},
 				"@schematics/angular:application": {
 					"strict": true
@@ -33,8 +40,7 @@
 						"styles": [
 							"src/styles.scss"
 						],
-						"scripts": [
-						]
+						"scripts": []
 					},
 					"configurations": {
 						"production": {
@@ -66,7 +72,7 @@
 							"sourceMap": true,
 							"namedChunks": true
 						},
-						"staging":{
+						"staging": {
 							"fileReplacements": [
 								{
 									"replace": "src/environments/environment.ts",
@@ -86,7 +92,7 @@
 						"development": {
 							"browserTarget": "Frontend-Final:build:development"
 						},
-						"staging":{
+						"staging": {
 							"browserTarget": "Frontend-Final:build:staging"
 						}
 					},
