@@ -4,7 +4,8 @@
 
 export const environment = {
 	production: true,
-	back_url: 'http://localhost:8000'
+	//baseUrl: 'http://localhost:8000'
+	baseUrl: 'https://back-final-xoje.herokuapp.com'
 };
 
 /*

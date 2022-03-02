@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormComponent } from '../shared/form/form.component';
+import { SignUpComponent } from './signup/signup.component';
 
 
 
@@ -16,6 +17,7 @@ import { FormComponent } from '../shared/form/form.component';
 	declarations: [
 		PublicComponent,
 		LoginComponent,
+		SignUpComponent,
 		HomeComponent,
 		NavComponent,
 		FormComponent

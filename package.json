@@ -17,7 +17,8 @@
 		"lite": "lite-server",
 		"preinstall": "npm install -g @angular/cli @angular/compiler-cli typescript",
 		"postinstall": "ng build --prod",
-		"staging-build": "ng build --configuration=staging"
+		"staging-build": "ng build --configuration=staging",
+		"proxy-start": "ng serve --proxy-config proxy.conf.json"
 	},
 	"private": true,
 	"dependencies": {

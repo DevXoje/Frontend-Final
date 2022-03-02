@@ -29,6 +29,12 @@ export class NavComponent implements OnInit {
 			icon: faBars,
 			isActive: true
 		},
+		{
+			name: 'Sign Up',
+			path: '/signup',
+			icon: faBars,
+			isActive: true
+		},
 
 		/* ,
 		{
@@ -70,7 +76,6 @@ export class NavComponent implements OnInit {
 		this.servicioCategorias.getCategories()
 			.then(categories => {
 				this.categories = categories;
-				console.log(this.categories[0].link.path);
 			});
 
 

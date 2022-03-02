@@ -1,7 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorMessage } from 'ng-bootstrap-form-validation';
 import { Input as InputModel } from 'src/app/interfaces/input';
+import { LoginData } from 'src/app/interfaces/login-data';
+import { SignUpData } from 'src/app/interfaces/sign-up-data';
+//type authData = LoginData | SignUpData;
 
 @Component({
 	selector: 'app-form',
@@ -13,7 +16,7 @@ import { Input as InputModel } from 'src/app/interfaces/input';
 				<textarea name="input.name" class="form-control" id="input.name" cols="30" rows="10" [formControlName]="input.name" *ngIf="input.tipo=='textarea'"></textarea>
 			</div>
 			<button class="btn btn-default" type="button" (click)="onReset()">Reset</button>
-			<button class="btn btn-primary pull-right" type="submit">Submit</button>
+			<button class="btn btn-primary pull-right" type="submit" (click)="onSubmit($event)">Submit</button>
 			</div>
 `,
 })
@@ -21,46 +24,61 @@ export class FormComponent implements OnInit {
 	formGroup: FormGroup = new FormGroup({});
 	valor: string = "";
 	@Input() inputs: InputModel[] = [];
+	@Output() validSubmit = new EventEmitter<any>();
 	customErrorMessages: ErrorMessage[] = [
 		{
 			error: 'required',
 			format: (label, error) => `${label?.toUpperCase()} IS DEFINITELY REQUIRED!`
-		}, {
+		},
+		{
 			error: 'pattern',
 			format: (label, error) => `${label?.toUpperCase()} DOESN'T LOOK RIGHT...`
 		}
 	];
-	constructor(private fb: FormBuilder) {
-
-	}
+	constructor(private fb: FormBuilder) { }
 
 	ngOnInit() {
 		//this.formGroup = this.fb.group({email: '',password: ''});
 		const controls = Object.assign({});
 		this.inputs.forEach(input => {
-
 			controls[input.name] = new FormControl('', input.validators)
-
 		});
-
 		this.formGroup = this.fb.group(controls);
-
 		//this.formGroup = new FormGroup(controls);
-
 		this.formGroup.valueChanges.subscribe(
 			(value) => console.log(value),
 			(error) => console.error(error),
 		);
 	}
 
-	onSubmit() {
-		console.log(this.formGroup);
+	onSubmit(event: Event) {
+		this.validSubmit.emit(this.formGroup.value);
+		event.preventDefault();
 	}
 
 	onReset() {
-		this.formGroup?.reset();
+		this.formGroup.reset();
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 {
 			Email: new FormControl('', [

@@ -10,6 +10,7 @@ import { PublicComponent } from './public/public.component';
 import { SecureComponent } from './components/secure/secure.component';
 import { FormAuthComponent } from './shared/form-auth/form-auth.component';
 import { FormProductComponent } from './shared/form-product/form-product.component';
+import { SignUpComponent } from './public/signup/signup.component';
 
 
 export const routes: Routes = [
@@ -19,6 +20,7 @@ export const routes: Routes = [
 		children: [
 			{ path: 'home', component: HomeComponent },
 			{ path: 'login', component: LoginComponent },
+			{ path: 'signup', component: SignUpComponent },
 		]
 	},
 	{
