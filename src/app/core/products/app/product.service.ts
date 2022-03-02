@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { Product } from '../domain/Product';
+import { Product } from '../domain/Products';
 import { ProductServiceInterface } from '../domain/ProductServiceInterface';
 import { HttpProductAdapter } from '../infrastructure/product-adapter';
 

@@ -3,7 +3,7 @@
  */
 export const products = [];
 import { HttpClient } from "@angular/common/http";
-import { Product } from "../domain/Product";
+import { Product } from "../domain/Products";
 import { ProductServiceInterface } from "../domain/ProductServiceInterface";
 
 export class HttpProductAdapter implements ProductServiceInterface {

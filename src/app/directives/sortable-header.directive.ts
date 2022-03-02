@@ -1,6 +1,6 @@
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { Auth } from '../core/auth/domain/Auth';
-import { Product } from '../core/products/domain/Product';
+import { Product } from '../core/products/domain/Products';
 
 @Directive({
 	selector: 'th[sortable]',

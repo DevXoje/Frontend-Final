@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/core/products/app/product.service';
-import { Product } from 'src/app/core/products/domain/Product';
+import { Product } from 'src/app/core/products/domain/Products';
 import { SortColumn } from 'src/app/directives/sortable-header.directive';
 
 @Component({
