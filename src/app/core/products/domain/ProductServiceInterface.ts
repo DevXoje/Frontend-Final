@@ -1,9 +1,9 @@
 import { Product } from "./Products";
 
 export interface ProductServiceInterface {
-	getUsers(): Promise<Product[]>;
-	getUser(id: number): Promise<Product>;
-	createUser(user: Product): Promise<Product>;
-	updateUser(user: Product): Promise<Product>;
-	deleteUser(id: number): Promise<Product>;
+	getProducts(): Promise<Product[]>;
+	getProduct(id: number): Promise<Product>;
+	createProduct(user: Product): Promise<Product>;
+	updateProduct(user: Product): Promise<Product>;
+	deleteProduct(id: number): Promise<Product>;
 }

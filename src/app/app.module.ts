@@ -1,28 +1,21 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, Title } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
 	CUSTOM_ERROR_MESSAGES, NgBootstrapFormValidationModule
 } from "ng-bootstrap-form-validation";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LenguageFormComponent } from './components/lenguage-form/lenguage-form.component';
-import { ListProductsComponent } from './components/list-products/list-products.component';
-import { ListUsersComponent } from './components/list-users/list-users.component';
-import { SortableHeaderDirective } from './directives/sortable-header.directive';
-import { CUSTOM_ERRORS } from "./shared/custom-errors";
-import { FooterComponent } from './shared/footer/footer.component';
-import { FormProductComponent } from './shared/form-product/form-product.component';
-import { ListComponent } from './shared/list/list.component';
-import { FormComponent } from './shared/form/form.component';
-import { FormAuthComponent } from './shared/form-auth/form-auth.component';
-import { HomeAdminComponent } from './components/secure/home-admin/home-admin.component';
-import { NavAdminComponent } from './components/secure/nav-admin/nav-admin.component';
-import { SecureComponent } from './components/secure/secure.component';
+import { FormUserComponent } from './core/auth/app/form-user/form-user.component';
+import { FormProductComponent } from './core/products/app/form-product/form-product.component';
+import { ListProductsModule } from './core/products/app/list-products/list-products.module';
+import { FooterComponent } from './core/shared/footer/footer.component';
+import { LenguageFormComponent } from './core/shared/lenguage-form/lenguage-form.component';
+import { CUSTOM_ERRORS } from "./custom-errors";
 import { PublicModule } from './public/public.module';
+import { SecureModule } from './secure/secure.module';
 
 
 
@@ -32,15 +25,8 @@ import { PublicModule } from './public/public.module';
 		AppComponent,
 		FooterComponent,
 		LenguageFormComponent,
-		ListUsersComponent,
-		SortableHeaderDirective,
-		ListProductsComponent,
-		ListComponent,
 		FormProductComponent,
-		FormAuthComponent,
-		HomeAdminComponent,
-		NavAdminComponent,
-		SecureComponent,
+		FormUserComponent,
 	],
 	imports: [
 		BrowserModule,
@@ -51,13 +37,15 @@ import { PublicModule } from './public/public.module';
 		AppRoutingModule,
 		NgBootstrapFormValidationModule,
 		NgBootstrapFormValidationModule.forRoot(),
-		PublicModule
+		PublicModule,
+		ListProductsModule,
+		SecureModule
 	],
 	providers: [{
 		provide: CUSTOM_ERROR_MESSAGES,
 		useValue: CUSTOM_ERRORS,
 		multi: true
-	}],
+	}, Title],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

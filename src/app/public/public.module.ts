@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PublicComponent } from './public.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
+import { LoginComponent } from '../core/auth/app/login/login.component';
 import { NavComponent } from './nav/nav.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormComponent } from '../shared/form/form.component';
-import { SignUpComponent } from './signup/signup.component';
+import { FormComponent } from '../core/shared/form/form.component';
+import { SignUpComponent } from '../core/auth/app/signup/signup.component';
+import { PublicRoutingModule } from './public-routing.module';
 
 
 
@@ -18,7 +18,6 @@ import { SignUpComponent } from './signup/signup.component';
 		PublicComponent,
 		LoginComponent,
 		SignUpComponent,
-		HomeComponent,
 		NavComponent,
 		FormComponent
 	],
@@ -27,7 +26,8 @@ import { SignUpComponent } from './signup/signup.component';
 		RouterModule,
 		ReactiveFormsModule,
 		FontAwesomeModule,
-		NgbModule
+		NgbModule,
+		PublicRoutingModule
 	]
 })
 export class PublicModule { }

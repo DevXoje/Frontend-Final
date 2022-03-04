@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { faBars, faEnvelope, faHeart, faPhoneAlt, faShoppingBag, faUser } from '@fortawesome/free-solid-svg-icons';
 import { CategoryService } from 'src/app/core/categories/app/category.service';
 import { Category } from 'src/app/core/categories/domain/category';
-import { NavLink } from 'src/app/interfaces/nav-link';
+import { NavLink } from 'src/app/core/shared/nav-link';
 
 @Component({
 	selector: 'app-nav',

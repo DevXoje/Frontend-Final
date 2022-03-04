@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { Title } from '@angular/platform-browser';
 
 @Component({
 	selector: 'app-root',
@@ -7,11 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-	title = 'Frontend-Final';
-
-	/* 	logo = `<div class="nav__logo"><img src="https://via.placeholder.com/468x120?text=Logo" alt="LOGO"></div>`;
-	logo: HTMLDivElement=document.createElement('div');*/
-	constructor() {
-
+	constructor(private titleService: Title) {
+		this.setTitle('Home');
+	}
+	public setTitle(newTitle: string) {
+		this.titleService.setTitle(newTitle);
 	}
 }
