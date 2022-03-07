@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavLink } from 'src/app/core/shared/nav-link';
 import { faChartLine, faUsers, faCubes } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -9,22 +8,23 @@ import { faChartLine, faUsers, faCubes } from '@fortawesome/free-solid-svg-icons
 })
 export class NavAdminComponent implements OnInit {
 	public isMenuCollapsed = false;
-	navLinks: NavLink[] = [
+	/* navLinks: NavLink[] = [ */
+	navLinks = [
 		{
 			name: 'Dashboard',
-			path: '/admin',
+			path: '/secure/home',
 			icon: faChartLine,
 			isActive: true
 		},
 		{
 			name: 'Users',
-			path: '/admin/auth',
+			path: '/secure/auth',
 			icon: faUsers,
 			isActive: true
 		},
 		{
 			name: 'Products',
-			path: '/admin/products',
+			path: '/secure/products',
 			icon: faCubes,
 			isActive: true
 		},

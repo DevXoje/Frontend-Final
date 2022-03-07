@@ -1,3 +1,5 @@
+import { Roles } from "./Roles";
+
 export interface Auth {
 	id: number;
 	name: string;
@@ -5,6 +7,7 @@ export interface Auth {
 	email_verified_at: Date;
 	password: string;
 	remenber_token: string;
-	created_at: string;
-	updated_at: string;
+	role: Roles;
+	created_at: string | Date;
+	updated_at: string | Date;
 }

@@ -1,21 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { faFacebook, faLinkedin, faPinterest, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faBars, faEnvelope, faHeart, faPhoneAlt, faShoppingBag, faUser } from '@fortawesome/free-solid-svg-icons';
+
+import { SideNavItems } from '../core/shared/navigation-models';
+import { sideNavItems, sideNavSections } from '../core/shared/side-nav.data';
 
 
 @Component({
 	selector: 'app-public',
 	template: `
-	<app-nav [socialLinks]="socialLinks" [userData]="userData" [num_phone]="contactData.phone"></app-nav>
-	<div class="container text-center">
+	<app-nav [sideNavItems]="sideNavItems"></app-nav>
+	<!-- <div class="container text-center">
 		<router-outlet></router-outlet>
-	</div>`
+	</div> -->`
 })
 export class PublicComponent implements OnInit {
-
+	mailIcon = faEnvelope;
+	userIcon = faUser;
+	heartIcon = faHeart;
+	bagIcon = faShoppingBag;
+	phoneIcon = faPhoneAlt;
+	burgerIcon = faBars;
 	constructor() { }
 
 	ngOnInit(): void {
 	}
+	
+	sideNavItems = sideNavItems;
+	sideNavSections = sideNavSections;
+	sidenavStyle = 'sb-sidenav-dark';
+
+
 	contactData = {
 		phone: '+34 922 022 022',
 		email: 'supermy@mail.com',

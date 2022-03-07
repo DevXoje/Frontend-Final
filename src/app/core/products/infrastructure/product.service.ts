@@ -23,7 +23,7 @@ export class ProductService {
 		const observable = from(this.productService.getProducts());
 		observable.subscribe(
 			(products) => productsFetched.push(...products),
-			(error: HttpErrorResponse) => console.error(`Error: ${error.message}`),
+			(error: HttpErrorResponse) => console.error(`Error Capturado: ${error.message}`),
 		);
 
 		return productsFetched;

@@ -24,10 +24,14 @@ export class AuthService {
 	private authUrl = environment.baseUrl + '/auth';
 	private userService: AuthServiceInterface = new HttpClientAdapter(this.http, this.authUrl);
 	constructor(private http: HttpClient) { }
-	/* getUsers(): Observable<Auth[]> {
+	getUsersObservable(): Observable<Auth[]> {
 		return from(this.userService.getUsers());
 
-	} */
+	}
+	getUserObservable(id: number): Observable<Auth> {
+		return from(this.userService.getUser(id));
+
+	}
 	getUsers(): Auth[] {
 		const usersFetched: Auth[] = [];
 		const observable = from(this.userService.getUsers());
@@ -45,6 +49,7 @@ export class AuthService {
 			email: '',
 			email_verified_at: new Date(),
 			password: '',
+			role: 'Customer',
 			remenber_token: '',
 			created_at: '',
 			updated_at: ''

@@ -14,6 +14,7 @@ import { ListModule } from '../../../shared/list/list.module';
 		CommonModule,
 		ListUsersRoutingModule,
 		ListModule
-	]
+	],
+	exports:[ListUsersComponent]
 })
 export class ListUsersModule { }

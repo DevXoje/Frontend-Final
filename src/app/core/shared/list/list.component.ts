@@ -21,11 +21,11 @@ import { compare, SortableHeaderDirective, SortColumn, SortEvent } from 'src/app
 				</tr>
 			</tbody>
 		</table>
-		<ng-template #elseBlock>
+		<!-- <ng-template #elseBlock>
 			<div class="alert alert-danger" role="alert">
  				This is a danger alert—check it out!
 			</div>
-		</ng-template>
+		</ng-template> -->
 		`
 })
 export class ListComponent implements OnInit {
@@ -56,8 +56,10 @@ export class ListComponent implements OnInit {
 		}
 	}
 	ngOnInit(): void {
-		this.titulos = Object.keys(this.data[0]) as SortColumn[];
+		/* this.titulos = Object.keys(this.data[0]) as SortColumn[]; */
 		console.log(this.data);
+		console.log(this.titulos);
+
 
 	}
 }

@@ -17,7 +17,7 @@ export class ProductsResolver implements Resolve<Product[]> {
 	resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Product[]> {
 		return this.productsService.getProductsObservable().pipe(
 			catchError(e => {
-				this.router.navigate(['/events']);
+				this.router.navigate(['/secure/home']);
 				return of(null);
 			})
 		) as Observable<Product[]>;

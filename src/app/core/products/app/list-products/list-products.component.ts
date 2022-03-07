@@ -7,8 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
 	selector: 'app-list-products',
-	//template: `<app-list [data]="products" [titulos]="titulos" [title]="title"></app-list>`,
-	template: `<app-list [data]="products" [title]="title"></app-list>`,
+	template: `<app-list [data]="products" [titulos]="titulos" [title]="title"></app-list>`,
 })
 export class ListProductsComponent implements OnInit {
 
@@ -28,10 +27,20 @@ export class ListProductsComponent implements OnInit {
 	atributos: string[] = [];
 	title: string = 'Lista de Productos';
 
-	constructor(private _Activatedroute: ActivatedRoute) { }
+	constructor(private _Activatedroute: ActivatedRoute, private productsService: ProductService) { }
 
 	ngOnInit(): void {
-		this.products = this._Activatedroute.snapshot.data.products;
+
+		if (this._Activatedroute.snapshot.data.products !== undefined) {
+			this.products = this._Activatedroute.snapshot.data.products;
+			console.log('from resolve');
+		} else {
+			this.products = this.productsService.getProducts();
+			console.log('from service');
+		}
+		this.titulos= Object.keys(this.productDefault) as SortColumn[];
+
+
 	}
 
 }

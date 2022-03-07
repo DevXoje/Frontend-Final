@@ -21,7 +21,7 @@ export class HttpClientAdapter implements AuthServiceInterface {
 	}
 	async getUser(id: number): Promise<Auth> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.get<Auth>(this.url + id).subscribe(
+			this.http.get<Auth>(`${this.url}/${id}`).subscribe(
 				(user) => {
 					resolve(user)
 				},

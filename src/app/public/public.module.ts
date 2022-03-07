@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormComponent } from '../core/shared/form/form.component';
 import { SignUpComponent } from '../core/auth/app/signup/signup.component';
 import { PublicRoutingModule } from './public-routing.module';
+import { SideNavItemComponent } from '../core/shared/side-nav-item/side-nav-item.component';
 
 
 
@@ -19,7 +20,8 @@ import { PublicRoutingModule } from './public-routing.module';
 		LoginComponent,
 		SignUpComponent,
 		NavComponent,
-		FormComponent
+		FormComponent,
+		SideNavItemComponent
 	],
 	imports: [
 		CommonModule,
