@@ -19,7 +19,7 @@ import { ProductService } from 'src/app/core/products/infrastructure/product.ser
 			<fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Productos
 		</div>
 		<div class="card-body">
-			<!-- <app-table-products [pageSize]="4"></app-table-products> -->
+			<app-table-products [pageSize]="4"></app-table-products>
 		</div>
 	</app-card>	`
 })

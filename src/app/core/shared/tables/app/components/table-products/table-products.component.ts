@@ -21,11 +21,14 @@ import { ProductService } from '@shared/tables/infrastructure/services/product.s
 export class TableProductsComponent implements OnInit {
 	@Input() pageSize = 4;
 	titles = [
-		'name',
-		'email',
-		'role',
+		"id",
+		"name",
+		"description",
+		"price",
+		"created_at",
+		"updated_at",
+		"image"
 	];
-	mainTitles: any[] = [];
 	products$!: Observable<Product[]>;
 
 	total$!: Observable<number>;
@@ -44,7 +47,7 @@ export class TableProductsComponent implements OnInit {
 	ngOnInit() {
 		this.productService.pageSize = this.pageSize;
 
-		this.products$ = this.productService.products$;
+		this.products$ = this.productService.getProductsObservable();
 
 		this.total$ = this.productService.total$;
 	}

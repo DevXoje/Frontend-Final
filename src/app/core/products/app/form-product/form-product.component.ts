@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorMessage } from 'ng-bootstrap-form-validation';
-import { Input } from 'src/app/core/shared/form/input';
+import { Input } from '@shared/app-common/app/components/form/input';
 
 
 @Component({

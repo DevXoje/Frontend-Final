@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { UserService, AuthService } from '@shared/auth/infrastructure/services';
+import { AuthService, UserService } from '@shared/auth/infrastructure/services';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -38,8 +38,16 @@ import { Observable } from 'rxjs';
 	</li>`,
 })
 export class TopNavUserComponent implements OnInit {
-	constructor(public userService: UserService, private authService: AuthService) {
-		userService.user = this.authService.getUser(4);
+	constructor(public authService: AuthService, public userService: UserService) {
+		this.userService.user = this.authService.getUser(4);
+		console.log(this.authService.getUser(4));
+
 	}
-	ngOnInit() { }
+	ngOnInit() {
+		this.userService.user$.subscribe(
+			(user) => { console.log(user); },
+			(error) => { console.log(error); }
+		)
+
+	}
 }

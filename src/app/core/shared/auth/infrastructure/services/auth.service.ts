@@ -5,8 +5,8 @@ import { catchError, retry, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClientAdapter } from '../HttpClientAdapter';
 import { AuthResponse } from '../AuthResponse';
-import { SignUpData } from 'src/app/core/shared/form/sign-up-data';
-import { LoginData } from 'src/app/core/shared/form/login-data';
+import { SignUpData } from '@shared/app-common/app/components/form/sign-up-data';
+import { LoginData } from '@shared/app-common/app/components/form/login-data';
 import { Auth, AuthServiceInterface } from '@shared/auth/domain/auth.model';
 
 

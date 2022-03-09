@@ -1,23 +1,63 @@
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Validators } from '@angular/forms';
-import { Input } from 'src/app/core/shared/form/input';
+import { Input } from '@shared/app-common/app/components/form/input';
+import { Auth } from '@shared/auth/domain/auth.model';
+import { AuthService } from '@shared/auth/infrastructure/services';
 
 @Component({
 	selector: 'app-form-user',
-	template: `
-
-<h2>Creacion de Cliente</h2>
-<div class="row">
-	<div class="col-md-6 col-md-offset-3">
-		<form (validSubmit)="onSubmit()">
-			<!-- <app-form [inputs]="inputs"></app-form> -->
-		</form>
-	</div>
-</div>
-
-	`,
+	templateUrl: './register.component.html',
 })
 export class RegisterComponent {
+	newCustomer: Auth = {
+		name: '',
+		email: '',
+		password: '',
+	};
+	@ViewChild('form') myFormVariable!: ElementRef;
+	completed: boolean = false;
+
+	controles = {
+		correo: {
+			id: 'inputEmailAddress',
+			name: 'Correo Electronico',
+			type: 'email',
+			placeholder: 'Email',
+			validators: [
+				Validators.required,
+				Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+			]
+		},
+		nombre: {
+			id: 'inputName',
+			name: 'Nombre Completo',
+			type: 'text',
+			validators: [
+				Validators.required,
+				Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+			]
+		},
+		password: {
+			id: 'inputPassword',
+			name: 'Contraseña',
+			type: 'password',
+			validators: [
+				Validators.required,
+				Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+			]
+		},
+		confirmPassword: {
+			id: 'inputCorfirmPassword',
+			name: 'Confirmacion Contraseña',
+			type: 'password',
+			validators: [
+				Validators.required,
+				Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+			]
+		},
+
+	};
 	inputs: Input[] = [
 		{
 			name: 'Email',
@@ -79,9 +119,18 @@ export class RegisterComponent {
 
 
 	]
-	constructor() { }
-	onSubmit() {
-		console.log('this.formGroup');
+	constructor(private authService: AuthService) { }
+	onSubmit(evento: any) {
+
+		console.log(evento.submitter);
+
+		this.authService.createUser(this.newCustomer).subscribe(
+			(data: Auth) => console.log(`User created: ${data}`),
+			(error: HttpErrorResponse) => {
+				console.error(`Error: ${error.message}`)
+			}
+		);
+		evento.preventDefault();
 	}
 
 }

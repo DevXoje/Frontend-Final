@@ -1,0 +1,64 @@
+<app-layout-auth>
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-7">
+				<div class="card shadow-lg border-0 rounded-lg mt-5">
+					<div class="card-header">
+						<h3 class="text-center font-weight-light my-4">Create Account</h3>
+					</div>
+					<div class="card-body">
+						<form (ngSubmit)="onSubmit($event)"  #form>
+							<div class="form-group">
+								<label class="small mb-1"
+									for="{{controles.nombre.id}}">{{controles.nombre.name}}</label>
+								<input class="form-control py-4" id="{{controles.nombre.id}}"
+									type="{{controles.nombre.type}}"
+									placeholder="Introduzca su {{controles.nombre.name}}" autocomplete="username" />
+							</div>
+							<div class="form-group">
+								<label class="small mb-1"
+									for="{{controles.correo.id}}">{{controles.correo.name}}</label><input
+									class="form-control py-4" id="{{controles.correo.id}}"
+									type="{{controles.correo.type}}" aria-describedby="emailHelp"
+									placeholder="Introduzca su {{controles.correo.name}}" autocomplete="email" />
+							</div>
+							<div class="form-row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label class="small mb-1"
+											for="{{controles.password.id}}">{{controles.password.name}}</label>
+										<input class="form-control py-4" id="{{controles.password.id}}"
+											type="{{controles.password.type}}"
+											placeholder="Introduzca su {{controles.password.name}}"
+											autocomplete="new-password" />
+									</div>
+								</div>
+								<div class="col-md-6">
+									<div class="form-group"><label class="small mb-1"
+											for="{{controles.confirmPassword.id}}">{{controles.confirmPassword.name}}</label><input
+											class="form-control py-4" id="{{controles.confirmPassword.id}}"
+											type="{{controles.confirmPassword.type}}"
+											placeholder="Introduzca la {{controles.confirmPassword.name}}"
+											autocomplete="new-password" /></div>
+								</div>
+							</div>
+							<div class="form-group mt-4 mb-0">
+								<button class="btn btn-primary btn-block" type="submit">Create Account</button>
+							</div>
+						</form>
+					</div>
+					<div class="card-footer text-center">
+						<div class="small"><a routerLink="/auth/login">Have an account? Go to login</a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</app-layout-auth>
+<!-- <div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<form (validSubmit)="onSubmit()">
+			<app-form [inputs]="inputs"></app-form>
+		</form>
+	</div>
+</div> -->

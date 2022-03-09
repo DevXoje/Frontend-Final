@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 @Component({
 	selector: 'app-forgot-password',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	template: ``/*`<app-layout-auth>
+	template: `<app-layout-auth>
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-lg-5">
@@ -23,7 +23,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 				</div>
 			</div>
 		</div>
-	</app-layout-auth>`*/
+	</app-layout-auth>`
 })
 export class ForgotPasswordComponent implements OnInit {
 	constructor() { }

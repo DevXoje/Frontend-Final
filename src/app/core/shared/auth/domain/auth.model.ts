@@ -1,13 +1,13 @@
 export interface Auth {
-	id: number;
+	id?: number;
 	name: string;
 	email: string;
-	email_verified_at: Date;
+	email_verified_at?: Date;
 	password: string;
-	remenber_token: string;
-	role: Roles;
-	created_at: string | Date;
-	updated_at: string | Date;
+	remenber_token?: string;
+	role?: Roles;
+	created_at?: string | Date;
+	updated_at?: string | Date;
 }
 export interface AuthResponse {
 	users: Auth[];

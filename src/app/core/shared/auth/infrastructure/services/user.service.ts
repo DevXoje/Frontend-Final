@@ -10,7 +10,7 @@ export class UserService {
 	constructor() {
 		this.user = {
 			id: -1,
-			name: 'John Doe',
+			name: 'Null Name',
 			email: '',
 			email_verified_at: new Date(),
 			password: '',

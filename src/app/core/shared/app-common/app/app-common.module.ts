@@ -2,6 +2,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+const angularNative = [CommonModule, RouterModule, FormsModule, ReactiveFormsModule];
 
 //Third Party
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -23,7 +26,7 @@ import * as appCommonServices from '../infrastructure/services';
 import * as authServices from '@shared/auth/infrastructure/services';
 
 @NgModule({
-	imports: [CommonModule, RouterModule, ...thirdParty],
+	imports: [...angularNative, ...thirdParty],
 	providers: [...appCommonServices.services, ...authServices.services, ...appCommonGuards.guards],
 	declarations: [...appCommonContainers.containers, ...appCommonComponents.components],
 	exports: [...appCommonContainers.containers, ...appCommonComponents.components, ...thirdParty],

@@ -27,7 +27,6 @@ export class TableCustomersComponent implements OnInit {
 		'email',
 		'role',
 	];
-	mainTitles: any[] = [];
 	customers$!: Observable<Customer[]>;
 
 	total$!: Observable<number>;

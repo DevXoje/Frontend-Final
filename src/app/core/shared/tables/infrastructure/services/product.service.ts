@@ -44,7 +44,7 @@ function matches(product: Product, term: string, pipe: PipeTransform) {
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-	private authUrl = environment.baseUrl + '/auth';
+	private authUrl = environment.baseUrl + '/product';
 	private productService: ProductServiceInterface = new HttpProductAdapter(this.http, this.authUrl);
 
 
@@ -135,13 +135,13 @@ export class ProductService {
 		return of({ products, total });
 	}
 
-	getUsersObservable(): Observable<Product[]> {
+	getProductsObservable(): Observable<Product[]> {
 		return from(this.productService.getProducts());
 	}
-	getUserObservable(id: number): Observable<Product> {
+	getProductObservable(id: number): Observable<Product> {
 		return from(this.productService.getProduct(id));
 	}
-	getUsers(): Product[] {
+	getProducts(): Product[] {
 		const productsFetched: Product[] = [];
 		const observable = from(this.productService.getProducts());
 		observable.subscribe(
@@ -151,7 +151,7 @@ export class ProductService {
 
 		return productsFetched;
 	}
-	getUser(id: number): Product {
+	getProduct(id: number): Product {
 		let productFetched: Product = {
 			id: 0,
 			name: '',

@@ -1,8 +1,7 @@
 <form>
-
-	<!-- <div class="form-group form-inline">Full text search: <input class="form-control ml-2" type="text" name="searchTerm"
+	<div class="form-group form-inline">Full text search: <input class="form-control ml-2" type="text" name="searchTerm"
 			[(ngModel)]="productService.searchTerm" /><span class="ml-3"
-			*ngIf="productService.loading$ | async">Loading...</span></div> -->
+			*ngIf="productService.loading$ | async">Loading...</span></div>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -25,10 +24,34 @@
 				<th scope="row">{{ i + 1 }}</th>
 				<td>
 					<!-- <img class="mr-2" [src]="'https://upload.wikimedia.org/wikipedia/commons/' + product.flag"					style="width: 20px" /> -->
+					<ngb-highlight [result]="product.id.toString()" [term]="productService.searchTerm"></ngb-highlight>
+				</td>
+				<td>
 					<ngb-highlight [result]="product.name" [term]="productService.searchTerm"></ngb-highlight>
 				</td>
+				<td>
+					<ngb-highlight
+						[result]=" (product.description.length>12)? (product.description | slice:0:12)+'..':(product.description)"
+						[term]="productService.searchTerm"></ngb-highlight>
+				</td>
+				<td>
+					<ngb-highlight [result]="product.price.toString()|currency:'EUR'"
+						[term]="productService.searchTerm">
+					</ngb-highlight>
+				</td>
+				<td>
+					<ngb-highlight [result]=" product.created_at|date" [term]="productService.searchTerm">
+					</ngb-highlight>
+				</td>
+				<td>
+					<ngb-highlight [result]="product.updated_at|date" [term]="productService.searchTerm">
+					</ngb-highlight>
+				</td>
+				<td>
+					<ngb-highlight [result]="product.image" [term]="productService.searchTerm">
+					</ngb-highlight>
+				</td>
 
-				
 			</tr>
 
 		</tbody>

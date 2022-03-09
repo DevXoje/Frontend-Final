@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@shared/auth/infrastructure/services';
-import { Input } from 'src/app/core/shared/form/input';
-import { SignUpData } from 'src/app/core/shared/form/sign-up-data';
+import { Input } from '@shared/app-common/app/components/form/input';
+import { SignUpData } from '@shared/app-common/app/components/form/sign-up-data';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { SignUpData } from 'src/app/core/shared/form/sign-up-data';
 	<div class="row justify-content-center ">
 		<div class="col-md-4  col-md-offset-3">
 			<form>
-				<!-- <app-form [inputs]="inputs" (validSubmit)="onSubmit($event)"></app-form> -->
+				<app-form [inputs]="inputs" (validSubmit)="onSubmit($event)"></app-form>
 			</form>
 		</div>
 	</div>`,
