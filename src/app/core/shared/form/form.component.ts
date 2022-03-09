@@ -6,7 +6,7 @@ import { Input as InputModel } from 'src/app/core/shared/form/input';
 
 @Component({
 	selector: 'app-form',
-	template: `
+	template: ``/*  `
 			<div [formGroup]="formGroup">
 				<div class="form-group" *ngFor="let input of inputs">
 				<label class="control-label">{{input.name}}</label>
@@ -15,8 +15,7 @@ import { Input as InputModel } from 'src/app/core/shared/form/input';
 			</div>
 			<button class="btn btn-default" type="button" (click)="onReset()">Reset</button>
 			<button class="btn btn-primary pull-right" type="submit" (click)="onSubmit($event)">Submit</button>
-			</div>
-`,
+			</div>` */
 })
 export class FormComponent implements OnInit {
 	formGroup: FormGroup = new FormGroup({});

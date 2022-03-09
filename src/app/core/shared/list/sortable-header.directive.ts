@@ -1,5 +1,5 @@
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
-import { Auth } from '../../auth/domain/Auth';
+import { Auth } from '../auth/domain/auth.model';
 import { Product } from '../../products/domain/Products';
 
 @Directive({

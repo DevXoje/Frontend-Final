@@ -8,14 +8,13 @@ import {
 } from "ng-bootstrap-form-validation";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormUserComponent } from './core/auth/app/form-user/form-user.component';
 import { FormProductComponent } from './core/products/app/form-product/form-product.component';
 import { ListProductsModule } from './core/products/app/list-products/list-products.module';
-import { FooterComponent } from './core/shared/footer/footer.component';
-import { LenguageFormComponent } from './core/shared/lenguage-form/lenguage-form.component';
-import { CUSTOM_ERRORS } from "./custom-errors";
-import { PublicModule } from './public/public.module';
-import { SecureModule } from './secure/secure.module';
+import { FooterComponent } from '@shared/footer/footer.component';
+import { LenguageFormComponent } from '@shared/lenguage-form/lenguage-form.component';
+import { CUSTOM_ERRORS } from "@shared/custom-errors";
+import { PublicModule } from '@public/public.module';
+import { SecureModule } from '@secure/secure.module';
 
 
 
@@ -26,7 +25,6 @@ import { SecureModule } from './secure/secure.module';
 		FooterComponent,
 		LenguageFormComponent,
 		FormProductComponent,
-		FormUserComponent,
 	],
 	imports: [
 		BrowserModule,
