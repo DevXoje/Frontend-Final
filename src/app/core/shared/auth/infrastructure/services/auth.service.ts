@@ -14,12 +14,7 @@ import { Auth, AuthServiceInterface } from '@shared/auth/domain/auth.model';
 	providedIn: 'root'
 })
 export class AuthService {
-	httpOptions = {
-		headers: new HttpHeaders({
-			'Content-Type': 'application/json',
-			/* Authorization: 'my-auth-token' */
-		})
-	};
+
 	private authUrl = environment.baseUrl + '/auth';
 	private userService: AuthServiceInterface = new HttpClientAdapter(this.http, this.authUrl);
 	constructor(private http: HttpClient) { }

@@ -1,7 +1,13 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Auth, AuthServiceInterface } from "@shared/auth/domain/auth.model";
 
 export class HttpClientAdapter implements AuthServiceInterface {
+	headers = new HttpHeaders({
+		'Content-Type': 'application/json',
+		'Access-Control-Allow-Origin': '*',
+		'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+		/* Authorization: 'my-auth-token' */
+	})
 	constructor(private http: HttpClient, private url: string) { }
 	async getUsers(): Promise<Auth[]> {
 		const payload = await new Promise((resolve, reject) => {
@@ -35,7 +41,7 @@ export class HttpClientAdapter implements AuthServiceInterface {
 	}
 	async createUser(user: Auth): Promise<Auth> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.post<Auth>(this.url, user).subscribe(
+			this.http.post<Auth>(this.url, user, { headers: this.headers }).subscribe(
 				(user) => resolve(user),
 				(error) => {
 					console.log('Error: ', error);
