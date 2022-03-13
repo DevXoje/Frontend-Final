@@ -8,6 +8,10 @@ import { AuthResponse } from '../AuthResponse';
 import { SignUpData } from '@shared/app-common/app/components/form/sign-up-data';
 import { LoginData } from '@shared/app-common/app/components/form/login-data';
 import { Auth, AuthServiceInterface } from '@shared/auth/domain/auth.model';
+import { NotificationService } from '@shared/app-common/infrastructure/services/notification.service';
+import { NotificationType } from '@shared/app-common/domain/notification.message';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -17,7 +21,20 @@ export class AuthService {
 
 	private authUrl = environment.baseUrl + '/auth';
 	private userService: AuthServiceInterface = new HttpClientAdapter(this.http, this.authUrl);
-	constructor(private http: HttpClient) { }
+	constructor(
+		private http: HttpClient,
+		private notificationService: NotificationService,
+		private router: Router
+		/* , public jwtHelper: JwtHelperService */
+	) { }
+	isAuthenticated(): boolean {
+
+		/* const token = localStorage.getItem('token') as string;
+		// Check whether the token is expired and return
+		// true or false
+		return !this.jwtHelper.isTokenExpired(token); */
+		return true;
+	}
 	getAuth$(): Observable<{}> {
 		return of({});
 	}
@@ -37,23 +54,14 @@ export class AuthService {
 
 		return usersFetched;
 	}
-	getUser(id: number): Auth {
-		let userFetched: Auth = {
-			id: 0,
-			name: '',
-			email: '',
-			email_verified_at: new Date(),
-			password: '',
-			role: 'Customer',
-			remenber_token: '',
-			created_at: '',
-			updated_at: ''
-		};
-		const observable = from(this.userService.getUser(id));
-		observable.subscribe(
-			(user) => userFetched = user,
-			(error: HttpErrorResponse) => console.error(`Service Error: ${error.message}`),
-		);
+	async getUser(id: number): Promise<Auth> {
+		let userFetched: Auth;
+		return await from(this.userService.getUser(id)).toPromise()
+
+		// return observable.subscribe(
+		// 	(user) => user,
+		// 	(error: HttpErrorResponse) => console.error(`Service Error: ${error.message}`),
+		// );
 		return userFetched;
 	}
 	createUser(user: Auth): Observable<Auth> {
@@ -69,10 +77,17 @@ export class AuthService {
 		return this.http.post<AuthResponse>(this.authUrl + '/login', data)
 			.subscribe(
 				(data) => {
-					return data;
+					console.log("User is logged in");
+					this.router.navigateByUrl('/');
 				},
-				(error: HttpErrorResponse) => console.error(`Error: ${error.message}`),
-			)
+				(error: HttpErrorResponse) => {
+					console.error(`Error en login: ${error.message}`);
+					/* this.notificationService.sendMessage({
+						message: `Error creando evento: ${error.message}`,
+						type: NotificationType.danger
+					}) */
+				},
+			);
 	}
 	signUp(data: SignUpData) {
 		return this.http.post<AuthResponse>(this.authUrl + '/signup', data)

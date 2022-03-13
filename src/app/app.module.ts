@@ -15,6 +15,7 @@ import { LenguageFormComponent } from '@shared/lenguage-form/lenguage-form.compo
 import { CUSTOM_ERRORS } from "@shared/custom-errors";
 import { PublicModule } from '@public/public.module';
 import { SecureModule } from '@secure/secure.module';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -37,7 +38,8 @@ import { SecureModule } from '@secure/secure.module';
 		NgBootstrapFormValidationModule.forRoot(),
 		PublicModule,
 		ListProductsModule,
-		SecureModule
+		SecureModule,
+		ToastrModule.forRoot()
 	],
 	providers: [{
 		provide: CUSTOM_ERROR_MESSAGES,

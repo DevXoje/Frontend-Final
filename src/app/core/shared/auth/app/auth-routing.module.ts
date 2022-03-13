@@ -24,7 +24,7 @@ export const ROUTES: Routes = [
 		canActivate: [],
 		component: authContainers.LoginComponent,
 		data: {
-			title: 'Pages Login - SB Admin Angular',
+			title: 'Identificate - Green Shop',
 		} as SBRouteData,
 	},
 	{
@@ -32,7 +32,7 @@ export const ROUTES: Routes = [
 		canActivate: [],
 		component: authContainers.RegisterComponent,
 		data: {
-			title: 'Pages Register - SB Admin Angular',
+			title: 'Registrate - Green Shop',
 		} as SBRouteData,
 	},
 	{
@@ -40,7 +40,7 @@ export const ROUTES: Routes = [
 		canActivate: [],
 		component: authContainers.ForgotPasswordComponent,
 		data: {
-			title: 'Pages Forgot Password - SB Admin Angular',
+			title: 'Recuperar contraseña - Green Shop',
 		} as SBRouteData,
 	},
 ];

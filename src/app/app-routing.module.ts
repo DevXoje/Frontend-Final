@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard, AuthRoleGuard,  } from '@shared/auth/app/guards';
 
 /* export const routes: Routes = [
 	{ path: '**', redirectTo: 'secure' },
@@ -20,10 +21,16 @@ import { RouterModule, Routes } from '@angular/router';
  */
 
 const routes: Routes = [
-	{
+	/* {
 		path: '',
 		pathMatch: 'full',
 		redirectTo: '/dashboard',
+	}, */
+	{
+		path: '',
+		loadChildren: () =>
+			import('@public/public-routing.module').then(m => m.PublicRoutingModule),
+
 	},
 	{
 		path: 'charts',
@@ -36,11 +43,10 @@ const routes: Routes = [
 			import('@secure/dashboard/dashboard-routing.module').then(
 				m => m.DashboardRoutingModule
 			),
-	},
-	{
-		path: 'auth',
-		loadChildren: () =>
-			import('@shared/auth/app/auth-routing.module').then(m => m.AuthRoutingModule),
+		canActivate: [AuthRoleGuard],
+		data: {
+			expectedRole: 'admin'
+		}
 	},
 	{
 		path: 'error',

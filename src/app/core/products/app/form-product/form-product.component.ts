@@ -21,8 +21,9 @@ import { Input } from '@shared/app-common/app/components/form/input';
 export class FormProductComponent {
 	inputs: Input[] = [
 		{
+			id: 'name',
 			name: 'Name',
-			tipo: 'text',
+			type: 'text',
 			validators: [
 				Validators.required,
 				Validators.minLength(3),
@@ -30,15 +31,17 @@ export class FormProductComponent {
 			]
 		},
 		{
+			id: 'description',
 			name: 'Description',
-			tipo: 'textarea',
+			type: 'textarea',
 			validators: [
 
 			]
 		},
 		{
+			id: 'price',
 			name: 'Price',
-			tipo: 'number',
+			type: 'number',
 			validators: [
 				Validators.required,
 				Validators.pattern(/^[0-9]{10}$/)

@@ -1,1 +1,1 @@
-export type LoginData= { email: '', password: '' }
+export type LoginData = { email: '', password: '', remember: boolean };

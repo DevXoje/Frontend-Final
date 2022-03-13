@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Auth } from '@shared/auth/domain/auth.model';
 import { AuthService, UserService } from '@shared/auth/infrastructure/services';
 import { Observable } from 'rxjs';
 
@@ -6,6 +7,7 @@ import { Observable } from 'rxjs';
 	selector: 'app-top-nav-user',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
+
 	<li class="nav-item dropdown dropdown-user no-caret"
 	*ngIf="userService.user$ | async as user"
 	ngbDropdown
@@ -38,16 +40,15 @@ import { Observable } from 'rxjs';
 	</li>`,
 })
 export class TopNavUserComponent implements OnInit {
-	constructor(public authService: AuthService, public userService: UserService) {
-		this.userService.user = this.authService.getUser(4);
-		console.log(this.authService.getUser(4));
+	userLogged!: Observable<Auth>;
+	constructor(
+		public authService: AuthService,
+		public userService: UserService) {
+
+		//console.log(this.userService.user$);
 
 	}
-	ngOnInit() {
-		this.userService.user$.subscribe(
-			(user) => { console.log(user); },
-			(error) => { console.log(error); }
-		)
-
+	async ngOnInit() {
+		//this.userService.user = await this.authService.getUser(4);
 	}
 }

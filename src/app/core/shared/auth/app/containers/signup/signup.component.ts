@@ -22,8 +22,9 @@ export class SignUpComponent implements OnInit {
 
 	inputs: Input[] = [
 		{
+			id: 'name',
 			name: 'Name',
-			tipo: 'text',
+			type: 'text',
 			validators: [
 				Validators.required,
 				Validators.minLength(3),
@@ -31,16 +32,18 @@ export class SignUpComponent implements OnInit {
 			]
 		},
 		{
+			id: 'email',
 			name: 'Email',
-			tipo: 'email',
+			type: 'email',
 			validators: [
 				Validators.required,
 				Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
 			]
 		},
 		{
+			id: 'password',
 			name: 'Password',
-			tipo: 'password',
+			type: 'password',
 			validators: [
 				Validators.required,
 				Validators.minLength(8),

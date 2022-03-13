@@ -1,31 +1,45 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Input } from '@shared/app-common/app/components/form/input';
 
 @Component({
 	selector: 'app-forgot-password',
 	changeDetection: ChangeDetectionStrategy.OnPush,
-	template: `<app-layout-auth>
-		<div class="container">
-			<div class="row justify-content-center">
-				<div class="col-lg-5">
-					<div class="card shadow-lg border-0 rounded-lg mt-5">
-						<div class="card-header"><h3 class="text-center font-weight-light my-4">Password Recovery</h3></div>
-						<div class="card-body">
-							<div class="small mb-3 text-muted">Enter your email address and we will send you a link to reset your password.</div>
-							<form>
-								<div class="form-group"><label class="small mb-1" for="inputEmailAddress">Email</label><input class="form-control py-4" id="inputEmailAddress" type="email" aria-describedby="emailHelp" placeholder="Enter email address" /></div>
-								<div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0"><a class="small" routerLink="/auth/login">Return to login</a><a class="btn btn-primary" routerLink="/auth/login">Reset Password</a></div>
-							</form>
-						</div>
-						<div class="card-footer text-center">
-							<div class="small"><a routerLink="/auth/register">Need an account? Sign up!</a></div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</app-layout-auth>`
+	templateUrl: './forgot-password.component.html',
 })
 export class ForgotPasswordComponent implements OnInit {
-	constructor() { }
-	ngOnInit() { }
+	input!: Input;
+	form = new FormGroup({});
+	email_value: string = "";
+	constructor() {
+		this.input = {
+			id: 'email',
+			name: 'Email',
+			type: 'email',
+			validators: [
+				//Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/),
+				Validators.email
+			]
+		};
+	}
+	ngOnInit() {
+		this.form = new FormGroup(
+			{
+				'email': new FormControl('', this.input.validators)
+			}
+		);
+	}
+	onSubmit(event: Event) {
+		const val = this.form.value;
+		console.info(this.form.value);
+
+		if (val.email) {
+			this.email_value = this.form.value;
+			//this.authService.login(this.email);
+		} else {
+			console.error('error en datos introducidos');
+
+		}
+	}
+	get email() { return this.form.get('email'); }
 }

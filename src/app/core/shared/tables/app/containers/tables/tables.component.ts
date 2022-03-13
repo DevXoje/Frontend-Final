@@ -7,12 +7,13 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 	<app-layout-dashboard>
 		<app-dashboard-head title="Tables" [hideBreadcrumbs]="false"></app-dashboard-head>
 		<app-card>
-			<div class="card-body">The table below is adapted from ng-bootsrap. For more information, please visit the <a target="_blank" href="https://ng-bootstrap.github.io/#/components/table/overview">ng-bootstrap table documentation</a>.</div>
+			<div class="card-body">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea recusandae deleniti cupiditate cum quo, facere repellat illum praesentium, quos esse eaque veniam quasi voluptatum incidunt voluptate placeat explicabo molestiae. Quo?</div>
 		</app-card>
 		<app-card>
 			<div class="card-header">
 				<fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>DataTable Example</div>
-				<div class="card-body"><!-- <app-ng-bootstrap-table [pageSize]="6"></app-ng-bootstrap-table> -->
+				<div class="card-body">
+				<app-table-products [pageSize]="4"></app-table-products>
 			</div>
 		</app-card>
 	</app-layout-dashboard>`
