@@ -18,7 +18,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 			</div>
 		</div>
 	</div>
-</app-layout-error>`,
+</app-layout-error>`
 })
 export class Error404Component implements OnInit {
 	constructor() { }

@@ -1,0 +1,49 @@
+<h1>Store</h1>
+<div class="row">
+	<div>
+		<p>
+			<button type="button" class="btn btn-outline-primary" (click)="collapse.toggle()"
+				[attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+				All departaments
+			</button>
+		</p>
+		<div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+			<ul class="list-group">
+				<li class="list-group-item">An item</li>
+				<li class="list-group-item">A second item</li>
+				<li class="list-group-item">A third item</li>
+				<li class="list-group-item">A fourth item</li>
+				<li class="list-group-item">And a fifth one</li>
+			</ul>
+		</div>
+	</div>
+	<div class="col">
+		<div class="input-group mb-3">
+			<div class="input-group-prepend">
+				<select class="input-group-text" id="inputGroupSelect01">
+					<option selected>All Categories</option>
+					<option value="1">One</option>
+					<option value="2">Two</option>
+					<option value="3">Three</option>
+				</select>
+			</div>
+			<input id="typeahead-basic" type="text" class="form-control" [(ngModel)]="model" [ngbTypeahead]="search" />
+			<button type="submit">Buscar</button>
+		</div>
+	</div>
+	<div class="col">
+		<a href="tel:666666666" class="d-flex flex-row">
+			<fa-icon [icon]="icon"></fa-icon>
+			<div class="d-flex flex-column">
+				<span>666666666</span>
+				<span>support 24/7 time</span>
+			</div>
+		</a>
+	</div>
+</div>
+<div class="jumbo d-flex flex-column">
+	<h1>Fruta Fresca</h1>
+	<h2>Vegetales 100% Organicos</h2>
+	<h3>Envio gratuito*</h3>
+	<a class="btn btn-primary btn-sm w-25 p-3" href="#" role="button">Compra ahora </a>
+</div>

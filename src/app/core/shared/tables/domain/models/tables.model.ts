@@ -1,14 +1,5 @@
 import { Roles } from "@shared/auth/domain/auth.model";
-import { Product } from "src/app/core/products/domain/Products";
 
-export interface Country {
-	[key: string]: string | number;
-	id: number;
-	name: string;
-	flag: string;
-	area: number;
-	population: number;
-}
 
 export interface Customer {
 	id: number;

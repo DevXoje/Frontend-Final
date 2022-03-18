@@ -7,7 +7,7 @@ import { SecureRoutingModule } from './secure-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ListProductsModule } from '../products/app/list-products/list-products.module';
+import { ListProductsModule } from '../shared/product/app/components/list-products/list-products.module';
 
 
 

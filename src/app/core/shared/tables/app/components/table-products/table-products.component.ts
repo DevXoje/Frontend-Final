@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import { SBSortableHeaderDirective, SortEvent } from '../../directives';
 import { Observable } from 'rxjs';
-import { Product } from 'src/app/core/products/domain/Products';
-import { ProductService } from '@shared/tables/infrastructure/services/product.service';
+import { Product } from '@shared/product/domain/product.model';
+import { ProductService } from '@shared/product/infrastructure/services';
 
 @Component({
 	selector: 'app-table-products',

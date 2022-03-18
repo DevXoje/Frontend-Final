@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import { SBSortableHeaderDirective, SortEvent } from '../../directives';
 import { Observable } from 'rxjs';
-import { Product } from 'src/app/core/products/domain/Products';
 import { Customer } from '@shared/tables/domain/models';
 import { CustomerService } from '@shared/tables/infrastructure/services';
 

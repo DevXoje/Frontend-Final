@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Product } from 'src/app/core/products/domain/Products';
-import { ProductService } from 'src/app/core/products/infrastructure/product.service';
+import { ProductService } from '@shared/product/infrastructure/services';
 
 @Component({
 	selector: 'app-dashboard-tables',

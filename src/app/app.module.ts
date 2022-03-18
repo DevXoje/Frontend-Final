@@ -8,8 +8,8 @@ import {
 } from "ng-bootstrap-form-validation";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormProductComponent } from './core/products/app/form-product/form-product.component';
-import { ListProductsModule } from './core/products/app/list-products/list-products.module';
+import { FormProductComponent } from './core/shared/product/app/components/form-product/form-product.component';
+import { ListProductsModule } from './core/shared/product/app/components/list-products/list-products.module';
 import { FooterComponent } from '@shared/footer/footer.component';
 import { LenguageFormComponent } from '@shared/lenguage-form/lenguage-form.component';
 import { CUSTOM_ERRORS } from "@shared/custom-errors";

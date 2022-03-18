@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="d-flex flex-column col-4" *ngFor="let list of lists" style="border: 1px solid red;">
+		<header>
+			<h3>{{list.title}}</h3>
+			<div class="controls">
+				<button class="btn btn-primary" (click)="leftClick()"><</button>
+				<button class="btn btn-danger" (click)="rightClick()">></button>
+			</div>
+		</header>
+		<div class="card" *ngFor="let item of list.items">
+			<div class="card-header">
+			</div>
+			<div class="card-body">
+				<a [routerLink]="['/store/item', item.id]">{{item.name}}</a>
+
+				<div class="list-item-price">
+					{{item.price | currency: 'EUR'}}
+				</div>
+			</div>
+			<img class="" src='https://source.unsplash.com/W1yjvf5idqA' alt="Card image cap" height="100px">
+		</div>
+	</div>
+</div>

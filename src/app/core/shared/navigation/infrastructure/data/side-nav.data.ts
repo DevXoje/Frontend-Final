@@ -18,6 +18,24 @@ export const sideNavSections: SideNavSection[] = [
 		items: ['charts'],
 	},
 ];
+export const storeSideNavSections: SideNavSection[] = [
+	{
+		text: 'General',
+		items: ['dashboard'],
+	},
+	{
+		text: 'Clientes',
+		items: ['layouts'],
+	},
+	{
+		text: 'Productos',
+		items: ['tables'],
+	},
+	{
+		text: 'Facturacion',
+		items: ['charts'],
+	},
+];
 
 export const sideNavItems: SideNavItems = {
 	dashboard: {

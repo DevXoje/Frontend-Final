@@ -11,10 +11,10 @@ import { TablesModule } from '@shared/tables/app/tables.module';
 
 
 //Components
-//import * as dashboardComponents from './components';
+import * as storeComponents from './components';
 
 //Containers
-//import * as dashboardContainers from './containers';
+import * as storeContainers from './containers';
 
 //Guards
 //import * as dashboardGuards from './guards';
@@ -33,10 +33,9 @@ import { TablesModule } from '@shared/tables/app/tables.module';
 		NavigationModule,
 		TablesModule,
 	],
-	/* providers: [...dashboardServices.services, ...dashboardGuards.guards],
-	declarations: [...dashboardContainers.containers, ...dashboardComponents.components],
-	exports: [...dashboardContainers.containers, ...dashboardComponents.components], */
-	exports: [],
+	//providers: [...dashboardServices.services, ...dashboardGuards.guards],
+	declarations: [...storeContainers.containers, ...storeComponents.components],
+	exports: [...storeContainers.containers, ...storeComponents.components],
 })
 export class StoreModule {
 

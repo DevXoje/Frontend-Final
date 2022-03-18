@@ -1,0 +1,53 @@
+<!-- Control buttons -->
+<div id="controlsContainer">
+	<button class="btn" (click)="filterSelection(category)" *ngFor="let category of categories"
+		[ngClass]="{'active': activeCategory==category}"> {{category|titlecase}}</button>
+</div>
+
+<!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
+<div class="container">
+	<div class="galery_item {{item.category}}" *ngFor="let item of items|async" (click)="show_item(item)">
+		{{item.name}}
+	</div>
+</div>
+
+
+<!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
+<!-- <div class="container gallery" id="gallery">
+	<div class="galery_item gallery-item {{item.category}}" *ngFor="let item of items|async">
+		<div class="content">
+			<img src="https://source.unsplash.com/random/?tech,care" alt="">
+			{{item.name}}
+		</div>
+	</div>
+</div>
+ -->
+
+<!-- 
+<div class="gallery" id="gallery">
+	<div class="gallery-item">
+		<div class="content"><img src="https://source.unsplash.com/random/?tech,care" alt=""></div>
+	</div>
+	<div class="gallery-item">
+		<div class="content"><img src="https://source.unsplash.com/random/?tech,studied" alt=""></div>
+	</div>
+	<div class="gallery-item">
+		<div class="content"><img src="https://source.unsplash.com/random/?tech,substance" alt=""></div>
+	</div>
+	<div class="gallery-item">
+		<div class="content"><img src="https://source.unsplash.com/random/?tech,choose" alt=""></div>
+	</div>
+	<div class="gallery-item">
+		<div class="content"><img src="https://source.unsplash.com/random/?tech,past" alt=""></div>
+	</div>
+	<div class="gallery-item">
+		<div class="content"><img src="https://source.unsplash.com/random/?tech,lamp" alt=""></div>
+	</div>
+	<div class="gallery-item">
+		<div class="content"><img src="https://source.unsplash.com/random/?tech,yet" alt=""></div>
+	</div>
+	<div class="gallery-item">
+		<div class="content"><img src="https://source.unsplash.com/random/?tech,eight" alt=""></div>
+	</div>
+</div>
+ -->

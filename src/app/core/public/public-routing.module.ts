@@ -11,7 +11,9 @@ const routes: Routes = [
 	},
 	{
 		path: 'tienda',
-		/* loadChildren: () => */
+		loadChildren: () =>
+			import('@public/store/store-routing.module')
+				.then(m => m.StoreRoutingModule)
 
 	}
 ];
