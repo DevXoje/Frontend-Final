@@ -8,14 +8,9 @@ import { Subscription } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 	<span [ngClass]='{"sb-nav-fixed": !static}'>
-		<app-top-nav></app-top-nav>
+		<app-top-nav-store></app-top-nav-store>
 		<div id="layoutSidenav">
-			<div id="layoutSidenav_nav">
-				<app-side-nav
-					[sidenavStyle]="sidenavStyle"
-					[sideNavItems]="sideNavItems"
-					[sideNavSections]="sideNavSections"></app-side-nav>
-			</div>
+			
 			<div id="layoutSidenav_content">
 				<main>
 					<div class="container-fluid"><ng-content></ng-content></div>

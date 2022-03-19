@@ -13,7 +13,7 @@ import { ProductService } from '@shared/product/infrastructure/services';
 		</div>
 		<div class="col-md-3 d-flex flex-column text-center p-2" *ngFor="let item of mediator" style="background-color: grey; aspect-ratio:2/3;">
 			<img class="img-thumbnail" [src]="item.img" style="aspect-ratio:2/3">
-			<h5 style="background-color: white;">{{item.stock}}</h5>
+			<h5 style="background-color: white;">{{item.name}}</h5>
 		</div>
 		<div class="col-md-1">
 			<button class="btn btn-default" (click)="rightClick()">
@@ -24,91 +24,90 @@ import { ProductService } from '@shared/product/infrastructure/services';
 	`
 })
 export class StoreCarrouselComponent implements OnInit, AfterViewInit {
-	data: any;
-	items = [{
-		stock: "AAPL",
+	categories = [{
+		name: "AAPL",
 		img: "https://placeimg.com/350/150/any"
 	},
 	{
-		stock: "F",
+		name: "F",
 		img: "https://placeimg.com/350/150/any/sepia"
 	},
 	{
-		stock: "Q",
+		name: "Q",
 		img: "https://placeimg.com/350/150/any/grayscale"
 	},
 	{
-		stock: "W",
+		name: "W",
 		img: "https://placeimg.com/350/150/tech/grayscale"
 	},
 	{
-		stock: "E",
+		name: "E",
 		img: "https://placeimg.com/350/150/people"
 	},
 	{
-		stock: "T",
+		name: "T",
 		img: "https://placeimg.com/350/150/nature"
 	},
 	{
-		stock: "Y",
+		name: "Y",
 		img: "https://placeimg.com/350/150/arch"
 	}];
 	startIndex = 0
 	lastIndex = 2
 	mediator: any[] = [];
 	constructor(private productService: ProductService) {
-		this.productService.getProductsObservable().subscribe(data => {
-			this.data = data;
-		});
 
-		this.mediator = [this.items[0], this.items[1], this.items[2]]
+		//this.categories=this.productService.getCategories();
+		this.mediator = [this.categories[0], this.categories[1], this.categories[2]];
+
 	}
 
 	ngOnInit() {
-
+		
 	}
 	ngAfterViewInit(): void {
+		
 	}
 	leftClick() {
 		if (this.startIndex === 0) {
-			this.startIndex = this.items.length - 1
+			this.startIndex = this.categories.length - 1
 			this.lastIndex--
-			this.mediator.unshift(this.items[this.items.length - 1])
+			this.mediator.unshift(this.categories[this.categories.length - 1])
 			this.mediator.pop()
 		}
 		else if (this.lastIndex === 0) {
-			this.lastIndex = this.items.length - 1
+			this.lastIndex = this.categories.length - 1
 			this.startIndex--
-			this.mediator.unshift(this.items[this.startIndex])
+			this.mediator.unshift(this.categories[this.startIndex])
 			this.mediator.pop()
 		}
 		else {
 			this.startIndex--
 			this.lastIndex--
-			this.mediator.unshift(this.items[this.startIndex])
+			this.mediator.unshift(this.categories[this.startIndex])
 			this.mediator.pop()
 		}
 		console.log('start ', this.startIndex, 'last ', this.lastIndex)
 		return
 	}
 	rightClick() {
-		if (this.lastIndex === this.items.length - 1) {
+		if (this.lastIndex === this.categories.length - 1) {
 			this.lastIndex = 0
 			this.startIndex++
 			this.mediator.shift()
-			this.mediator.push(this.items[0])
+			this.mediator.push(this.categories[0])
 		}
-		else if (this.startIndex === this.items.length - 1) {
+		else if (this.startIndex === this.categories.length - 1) {
 			this.startIndex = 0
 			this.lastIndex++
 			this.mediator.shift()
-			this.mediator.push(this.items[this.lastIndex])
+			this.mediator.push(this.categories[this.lastIndex])
 		}
 		else {
 			this.startIndex++
 			this.lastIndex++
 			this.mediator.shift()
-			this.mediator.push(this.items[this.lastIndex])
+			this.mediator.push(this.categories[this.lastIndex])
 		}
 		console.log('start ', this.startIndex, 'last ', this.lastIndex)
 		return

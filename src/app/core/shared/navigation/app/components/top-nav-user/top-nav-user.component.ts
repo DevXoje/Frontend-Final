@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { Auth } from '@shared/auth/domain/auth.model';
 import { AuthService, UserService } from '@shared/auth/infrastructure/services';
 import { Observable } from 'rxjs';
@@ -7,7 +8,6 @@ import { Observable } from 'rxjs';
 	selector: 'app-top-nav-user',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
-
 	<li class="nav-item dropdown dropdown-user no-caret"
 	*ngIf="userService.user$ | async as user"
 	ngbDropdown
@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
 		role="button"
 		aria-haspopup="true"
 		aria-expanded="false">
-			<fa-icon [icon]='["fas", "user"]'></fa-icon>
+			<fa-icon [icon]='userIcon'></fa-icon>
 		</a>
 		<div class="dropdown-menu dropdown-menu-right"
 		ngbDropdownMenu
@@ -40,7 +40,8 @@ import { Observable } from 'rxjs';
 	</li>`,
 })
 export class TopNavUserComponent implements OnInit {
-	userLogged!: Observable<Auth>;
+	isLogged!: boolean;
+	userIcon = faUser;
 	constructor(
 		public authService: AuthService,
 		public userService: UserService) {

@@ -12,7 +12,7 @@ const routes: Routes = [
 	{
 		path: 'tienda',
 		loadChildren: () =>
-			import('@public/store/store-routing.module')
+			import('@public/store/app/store-routing.module')
 				.then(m => m.StoreRoutingModule)
 
 	}

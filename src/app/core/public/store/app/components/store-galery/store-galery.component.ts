@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
-import { GaleryItem } from '@public/store/model';
+import { GaleryItem } from '@public/store/domain/model';
 import { Category } from '@shared/product/domain/product.model';
 import { ProductService } from '@shared/product/infrastructure/services';
 import { Observable } from 'rxjs';
