@@ -1,17 +1,14 @@
 <div class="row">
-	<div class="d-flex flex-column col-4" *ngFor="let list of lists" style="border: 1px solid red;">
+	<div class="d-flex flex-column col-4" *ngFor="let list of lists">
 		<header>
 			<h3>{{list.title}}</h3>
-			<div class="controls">
-				<button class="btn btn-primary" (click)="leftClick()"><</button>
-				<button class="btn btn-danger" (click)="rightClick()">></button>
-			</div>
+			<ngb-pagination [(page)]="list.page" [pageSize]="5" [collectionSize]="10" size="sm"></ngb-pagination>
 		</header>
-		<div class="card" *ngFor="let item of list.items">
+		<div class="card" *ngFor="let item of list.items | slice: (list.page-1) * pageSize : list.page * pageSize">
 			<div class="card-header">
 			</div>
 			<div class="card-body">
-				<a [routerLink]="['/store/item', item.id]">{{item.name}}</a>
+				<a [routerLink]="['/tienda/details', item.id]">{{item.name}}</a>
 
 				<div class="list-item-price">
 					{{item.price | currency: 'EUR'}}

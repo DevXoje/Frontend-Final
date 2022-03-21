@@ -1,53 +1,23 @@
-<!-- Control buttons -->
-<div id="controlsContainer">
-	<button class="btn" (click)="filterSelection(category)" *ngFor="let category of categories"
+<div id="controlsContainer mb-5">
+	<button class="btn" (click)="filterSelection('all')" [ngClass]="{'active': activeCategory=='all'}"> All</button>
+	<button class="btn" (click)="filterSelection(category)" *ngFor="let category of categories_names"
 		[ngClass]="{'active': activeCategory==category}"> {{category|titlecase}}</button>
 </div>
 
-<!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
 <div class="container">
-	<div class="galery_item {{item.category}}" *ngFor="let item of items|async" (click)="show_item(item)">
-		{{item.name}}
-	</div>
-</div>
-
-
-<!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
-<!-- <div class="container gallery" id="gallery">
-	<div class="galery_item gallery-item {{item.category}}" *ngFor="let item of items|async">
-		<div class="content">
-			<img src="https://source.unsplash.com/random/?tech,care" alt="">
-			{{item.name}}
+	<div class="content clearfix">
+		<div class="cube-container galery_item  {{product.category}}" *ngFor="let product of products"
+			(click)="show_product(product)">
+			<div class="photo-cube">
+				<img class="front" src="https://source.unsplash.com/W1yjvf5idqA" alt="">
+				<div class="back photo-desc">
+					<h3>{{product.name}}</h3>
+					<p>{{product.description}}</p>
+					<a href="#" class="button">Comprar</a>
+				</div>
+				<img class="left" src="https://source.unsplash.com/VgbUxvW3gS4" alt="">
+				<img class="right" src="https://source.unsplash.com/5WbYFH0kf_8" alt="">
+			</div>
 		</div>
 	</div>
 </div>
- -->
-
-<!-- 
-<div class="gallery" id="gallery">
-	<div class="gallery-item">
-		<div class="content"><img src="https://source.unsplash.com/random/?tech,care" alt=""></div>
-	</div>
-	<div class="gallery-item">
-		<div class="content"><img src="https://source.unsplash.com/random/?tech,studied" alt=""></div>
-	</div>
-	<div class="gallery-item">
-		<div class="content"><img src="https://source.unsplash.com/random/?tech,substance" alt=""></div>
-	</div>
-	<div class="gallery-item">
-		<div class="content"><img src="https://source.unsplash.com/random/?tech,choose" alt=""></div>
-	</div>
-	<div class="gallery-item">
-		<div class="content"><img src="https://source.unsplash.com/random/?tech,past" alt=""></div>
-	</div>
-	<div class="gallery-item">
-		<div class="content"><img src="https://source.unsplash.com/random/?tech,lamp" alt=""></div>
-	</div>
-	<div class="gallery-item">
-		<div class="content"><img src="https://source.unsplash.com/random/?tech,yet" alt=""></div>
-	</div>
-	<div class="gallery-item">
-		<div class="content"><img src="https://source.unsplash.com/random/?tech,eight" alt=""></div>
-	</div>
-</div>
- -->

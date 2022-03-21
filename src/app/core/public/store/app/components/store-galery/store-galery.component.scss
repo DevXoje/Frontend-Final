@@ -1,5 +1,5 @@
 .galery_item {
-  cursor: pointer;
+	cursor: pointer;
 	float: left;
 	background-color: #2196f3;
 	color: #ffffff;
@@ -31,149 +31,177 @@
 	}
 }
 
-// Experiment
-.hello {
-  opacity: 1 !important;
+// experimento
+
+/* ================================= 
+  Base Element Styles
+==================================== */
+
+* {
+	box-sizing: border-box;
 }
-.full {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+body {
+	font: 1em/1.5 "Open Sans", sans-serif;
+	color: #373737;
+	background: #eaeaea;
+	margin: 0;
 }
-.full .content {
-  background-color: rgba(0,0,0,0.75) !important;
-  height: 100%;
-  width: 100%;
-  display: grid;
+a {
+	text-decoration: none;
 }
-.full .content img {
-  left: 50%;
-  transform: translate3d(0, 0, 0);
-  animation: zoomin 1s ease;
-  max-width: 100%;
-  max-height: 100%;
-  margin: auto;
+h1,
+h2,
+h3 {
+	text-transform: uppercase;
 }
-.byebye {
-  opacity: 0;
+h2 {
+	font-size: 1.125em;
+	color: #4a89ca;
+	font-weight: 600;
+	margin: 0;
 }
-.byebye:hover {
-  transform: scale(0.2) !important;
+h3 {
+	font-size: 1.3em;
+	line-height: 1.25em;
+	margin-top: 0.85em;
+	margin-bottom: 0.5em;
 }
-.gallery {
-  display: grid;
-  grid-column-gap: 8px;
-  grid-row-gap: 8px;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-auto-rows: 8px;
+p {
+	font-size: 0.875em;
+	line-height: 1.4;
+	margin: 0 0 1.5em;
 }
-.gallery img {
-  max-width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 0 16px #333;
-  transition: all 1.5s ease;
+
+/* ================================= 
+  Base Layout Styles
+==================================== */
+
+/* ---- Layout Containers ---- */
+
+.content {
+	margin: auto;
 }
-.gallery img:hover {
-  box-shadow: 0 0 32px #333;
+
+.cube-container {
+	max-width: 200px;
+	text-align: center;
+	margin: 0 auto 4.5em;
 }
-.gallery .content {
-  padding: 4px;
+/* ---- Page Elements ---- */
+
+.button {
+	font-size: 0.8em;
+	color: #fff;
+	width: 90%;
+	line-height: 1.15;
+	font-weight: 700;
+	display: block;
+	text-decoration: none;
+	text-transform: uppercase;
+	padding: 0.95em 0;
+	border-radius: 0.5em;
+	background: rgba(74, 137, 202, 0.8);
+	margin: auto;
 }
-.gallery .gallery-item {
-  transition: grid-row-start 300ms linear;
-  transition: transform 300ms ease;
-  transition: all 0.5s ease;
-  cursor: pointer;
+/* ---- Photo Overlay ---- */
+
+.photo-desc {
+	font-size: 0.85em;
+	color: #fff;
+	padding: 1.1em 1em 0;
+	background: #345d88;
 }
-.gallery .gallery-item:hover {
-  transform: scale(1.025);
+/* ---- Float clearfix ---- */
+
+.clearfix::after {
+	content: " ";
+	display: table;
+	clear: both;
 }
-@media (max-width: 600px) {
-  .gallery {
-    grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
-  }
+
+/* ================================= 
+  Media Queries
+==================================== */
+
+@media (min-width: 769px) {
+	.cube-container {
+		float: left;
+		margin-left: 16.6%;
+	}
 }
-@media (max-width: 400px) {
-  .gallery {
-    grid-template-columns: repeat(auto-fill, minmax(50%, 1fr));
-  }
+@media (min-width: 1025px) {
+	.cube-container {
+		&:first-child {
+			margin-left: 0;
+		}
+		&:last-child {
+			float: right;
+		}
+	}
+	.content {
+		max-width: 900px;
+		margin: auto;
+	}
 }
-@-moz-keyframes zoomin {
-  0% {
-    max-width: 50%;
-    transform: rotate(-30deg);
-    filter: blur(4px);
-  }
-  30% {
-    filter: blur(4px);
-    transform: rotate(-80deg);
-  }
-  70% {
-    max-width: 50%;
-    transform: rotate(45deg);
-  }
-  100% {
-    max-width: 100%;
-    transform: rotate(0deg);
-  }
-}
-@-webkit-keyframes zoomin {
-  0% {
-    max-width: 50%;
-    transform: rotate(-30deg);
-    filter: blur(4px);
-  }
-  30% {
-    filter: blur(4px);
-    transform: rotate(-80deg);
-  }
-  70% {
-    max-width: 50%;
-    transform: rotate(45deg);
-  }
-  100% {
-    max-width: 100%;
-    transform: rotate(0deg);
-  }
-}
-@-o-keyframes zoomin {
-  0% {
-    max-width: 50%;
-    transform: rotate(-30deg);
-    filter: blur(4px);
-  }
-  30% {
-    filter: blur(4px);
-    transform: rotate(-80deg);
-  }
-  70% {
-    max-width: 50%;
-    transform: rotate(45deg);
-  }
-  100% {
-    max-width: 100%;
-    transform: rotate(0deg);
+
+/* ================================= 
+  Button Transitions
+==================================== */
+
+.button {
+	transition: background 0.3s;
+  &:hover{
+	background: rgba(74, 137, 202, 1);
+
   }
 }
-@keyframes zoomin {
-  0% {
-    max-width: 50%;
-    transform: rotate(-30deg);
-    filter: blur(4px);
+
+
+/* ================================= 
+  Photo 3D Transforms & Transitions
+==================================== */
+
+.cube-container {
+	box-shadow: 0 18px 40px 5px rgba(0, 0, 0, 0.4);
+	perspective: 800px;
+}
+
+.photo-cube {
+	transition: transform 2s ease-in-out;
+	width: 220px;
+	height: 200px;
+	transform-style: preserve-3d;
+  &:hover{
+	transform: rotateY(-270deg);
+
   }
-  30% {
-    filter: blur(4px);
-    transform: rotate(-80deg);
-  }
-  70% {
-    max-width: 50%;
-    transform: rotate(45deg);
-  }
-  100% {
-    max-width: 100%;
-    transform: rotate(0deg);
-  }
+}
+
+
+.front,
+.back,
+.left,
+.right {
+	width: 100%;
+	height: 100%;
+	display: block;
+	position: absolute;
+}
+
+.front {
+	transform: translate3d(0, 0, 110px);
+}
+
+.back {
+	transform: translateZ(-110px) rotateY(270deg);
+	transform-origin: center left;
+}
+
+.left {
+	transform: rotateY(-270deg) translate3d(110px, 0, 0);
+	transform-origin: top right;
+}
+
+.right {
+	transform: translateZ(-110px) rotateY(180deg);
 }

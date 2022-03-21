@@ -16,6 +16,8 @@ import { CUSTOM_ERRORS } from "@shared/custom-errors";
 import { PublicModule } from '@public/public.module';
 import { SecureModule } from '@secure/secure.module';
 import { ToastrModule } from 'ngx-toastr';
+import { NgxsModule } from '@ngxs/store';
+import { AuthState } from 'src/state/auth.state';
 
 
 
@@ -35,11 +37,12 @@ import { ToastrModule } from 'ngx-toastr';
 		HttpClientModule,
 		AppRoutingModule,
 		NgBootstrapFormValidationModule,
-		NgBootstrapFormValidationModule.forRoot(),
 		PublicModule,
 		ListProductsModule,
 		SecureModule,
-		ToastrModule.forRoot()
+		NgBootstrapFormValidationModule.forRoot(),
+		ToastrModule.forRoot(),
+		NgxsModule.forRoot([AuthState], {}),
 	],
 	providers: [{
 		provide: CUSTOM_ERROR_MESSAGES,

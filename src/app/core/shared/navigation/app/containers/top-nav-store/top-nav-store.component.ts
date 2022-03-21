@@ -12,23 +12,11 @@ import { NavigationService } from '../../../infrastructure/services';
 })
 export class TopNavStoreComponent implements OnInit {
 	@Input() isLogged: boolean = false;
-	email: string;
-	socialLinks: Icon[] = [];
-	iconMail = faMailBulk;
+	@Input()socialLinks: Icon[] = [];
 	userName: string = "Juan";
-	navItems: Link[] = [
-		{ text: "Home", path: "/" },
-		{ text: "Shop", path: "/shop" },
-		{ text: "Blog", path: "/blog" },
-		{ text: "Contact", path: "/contact" },
-	];//Falta implementar el dropdown
 	isCollapsed = false;
 	constructor(private navigationService: NavigationService) {
-		this.email = "mi email";
-		this.socialLinks = [
-			{ path: "https://www.facebook.com/", icon: faFacebookF },
-			{ path: "https://twitter.com/", icon: faTwitter },
-		];
+	
 	}
 	ngOnInit() { }
 	toggleSideNav() {

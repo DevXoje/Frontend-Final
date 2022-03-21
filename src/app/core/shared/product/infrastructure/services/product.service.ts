@@ -161,4 +161,17 @@ export class ProductService {
 		);
 		return productFetched;
 	}
+	async getProd(): Promise<Product[]> {
+		return await from(this.productService.getProducts()).toPromise();
+	}
+	addProduct(product: Product): Observable<Product> {
+		return from(this.productService.createProduct(product));
+	}
+	updateProduct(product: Product): Observable<Product> { 
+		return from(this.productService.updateProduct(product));
+	}
+	deleteProduct(id: number): Observable<Product> { 
+		return from(this.productService.deleteProduct(id));
+	}
+	
 }

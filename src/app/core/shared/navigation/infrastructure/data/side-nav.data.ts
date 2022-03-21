@@ -1,4 +1,6 @@
-import { SideNavItems, SideNavSection } from "@shared/navigation/domain/models";
+import { faFacebookF, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faMailBulk } from "@fortawesome/free-solid-svg-icons";
+import { Icon, Link, SideNavItems, SideNavSection } from "@shared/navigation/domain/models";
 
 export const sideNavSections: SideNavSection[] = [
 	{
@@ -68,3 +70,10 @@ export const sideNavItems: SideNavItems = {
 		link: '/tables',
 	},
 };
+
+export const socialLinks: Icon[] = [
+	{ path: "https://www.facebook.com/", icon: faFacebookF },
+	{ path: "https://twitter.com/", icon: faTwitter },
+	{ path: "https://www.google.com/", icon: faMailBulk },
+	{ path: "https://twitter.com/", icon: faTwitter },
+];

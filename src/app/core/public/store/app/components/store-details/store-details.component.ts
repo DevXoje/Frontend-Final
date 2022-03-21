@@ -1,5 +1,4 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Category } from '@shared/product/domain/product.model';
 import { ProductService } from '@shared/product/infrastructure/services';
 import { Observable } from 'rxjs';
 

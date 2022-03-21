@@ -1,42 +1,26 @@
-<div class="top-nav-store row p-5">
-    <div class="left col-5">
-        <span class="vr">
-            <fa-icon [icon]="iconMail"></fa-icon> <a href="mailto:{{email}}">{{email}}</a>
-        </span>
-        <span>
-            Free Shipping for all Order of $99
-        </span>
+<div class="row justify-content-between py-2 px-5 top-nav-store">
+    <div class="col-5">
+        <app-mail-info></app-mail-info>
     </div>
-    <div class="right col-6">
-        <ul class="list-group list-group-horizontal icona-bar">
-            <li class="list-group-item" *ngFor="let socialLink of socialLinks">
-                <fa-icon [icon]="socialLink.icon" class="icona"></fa-icon>
-            </li>
-        </ul>
-        <select name="" id="">
-            <option value="">English</option>
-            <option value="">French</option>
-        </select>
-        <ul class="navbar-nav ml-auto ml-md-0">
+    <div class="col-4">
+        <div class="row">
+            <app-social-links class="col"></app-social-links>
             <app-top-nav-user></app-top-nav-user>
-        </ul>
+        </div>
     </div>
 </div>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-        </ul>
+<nav class="d-flex justify-content-between">
+    <div class="col-3">
+        <img src="https://via.placeholder.com/200x90.png?text=JODERRR" alt="imgBrand">
     </div>
+    <app-list-links [vertical]="true" class="col"></app-list-links>
+    <app-cart-info class="col-2"></app-cart-info>
 </nav>
+
+<button class="btn btn-link btn-sm order-1 order-lg-0 d-lg-none" id="sidebarToggle" data-cy="topNavToggleSideNav"
+    (click)="toggleSideNav()">
+    <fa-icon [icon]='["fas", "bars"]'></fa-icon>
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
+</button>

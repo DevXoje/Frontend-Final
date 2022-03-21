@@ -1,199 +1,109 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ProductService } from '@shared/product/infrastructure/services';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Category } from '@shared/category/domain/category.model';
+import { Observable, of } from 'rxjs';
 
 @Component({
 	selector: 'app-store-carrousel',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 	<div class="row">
-		<div class="col-md-1">
-			<button class="btn btn-default" (click)="leftClick()">
-				<
+		<div class="col-md-1 d-flex align-items-center">
+			<button class="cta" (click)="leftClick()">
+				<svg width="13px" height="10px" viewBox="0 0 13 10">
+					<path d="M0.5 9.35772H20.9956L14.2001 2.29941L16.4134 0L27 11L16.4134 22L14.2001 19.7006L20.9956 12.6423H0.5V9.35772Z"></path>
+				</svg>
 			</button>
 		</div>
-		<div class="col-md-3 d-flex flex-column text-center p-2" *ngFor="let item of mediator" style="background-color: grey; aspect-ratio:2/3;">
-			<img class="img-thumbnail" [src]="item.img" style="aspect-ratio:2/3">
-			<h5 style="background-color: white;">{{item.name}}</h5>
+		<div class="col ">
+			<div class="row">
+				<div class="col d-flex flex-column text-center p-2" *ngFor="let item of mediator;" style="background-color: grey;">
+					<img class="img-thumbnail" [src]="item.image">
+					<h5 style="background-color: white;">{{item.name}}</h5>
+				</div>
+			</div>
 		</div>
-		<div class="col-md-1">
-			<button class="btn btn-default" (click)="rightClick()">
-				>
+		<div class="col-md-1 d-flex align-items-center">
+			<button class="cta" (click)="rightClick()">
+				<svg width="13px" height="10px" viewBox="0 0 13 10">
+					<path d="M1,5 L11,5"></path>
+					<polyline points="8 1 12 5 8 9"></polyline>
+				</svg>
 			</button>
 		</div>
 	</div>
-	`
+	`,
+	styleUrls: ['./store-carrousel.component.scss']
 })
-export class StoreCarrouselComponent implements OnInit, AfterViewInit {
-	categories = [{
-		name: "AAPL",
-		img: "https://placeimg.com/350/150/any"
-	},
-	{
-		name: "F",
-		img: "https://placeimg.com/350/150/any/sepia"
-	},
-	{
-		name: "Q",
-		img: "https://placeimg.com/350/150/any/grayscale"
-	},
-	{
-		name: "W",
-		img: "https://placeimg.com/350/150/tech/grayscale"
-	},
-	{
-		name: "E",
-		img: "https://placeimg.com/350/150/people"
-	},
-	{
-		name: "T",
-		img: "https://placeimg.com/350/150/nature"
-	},
-	{
-		name: "Y",
-		img: "https://placeimg.com/350/150/arch"
-	}];
-	startIndex = 0
-	lastIndex = 2
-	mediator: any[] = [];
-	constructor(private productService: ProductService) {
+export class StoreCarrouselComponent implements OnInit, AfterViewInit, OnChanges {
 
-		//this.categories=this.productService.getCategories();
-		this.mediator = [this.categories[0], this.categories[1], this.categories[2]];
-
+	@Input() categories!: Category[] | null;
+	total!: number;
+	iterator: number;
+	startIndex: number;
+	lastIndex: number;
+	size: number;
+	mediator!: Category[];
+	constructor() {
+		this.categories = [] as Category[];
+		this.size = 3;
+		this.iterator = 0;
+		this.startIndex = 0
+		this.lastIndex = 2
 	}
-
 	ngOnInit() {
-		
 	}
 	ngAfterViewInit(): void {
-		
+	}
+	ngOnChanges(changes: SimpleChanges): void {
+		if (this.categories && this.categories.length > 0) {
+			this.mediator = this.categories.slice(0, this.size);
+			this.total = this.categories.length;
+		}
 	}
 	leftClick() {
+		const cat = this.categories as Category[];
 		if (this.startIndex === 0) {
-			this.startIndex = this.categories.length - 1
-			this.lastIndex--
-			this.mediator.unshift(this.categories[this.categories.length - 1])
-			this.mediator.pop()
+			this.startIndex = this.total - 1
+			this.lastIndex--;
+			this.mediator.unshift(cat[this.total - 1]);
+			this.mediator.pop();
 		}
 		else if (this.lastIndex === 0) {
-			this.lastIndex = this.categories.length - 1
+			this.lastIndex = this.total - 1
 			this.startIndex--
-			this.mediator.unshift(this.categories[this.startIndex])
+			this.mediator.unshift(cat[this.startIndex])
 			this.mediator.pop()
 		}
 		else {
 			this.startIndex--
 			this.lastIndex--
-			this.mediator.unshift(this.categories[this.startIndex])
+			this.mediator.unshift(cat[this.startIndex])
 			this.mediator.pop()
 		}
 		console.log('start ', this.startIndex, 'last ', this.lastIndex)
 		return
 	}
 	rightClick() {
-		if (this.lastIndex === this.categories.length - 1) {
+		const cat = this.categories as Category[];
+		if (this.lastIndex === this.total - 1) {
 			this.lastIndex = 0
 			this.startIndex++
 			this.mediator.shift()
-			this.mediator.push(this.categories[0])
+			this.mediator.push(cat[0])
 		}
-		else if (this.startIndex === this.categories.length - 1) {
+		else if (this.startIndex === this.total - 1) {
 			this.startIndex = 0
 			this.lastIndex++
 			this.mediator.shift()
-			this.mediator.push(this.categories[this.lastIndex])
+			this.mediator.push(cat[this.lastIndex])
 		}
 		else {
 			this.startIndex++
 			this.lastIndex++
 			this.mediator.shift()
-			this.mediator.push(this.categories[this.lastIndex])
+			this.mediator.push(cat[this.lastIndex])
 		}
 		console.log('start ', this.startIndex, 'last ', this.lastIndex)
 		return
 	}
 }
-	/*
-function($scope) {
-$scope.items = [
-{
-stock: "AAPL",
-img: "https://placeimg.com/350/150/any"
-},
-{
-stock: "F",
-img: "https://placeimg.com/350/150/any/sepia"
-},
-{
-stock: "Q",
-img: "https://placeimg.com/350/150/any/grayscale"
-},
-{
-stock: "W",
-img: "https://placeimg.com/350/150/tech/grayscale"
-},
-{
-stock: "E",
-img: "https://placeimg.com/350/150/people"
-},
-{
-stock: "T",
-img: "https://placeimg.com/350/150/nature"
-},
-{
-stock: "Y",
-img: "https://placeimg.com/350/150/arch"
-}
-]
-
-var startIndex = 0
-var lastIndex = 2
-$scope.mediator = [$scope.items[0], $scope.items[1], $scope.items[2]]
-
-$scope.leftClick = function () {
-if (startIndex === 0) {
-startIndex = $scope.items.length-1
-lastIndex--
-$scope.mediator.unshift($scope.items[$scope.items.length-1])
-$scope.mediator.pop()
-}
-else if (lastIndex === 0) {
-lastIndex = $scope.items.length-1
-startIndex--
-$scope.mediator.unshift($scope.items[startIndex])
-$scope.mediator.pop()
-}
-else {
-startIndex--
-lastIndex--
-$scope.mediator.unshift($scope.items[startIndex])
-$scope.mediator.pop()
-}
-console.log('start ', startIndex, 'last ', lastIndex)
-return
-}
-
-$scope.rightClick = function () {
-if (lastIndex === $scope.items.length-1) {
-lastIndex = 0
-startIndex++
-$scope.mediator.shift()
-$scope.mediator.push($scope.items[0])
-}
-else if (startIndex === $scope.items.length-1) {
-startIndex = 0
-lastIndex++
-$scope.mediator.shift()
-$scope.mediator.push($scope.items[lastIndex])
-}
-else {
-startIndex++
-lastIndex++
-$scope.mediator.shift()
-$scope.mediator.push($scope.items[lastIndex])
-}
-console.log('start ', startIndex, 'last ', lastIndex)
-return
-}
-})
-*/

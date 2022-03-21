@@ -20,7 +20,7 @@ import { Observable } from 'rxjs';
 		role="button"
 		aria-haspopup="true"
 		aria-expanded="false">
-			<fa-icon [icon]='userIcon'></fa-icon>
+			<fa-icon [icon]='userIcon'></fa-icon>Login
 		</a>
 		<div class="dropdown-menu dropdown-menu-right"
 		ngbDropdownMenu

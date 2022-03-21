@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { faPhone, faPhoneSquare } from '@fortawesome/free-solid-svg-icons';
 import { Observable, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
@@ -12,14 +12,24 @@ const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'C
 	templateUrl: './store-head.component.html',
 	styleUrls: ['./store-head.component.scss']
 })
-export class StoreHeadComponent implements OnInit {
+export class StoreHeadComponent implements OnInit, OnChanges {
 	@Input() title!: string;
 	@Input() hideBreadcrumbs = false;
+	@Input() categories_names!: string[] | null;
 	icon = faPhone;
 	public model: any;
 	isCollapsed = true;
 	constructor() { }
+	ngOnChanges(changes: SimpleChanges): void {
+		console.log('StoreHeadComponent ngOnChanges', changes);
+		if (changes.categories) {
+			this.categories_names = changes.categories.currentValue as string[];
+		}
+
+	}
 	ngOnInit() { }
+
+	//Searcher
 	search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>
 		text$.pipe(
 			debounceTime(200),

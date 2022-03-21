@@ -37,9 +37,7 @@ export class TableCustomersComponent implements OnInit {
 	constructor(
 		private changeDetectorRef: ChangeDetectorRef,
 		public customerService: CustomerService
-	) {
-
-	}
+	) {	}
 
 	ngOnInit() {
 		this.customers$ = this.customerService.getUsersObservable();

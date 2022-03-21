@@ -12,8 +12,8 @@ export class HttpProductAdapter implements ProductServiceInterface {
 	async getProducts(): Promise<Product[]> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.get<Product>(this.url).subscribe(
-				(users) => {
-					resolve(users)
+				(products) => {
+					resolve(products)
 				},
 				(error) => {
 					console.error('getProduct Error: ', error.message);
@@ -27,8 +27,8 @@ export class HttpProductAdapter implements ProductServiceInterface {
 	async getProduct(id: number): Promise<Product> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.get<Product>(this.url + id).subscribe(
-				(user) => {
-					resolve(user)
+				(product) => {
+					resolve(product)
 				},
 				(error) => {
 					console.error('getProduct Error: ', error.message);
@@ -39,10 +39,10 @@ export class HttpProductAdapter implements ProductServiceInterface {
 		console.log('PAYLOAD', payload);
 		return payload as Product;
 	}
-	async createProduct(user: Product): Promise<Product> {
+	async createProduct(product: Product): Promise<Product> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.post<Product>(this.url, user).subscribe(
-				(user) => resolve(user),
+			this.http.post<Product>(this.url, product).subscribe(
+				(product) => resolve(product),
 				(error) => {
 					console.log('Error: ', error);
 					reject(error)
@@ -51,10 +51,10 @@ export class HttpProductAdapter implements ProductServiceInterface {
 		console.log('PAYLOAD', payload);
 		return payload as Product;
 	}
-	async updateProduct(user: Product): Promise<Product> {
+	async updateProduct(product: Product): Promise<Product> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.put<Product>(this.url + '/' + user.id, user).subscribe(
-				(user) => resolve(user),
+			this.http.put<Product>(this.url + '/' + product.id, product).subscribe(
+				(product) => resolve(product),
 				(error) => {
 					console.log('Error: ', error);
 					reject(error)
@@ -66,7 +66,7 @@ export class HttpProductAdapter implements ProductServiceInterface {
 	async deleteProduct(id: number): Promise<Product> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.delete<Product>(this.url + '/' + id).subscribe(
-				(user) => resolve(user),
+				(product) => resolve(product),
 				(error) => {
 					console.log('Error: ', error);
 					reject(error)

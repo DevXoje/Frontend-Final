@@ -1,4 +1,4 @@
-import { Category } from "@shared/product/domain/product.model";
+import { Category } from "@shared/category/domain/category.model";
 
 export interface Store { }
 export type GaleryItem = {

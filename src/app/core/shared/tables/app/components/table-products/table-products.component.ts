@@ -3,8 +3,10 @@ import {
 	ChangeDetectorRef,
 	Component,
 	Input,
+	OnChanges,
 	OnInit,
 	QueryList,
+	SimpleChanges,
 	ViewChildren,
 } from '@angular/core';
 import { SBSortableHeaderDirective, SortEvent } from '../../directives';
@@ -18,8 +20,9 @@ import { ProductService } from '@shared/product/infrastructure/services';
 	templateUrl: './table-products.component.html',
 	styles: ['thead > tr > th {cursor: pointer;}']
 })
-export class TableProductsComponent implements OnInit {
+export class TableProductsComponent implements OnInit, OnChanges {
 	@Input() pageSize = 4;
+	sizes = [2, 4, 6];
 	titles = [
 		"id",
 		"name",
@@ -30,6 +33,7 @@ export class TableProductsComponent implements OnInit {
 		"image"
 	];
 	products$!: Observable<Product[]>;
+	total: number = 0;
 
 	total$!: Observable<number>;
 	sortedColumn!: string;
@@ -40,7 +44,9 @@ export class TableProductsComponent implements OnInit {
 	constructor(
 		public productService: ProductService,
 		private changeDetectorRef: ChangeDetectorRef,
-	) {
+	) { }
+	ngOnChanges(changes: SimpleChanges): void {
+		console.log(changes)
 
 	}
 
@@ -49,7 +55,9 @@ export class TableProductsComponent implements OnInit {
 
 		this.products$ = this.productService.getProductsObservable();
 
-		this.total$ = this.productService.total$;
+	
+
+		this.total$ = this.productService.total$;// TODO: asignar el tamaño de forma estatica para poder asignarlo en el paginador
 	}
 
 	onSort({ column, direction }: SortEvent) {

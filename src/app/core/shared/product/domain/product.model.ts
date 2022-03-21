@@ -1,7 +1,8 @@
+
 export interface Product {
 	id: number;
 	name: string;
-	category: Category;
+	category?: string;
 	description: string;
 	price: number;
 	image: string;
@@ -9,5 +10,4 @@ export interface Product {
 	created_at?: string | Date;
 	updated_at?: string | Date;
 }
-export type Category = 'all' | 'cars' | 'animals' | 'fruits' | 'colors';
 
