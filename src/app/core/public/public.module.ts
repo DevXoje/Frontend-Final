@@ -6,14 +6,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PublicRoutingModule } from '@public/public-routing.module';
-import { SideNavItemComponent } from '@shared/side-nav-item/side-nav-item.component';
 
 
 
 @NgModule({
 	declarations: [
 		PublicComponent,
-		SideNavItemComponent
 	],
 	imports: [
 		CommonModule,

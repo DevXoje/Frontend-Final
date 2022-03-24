@@ -1,12 +1,12 @@
 <div id="controlsContainer mb-5">
 	<button class="btn" (click)="filterSelection('all')" [ngClass]="{'active': activeCategory=='all'}"> All</button>
-	<button class="btn" (click)="filterSelection(category)" *ngFor="let category of categories_names"
+	<button class="btn" (click)="filterSelection(category)" *ngFor="let category of categories_names$|async"
 		[ngClass]="{'active': activeCategory==category}"> {{category|titlecase}}</button>
 </div>
 
 <div class="container">
 	<div class="content clearfix">
-		<div class="cube-container galery_item  {{product.category}}" *ngFor="let product of products"
+		<div class="cube-container galery_item  {{product.category}}" *ngFor="let product of products$ | async"
 			(click)="show_product(product)">
 			<div class="photo-cube">
 				<img class="front" src="https://source.unsplash.com/W1yjvf5idqA" alt="">

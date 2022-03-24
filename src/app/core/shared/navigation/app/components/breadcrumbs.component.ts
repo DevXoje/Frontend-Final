@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Breadcrumb } from '../../../domain/models';
-import { NavigationService } from '../../../infrastructure/services';
+import { Breadcrumb } from '../../domain/models';
+import { NavigationService } from '../../infrastructure/services';
 
 @Component({
 	selector: 'app-breadcrumbs',

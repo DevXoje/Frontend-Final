@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { Store } from '@ngxs/store';
+import { AuthState } from '@shared/auth/infrastructure/ngxs/auth.state';
 import { AuthService } from '@shared/auth/infrastructure/services';
 import { Observable, of } from 'rxjs';
 
@@ -7,13 +9,9 @@ import { Observable, of } from 'rxjs';
 	providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-	constructor(public auth: AuthService, public router: Router) { }
-	canActivate():Observable <boolean> {
-		if (!this.auth.isAuthenticated()) {
-			alert('You are not logged in');
-			this.router.navigate(['login']);
-			return of(false);
-		}
-		return of(true);
+	constructor(private store: Store) { }
+	canActivate(): boolean {
+		const token = this.store.selectSnapshot(AuthState.token);
+		return token !== undefined;
 	}
 }

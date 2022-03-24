@@ -22,12 +22,7 @@ export class CategoryService {
 	private _categories$ = new BehaviorSubject<Category[]>([]);
 	private _total$ = new BehaviorSubject<number>(0);
 
-
-
-	constructor(private http: HttpClient) {
-
-
-	}
+	constructor(private http: HttpClient) { }
 
 	get categories$() {
 		return this._categories$.asObservable();
@@ -37,9 +32,6 @@ export class CategoryService {
 	}
 	get loading$() {
 		return this._loading$.asObservable();
-	}
-	async getCat(): Promise<Category[]> {
-		return await from(this.categoryService.getCategories()).toPromise()
 	}
 
 	getCategoriesObservable(): Observable<Category[]> {
@@ -66,5 +58,11 @@ export class CategoryService {
 			(error: HttpErrorResponse) => console.error(`Service Error: ${error.message}`),
 		);
 		return categoryFetched;
+	}
+	updateCategory(category: Category): Observable<Category> {
+		return from(this.categoryService.updateCategory(category));
+	}
+	deleteCategory(id: number): Observable<any> {
+		return from(this.categoryService.deleteCategory(id));
 	}
 }

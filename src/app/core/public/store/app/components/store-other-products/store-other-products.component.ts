@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
 @Component({
-	selector: 'app-store-other-products',
+	selector: 'app-shop-other-products',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 	<div class="grid related-products">
@@ -19,19 +19,19 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 export class StoreOtherProductsComponent implements OnInit {
 	items: any[] = [
 		{
-		image: "https://source.unsplash.com/6Rs76hNbIWE",
-		name: "Succulent",
-		price: 19.99
+			image: "https://source.unsplash.com/6Rs76hNbIWE",
+			name: "Succulent",
+			price: 19.99
 		},
 		{
 			image: "https://source.unsplash.com/2y6s0qKdGZg",
-		name: "Succulent",
-		price: 19.99
+			name: "Succulent",
+			price: 19.99
 		},
 		{
 			image: "https://source.unsplash.com/miziNqvJx5M",
-		name: "Succulent",
-		price: 19.99
+			name: "Succulent",
+			price: 19.99
 		},
 	];
 	constructor() {

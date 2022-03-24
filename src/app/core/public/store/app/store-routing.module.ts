@@ -24,7 +24,7 @@ export const ROUTES: Routes = [
 			],
 		} as SBRouteData,
 		canActivate: [],
-		component: storeContainers.StoreComponent,
+		component: storeContainers.ShopComponent,
 	},
 	{
 		path: 'details/:id',

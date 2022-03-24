@@ -1,9 +1,13 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
 import { Category } from '@shared/category/domain/category.model';
+import { GetCategories } from '@shared/category/infrastructure/ngxs/category.actions';
+import { CategoryState } from '@shared/category/infrastructure/ngxs/category.state';
 import { Observable, of } from 'rxjs';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
-	selector: 'app-store-carrousel',
+	selector: 'app-shop-carrousel',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 	<div class="row">
@@ -16,7 +20,7 @@ import { Observable, of } from 'rxjs';
 		</div>
 		<div class="col ">
 			<div class="row">
-				<div class="col d-flex flex-column text-center p-2" *ngFor="let item of mediator;" style="background-color: grey;">
+				<div class="col d-flex flex-column text-center p-2" *ngFor="let item of mediator|async;" style="background-color: grey;">
 					<img class="img-thumbnail" [src]="item.image">
 					<h5 style="background-color: white;">{{item.name}}</h5>
 				</div>
@@ -35,6 +39,7 @@ import { Observable, of } from 'rxjs';
 	styleUrls: ['./store-carrousel.component.scss']
 })
 export class StoreCarrouselComponent implements OnInit, AfterViewInit, OnChanges {
+	@Select(CategoryState.getCategoriesList) categories$!: Observable<Category[]>;
 
 	@Input() categories!: Category[] | null;
 	total!: number;
@@ -42,67 +47,105 @@ export class StoreCarrouselComponent implements OnInit, AfterViewInit, OnChanges
 	startIndex: number;
 	lastIndex: number;
 	size: number;
-	mediator!: Category[];
+	mediator!: Observable<Category[]>;
+	store: Store;
 	constructor() {
+		this.store = AppComponent.store;
 		this.categories = [] as Category[];
 		this.size = 3;
 		this.iterator = 0;
-		this.startIndex = 0
-		this.lastIndex = 2
+		this.startIndex = 0;
+		this.lastIndex = 2;
+
 	}
 	ngOnInit() {
+		this.store.dispatch(GetCategories);
+		this.store.select(CategoryState.getCategoriesList);
+		//this.store.select(CategoryState.getCategoriesList);
+		this.categories$.subscribe(categories => {
+			this.categories = categories;
+			this.mediator = of(categories.slice(0, this.size));
+			this.total = categories.length;
+
+		});
+
+		/* this.categories$.toPromise().then((categories) => {
+			this.categories = categories;
+			this.mediator = of(categories.slice(0, this.size));
+			this.total = categories.length;
+
+		});  */
 	}
 	ngAfterViewInit(): void {
 	}
 	ngOnChanges(changes: SimpleChanges): void {
-		if (this.categories && this.categories.length > 0) {
-			this.mediator = this.categories.slice(0, this.size);
-			this.total = this.categories.length;
-		}
+
+		console.log('carrousel', changes);
+
 	}
 	leftClick() {
 		const cat = this.categories as Category[];
+		let index = 0;
 		if (this.startIndex === 0) {
 			this.startIndex = this.total - 1
 			this.lastIndex--;
-			this.mediator.unshift(cat[this.total - 1]);
-			this.mediator.pop();
+			index = this.total - 1
+			//this.mediator.unshift(cat[this.total - 1]);
+			//this.mediator.pop();
 		}
 		else if (this.lastIndex === 0) {
-			this.lastIndex = this.total - 1
-			this.startIndex--
-			this.mediator.unshift(cat[this.startIndex])
-			this.mediator.pop()
+			this.lastIndex = this.total - 1;
+			this.startIndex--;
+			index = this.startIndex
+			//this.mediator.unshift(cat[this.startIndex])
+			//this.mediator.pop()
 		}
 		else {
-			this.startIndex--
-			this.lastIndex--
-			this.mediator.unshift(cat[this.startIndex])
-			this.mediator.pop()
+			this.startIndex--;
+			this.lastIndex--;
+			index = this.startIndex
+			//this.mediator.unshift(cat[this.startIndex])
+			//this.mediator.pop()
 		}
+		this.mediator.subscribe(categories => {
+			categories.unshift(cat[index]);
+			categories.pop();
+			this.mediator = of(categories);
+		});
 		console.log('start ', this.startIndex, 'last ', this.lastIndex)
 		return
 	}
 	rightClick() {
 		const cat = this.categories as Category[];
+		let index = 0;
 		if (this.lastIndex === this.total - 1) {
-			this.lastIndex = 0
-			this.startIndex++
-			this.mediator.shift()
-			this.mediator.push(cat[0])
+			this.lastIndex = 0;
+			this.startIndex++;
+			index = 0;
+			//this.mediator.shift()
+			//this.mediator.push(cat[0])
 		}
 		else if (this.startIndex === this.total - 1) {
-			this.startIndex = 0
-			this.lastIndex++
-			this.mediator.shift()
-			this.mediator.push(cat[this.lastIndex])
+			this.startIndex = 0;
+			this.lastIndex++;
+			index = this.lastIndex;
+
+			//this.mediator.shift()
+			//this.mediator.push(cat[this.lastIndex])
 		}
 		else {
-			this.startIndex++
-			this.lastIndex++
-			this.mediator.shift()
-			this.mediator.push(cat[this.lastIndex])
+			this.startIndex++;
+			this.lastIndex++;
+			index = this.lastIndex;
+			//this.mediator.shift()
+			//this.mediator.push(cat[this.lastIndex])
 		}
+		this.mediator.subscribe(categories => {
+			categories.shift();
+			categories.push(cat[index]);
+			this.mediator = of(categories);
+		});
+
 		console.log('start ', this.startIndex, 'last ', this.lastIndex)
 		return
 	}

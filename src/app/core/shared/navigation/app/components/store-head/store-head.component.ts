@@ -1,33 +1,44 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { faPhone, faPhoneSquare } from '@fortawesome/free-solid-svg-icons';
-import { Observable, OperatorFunction } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { ShopComponent } from '@public/store/app/containers';
+import { Category } from '@shared/category/domain/category.model';
+import { CategoryState } from '@shared/category/infrastructure/ngxs/category.state';
+import { Observable, of, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { AppComponent } from 'src/app/app.component';
 
 const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District Of Columbia', 'Federated States Of Micronesia', 'Florida', 'Georgia', 'Guam', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Marshall Islands', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Northern Mariana Islands', 'Ohio', 'Oklahoma', 'Oregon', 'Palau', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Islands', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
 
 @Component({
-	selector: 'app-store-head',
+	selector: 'app-shop-head',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './store-head.component.html',
 	styleUrls: ['./store-head.component.scss']
 })
 export class StoreHeadComponent implements OnInit, OnChanges {
+	@Select(CategoryState.getCategoriesList) category$!: Observable<Category[]>;
+	categories_names$!: Observable<string[]>;
+
 	@Input() title!: string;
 	@Input() hideBreadcrumbs = false;
-	@Input() categories_names!: string[] | null;
+
 	icon = faPhone;
 	public model: any;
 	isCollapsed = true;
-	constructor() { }
-	ngOnChanges(changes: SimpleChanges): void {
-		console.log('StoreHeadComponent ngOnChanges', changes);
-		if (changes.categories) {
-			this.categories_names = changes.categories.currentValue as string[];
-		}
-
+	store: Store;
+	constructor() {
+		this.store = AppComponent.store;
 	}
-	ngOnInit() { }
+	ngOnInit() {
+		AppComponent.store.select(CategoryState.getCategoriesList).subscribe(categories => {
+			this.categories_names$ = of(categories.map(category => category.name));
+		});
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+	}
 
 	//Searcher
 	search: OperatorFunction<string, readonly string[]> = (text$: Observable<string>) =>

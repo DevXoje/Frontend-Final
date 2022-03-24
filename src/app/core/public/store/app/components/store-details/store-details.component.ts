@@ -3,7 +3,7 @@ import { ProductService } from '@shared/product/infrastructure/services';
 import { Observable } from 'rxjs';
 
 @Component({
-	selector: 'app-store-details',
+	selector: 'app-shop-details',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './store-details.component.html',
 	styleUrls: ['./store-details.component.scss']
@@ -44,7 +44,7 @@ export class StoreDetailsComponent implements OnInit, AfterViewInit, OnChanges {
 	changeImage(e: Event) {
 
 		const image = e.target as HTMLImageElement;
-	
+
 
 		this.activeImage.src = image.src;
 	}

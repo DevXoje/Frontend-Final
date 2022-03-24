@@ -7,7 +7,7 @@ import { HttpClientAdapter } from '../HttpClientAdapter';
 import { AuthResponse } from '../AuthResponse';
 import { SignUpData } from '@shared/app-common/app/components/form/sign-up-data';
 import { LoginData } from '@shared/app-common/app/components/form/login-data';
-import { Auth, AuthServiceInterface } from '@shared/auth/domain/auth.model';
+import { Auth, AuthServiceInterface, AuthStateModel } from '@shared/auth/domain/auth.model';
 import { NotificationService } from '@shared/app-common/infrastructure/services/notification.service';
 import { NotificationType } from '@shared/app-common/domain/notification.message';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -73,21 +73,17 @@ export class AuthService {
 	deleteUser(id: number): Observable<Auth> {
 		return from(this.userService.deleteUser(id));
 	}
-	login(data: LoginData) {
-		return this.http.post<AuthResponse>(this.authUrl + '/login', data)
-			.subscribe(
-				(data) => {
-					console.log("User is logged in");
-					this.router.navigateByUrl('/');
-				},
-				(error: HttpErrorResponse) => {
-					console.error(`Error en login: ${error.message}`);
-					/* this.notificationService.sendMessage({
-						message: `Error creando evento: ${error.message}`,
-						type: NotificationType.danger
-					}) */
-				},
-			);
+	login(data: LoginData): Observable<AuthStateModel> {
+		//return this.http.post<LoginData>(this.authUrl + '/login', data);
+		return of({
+			name: 'Some Name',
+			email: 'some@email.com'
+		});
+	}
+	logout(token: string) {
+		//const headers = new HttpHeaders({ 'Authorization': 'Bearer ' + token });
+		//return this.http.post(this.authUrl + '/logout', {}, { headers: headers });
+		return of(null);
 	}
 	signUp(data: SignUpData) {
 		return this.http.post<AuthResponse>(this.authUrl + '/signup', data)

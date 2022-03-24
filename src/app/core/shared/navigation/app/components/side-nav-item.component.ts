@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { SBRouteData, SideNavItem } from '../../../domain/models';
+import { SBRouteData, SideNavItem } from '../../domain/models';
 
 @Component({
 	selector: 'app-side-nav-item',

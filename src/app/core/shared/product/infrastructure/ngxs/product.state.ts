@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { State, Action, StateContext, Selector } from '@ngxs/store';
 import { Product } from '@shared/product/domain/product.model';
 import { ProductService } from '@shared/product/infrastructure/services';
+import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AddProduct, DeleteProduct, SetSelectedProduct, UpdateProduct } from './product.actions';
+import { AddProduct, DeleteProduct, GetProducts, SetSelectedProduct, UpdateProduct } from './product.actions';
 
 export class ProductStateModel {
   public products: Product[] = [];
@@ -21,7 +22,6 @@ const defaults = {
 })
 @Injectable()
 export class ProductState {
-  constructor(private readonly productService: ProductService) { }
   @Selector()
   public static getProductsList({ products }: ProductStateModel) {
     return products;
@@ -32,33 +32,55 @@ export class ProductState {
     return selectedProduct;
   }
 
+  constructor(private readonly productService: ProductService) { }
+
+  @Action(GetProducts)
+  getProducts({
+    getState,
+    setState,
+  }: StateContext<ProductStateModel>): Observable<Product[]> {
+    return this.productService.getProductsObservable().pipe(
+      tap((products: Product[]) => {
+        const state = getState();
+        setState({ ...state, products });
+        console.log(state);
+
+      })
+    );
+  }
+
   @Action(AddProduct)
   addProduct(
     { getState, patchState }: StateContext<ProductStateModel>,
     { payload }: AddProduct
   ) {
-    return this.productService.addProduct(payload).pipe(
-      tap((product) => {
-        const state = getState();
-        patchState({
-          products: [...state.products, product],
-        });
-      })
-    );
+    const state = getState();
+    return patchState({
+      products: [...state.products],
+    });
   }
 
   @Action(UpdateProduct)
   updateProduct(
     { getState, setState }: StateContext<ProductStateModel>,
     { payload }: UpdateProduct
-  ) {
-    return this.productService.updateProduct(payload).pipe(
-      tap((product: Product) => {
-        const state = getState();
-        const newState = state.products.filter((productFiltered) => productFiltered.id !== product.id);
-        setState({ ...state, products: [...newState, product] });
-      })
-    );
+  ): Observable<Product> {
+
+    return this.productService
+      .updateProduct(payload)
+      .pipe(
+        tap(product => {
+          const state = getState();
+          const newState = state.products.map(
+            (product) => product.id === product.id ? product : product);
+          setState({
+            ...state,
+            products: [...newState],
+          })
+        }
+        )
+      );
+
   }
 
   @Action(DeleteProduct)

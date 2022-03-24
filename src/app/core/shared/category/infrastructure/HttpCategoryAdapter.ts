@@ -12,8 +12,8 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 	async getCategories(): Promise<Category[]> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.get<Category>(this.url).subscribe(
-				(users) => {
-					resolve(users)
+				(categories) => {
+					resolve(categories)
 				},
 				(error) => {
 					console.error('getCategory Error: ', error.message);
@@ -28,8 +28,8 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 	async getCategory(id: number): Promise<Category> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.get<Category>(this.url + id).subscribe(
-				(user) => {
-					resolve(user)
+				(category) => {
+					resolve(category)
 				},
 				(error) => {
 					console.error('getCategory Error: ', error.message);
@@ -40,10 +40,10 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 		console.log('PAYLOAD', payload);
 		return payload as Category;
 	}
-	async createCategory(user: Category): Promise<Category> {
+	async createCategory(category: Category): Promise<Category> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.post<Category>(this.url, user).subscribe(
-				(user) => resolve(user),
+			this.http.post<Category>(this.url, category).subscribe(
+				(category) => resolve(category),
 				(error) => {
 					console.log('Error: ', error);
 					reject(error)
@@ -52,10 +52,10 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 		console.log('PAYLOAD', payload);
 		return payload as Category;
 	}
-	async updateCategory(user: Category): Promise<Category> {
+	async updateCategory(category: Category): Promise<Category> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.put<Category>(this.url + '/' + user.id, user).subscribe(
-				(user) => resolve(user),
+			this.http.put<Category>(this.url + '/' + category.id, category).subscribe(
+				(category) => resolve(category),
 				(error) => {
 					console.log('Error: ', error);
 					reject(error)
@@ -67,7 +67,7 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 	async deleteCategory(id: number): Promise<Category> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.delete<Category>(this.url + '/' + id).subscribe(
-				(user) => resolve(user),
+				(category) => resolve(category),
 				(error) => {
 					console.log('Error: ', error);
 					reject(error)

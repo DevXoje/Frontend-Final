@@ -8,8 +8,8 @@ import {
 	OnInit,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { sideNavItems, sideNavSections } from '../../../infrastructure/data';
-import { NavigationService } from '../../../infrastructure/services';
+import { sideNavItems, sideNavSections } from '../../infrastructure/data';
+import { NavigationService } from '../../infrastructure/services';
 
 @Component({
 	selector: 'app-layout-dashboard',

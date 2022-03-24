@@ -6,8 +6,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 	template: `
 	<app-layout-store>
 		
-		<app-store-details></app-store-details>
-		<app-store-other-products></app-store-other-products>
+		<app-shop-details></app-shop-details>
+		<app-shop-other-products></app-shop-other-products>
 		
 	</app-layout-store>`
 })

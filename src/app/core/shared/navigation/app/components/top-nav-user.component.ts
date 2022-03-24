@@ -1,0 +1,61 @@
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { Select, Store } from '@ngxs/store';
+import { Auth } from '@shared/auth/domain/auth.model';
+import { AuthState } from '@shared/auth/infrastructure/ngxs/auth.state';
+import { AuthService, UserService } from '@shared/auth/infrastructure/services';
+import { Observable } from 'rxjs';
+import { AppComponent } from 'src/app/app.component';
+
+@Component({
+	selector: 'app-top-nav-user',
+	changeDetection: ChangeDetectionStrategy.OnPush,
+	template: `
+	<li class="nav-item dropdown dropdown-user no-caret"
+	*ngIf="user$ | async as user"
+	ngbDropdown
+	placement="bottom-right"
+	display="dynamic">
+		<a class="nav-link dropdown-toggle"
+		id="userDropdown"
+		ngbDropdownToggle
+		data-cy="userMenu"
+		role="button"
+		aria-haspopup="true"
+		aria-expanded="false">
+			<fa-icon [icon]='userIcon'></fa-icon>
+			{{user.name}}
+		</a>
+		<div class="dropdown-menu dropdown-menu-right"
+		ngbDropdownMenu
+		aria-labelledby="dropdownUser">
+			<ng-template *ngIf="user.name!=='';else elseBlock">
+				<h6 class="dropdown-header">
+					<div class="dropdown-user-details">
+						<div class="dropdown-user-details-name">{{ user.name }} - {{ user.id }}</div>
+						<div class="dropdown-user-details-email">{{ user.email }}</div>
+					</div>
+				</h6>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" routerLink="/login" >Logout</a>
+			</ng-template>
+			<ng-template #elseBlock>
+				<a class="dropdown-item" routerLink="/login" >Login</a>
+			</ng-template>
+		</div>
+	</li>`,
+})
+export class TopNavUserComponent implements OnInit {
+	@Select(AuthState.userDetails) user$!: Observable<Auth>;
+	isLogged!: boolean;
+	userIcon = faUser;
+	store: Store;
+	constructor() {
+		this.store = AppComponent.store;
+
+
+	}
+	ngOnInit() {
+		this.store.select(AuthState.userDetails);
+	}
+}

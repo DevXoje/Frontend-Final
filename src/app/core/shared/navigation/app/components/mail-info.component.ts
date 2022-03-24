@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { faMailBulk } from '@fortawesome/free-solid-svg-icons';
 import { Subscription } from 'rxjs';
-import { Breadcrumb } from '../../../domain/models';
-import { NavigationService } from '../../../infrastructure/services';
+import { Breadcrumb } from '../../domain/models';
+import { NavigationService } from '../../infrastructure/services';
 
 @Component({
 	selector: 'app-mail-info',

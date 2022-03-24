@@ -1,5 +1,5 @@
-import { TablesComponent } from './tables/tables.component';
+import { TablesComponent } from './tables.component';
 
 export const containers = [TablesComponent];
 
-export * from './tables/tables.component';
+export * from './tables.component';

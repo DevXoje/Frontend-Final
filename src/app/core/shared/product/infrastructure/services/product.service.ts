@@ -173,5 +173,17 @@ export class ProductService {
 	deleteProduct(id: number): Observable<Product> { 
 		return from(this.productService.deleteProduct(id));
 	}
+
+	getUpdateListProducts(product:Product): Product[] {
+		const productsFetched: Product[] = [];
+		const observable = from(this.productService.getProducts());
+		observable.subscribe(
+			(products) => productsFetched.push(...products),
+			(error: HttpErrorResponse) => console.error(`Error: ${error.message}`),
+		);
+
+		return productsFetched;
+	}
+
 	
 }

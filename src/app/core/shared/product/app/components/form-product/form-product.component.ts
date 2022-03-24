@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorMessage } from 'ng-bootstrap-form-validation';
 import { Input } from '@shared/app-common/app/components/form/input';
+import { ProductService } from '@shared/product/infrastructure/services';
 
 
 @Component({
@@ -58,8 +59,15 @@ export class FormProductComponent {
 
 
 	]
-	constructor() { }
+	constructor(private productService:ProductService) { }
 	onSubmit() {
+		if (true) {//validation 
+			//setState
+			if (true) {//State
+				//getState
+				//productService
+			}
+		}
 		console.log('this.formGroup');
 	}
 

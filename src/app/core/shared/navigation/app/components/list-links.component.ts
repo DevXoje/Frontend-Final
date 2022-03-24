@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Link } from '../../../domain/models';
+import { Link } from '../../domain/models';
 
 @Component({
 	selector: 'app-list-links',

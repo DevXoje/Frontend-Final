@@ -1,48 +1,56 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
+import { Select, Store } from '@ngxs/store';
 import { GaleryItem } from '@public/store/domain/model';
 import { Category } from '@shared/category/domain/category.model';
 import { Product } from '@shared/product/domain/product.model';
 import { Observable, of } from 'rxjs';
+import { GetProducts } from '@shared/product/infrastructure/ngxs/product.actions';
+import { ProductState } from '@shared/product/infrastructure/ngxs/product.state';
+import { AppComponent } from 'src/app/app.component';
+import { CategoryState } from '@shared/category/infrastructure/ngxs/category.state';
+import { GetCategories } from '@shared/category/infrastructure/ngxs/category.actions';
 
 @Component({
-	selector: 'app-store-galery',
+	selector: 'app-shop-galery',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	templateUrl: './store-galery.component.html',
 	styleUrls: ['./store-galery.component.scss']
 })
 export class StoreGaleryComponent implements OnInit, AfterViewInit, OnChanges {
+	@Select(ProductState.getProductsList) products$!: Observable<Product[]>;
+	@Select(CategoryState.getCategoriesList) categories$!: Observable<Category[]>;
+	categories_names$!: Observable<string[]>;
 
 	controls!: NodeListOf<HTMLButtonElement>;
 
-	@Input() categories_names: string[] = [];
-	@Input() products: Product[] | null = [];
+	store: Store;
 	activeCategory: string = 'all';
+
 	constructor(
 		private route: Router
 	) {
-		//this.categories = ['all', 'cars', 'animals', 'fruits', 'colors'];
-
+		this.store = AppComponent.store;
 	}
 
-	ngOnInit() { }
+	ngOnInit() {
+		this.store.dispatch(GetProducts);
+		this.store.dispatch(GetCategories);
+		this.store.select(ProductState.getProductsList);
+		this.store.select(CategoryState.getCategoriesList)
+			.subscribe(categories => {
+				this.categories_names$ = of(categories.map(category => category.name));
+				this.filterSelection('all');
+			});
+
+	}
 	ngAfterViewInit(): void { }
 	ngOnChanges(changes: SimpleChanges): void {
 		console.log('galery changes', changes);
-		const isValid = this.products && this.products.length > 0 &&
-			this.categories_names && this.categories_names.length > 0;
-		if (isValid) {
-			/* this.products = changes.products.currentValue; */
-			this.filterSelection("all");
-			
-		}
 	}
-
-
 	show_product(item: Product) {
 		this.route.navigate(['/tienda/details', item.id]);
 	}
-
 	filterSelection(category: string) {
 		this.activeCategory = category;
 		const items = document.getElementsByClassName("galery_item");
@@ -72,76 +80,4 @@ export class StoreGaleryComponent implements OnInit, AfterViewInit, OnChanges {
 		element.className = classList.join(" ");
 	}
 
-
-
-
-
-	//Experiment
-	/* gallery!: HTMLElement;
-	gallery_items!: NodeListOf<HTMLElement>;
-	getVal(elem: HTMLElement, style: any) { return parseInt(window.getComputedStyle(elem).getPropertyValue(style)); }
-	getHeight(item: HTMLElement) {
-		const content = item.querySelector('.content') as HTMLElement;
-		return content.getBoundingClientRect().height;
-	};
-	resizeAll() {
-		var altura = this.getVal(this.gallery, 'grid-auto-rows');
-		var gap = this.getVal(this.gallery, 'grid-row-gap');
-		var items = this.gallery.querySelectorAll('.gallery-item') as NodeListOf<HTMLElement>;
-		items.forEach((item) => {
-			var el = item;
-			el.style.gridRowEnd = "span " + Math.ceil((this.getHeight(item) + gap) / (altura + gap));
-		});
-	};
- */
-
-
-	/* gallery_items.forEach((item) => {
-	item.classList.add('byebye');
-	if (item.complete) {
-		console.log(item.src);
-	}
-	else {
-		item.onload = () => {
-			var altura = getVal(gallery, 'grid-auto-rows');
-			var gap = getVal(gallery, 'grid-row-gap');
-			var gitem = item.parentElement.parentElement;
-			gitem.style.gridRowEnd = "span " + Math.ceil((getHeight(gitem) + gap) / (altura + gap));
-			item.classList.remove('byebye');
-		}); */
 }
-
-/* 
-var gallery = document.querySelector('#gallery');
-var getVal = function (elem, style) { return parseInt(window.getComputedStyle(elem).getPropertyValue(style)); };
-var getHeight = function (item) { return item.querySelector('.content').getBoundingClientRect().height; };
-var resizeAll = function () {
-	var altura = getVal(gallery, 'grid-auto-rows');
-	var gap = getVal(gallery, 'grid-row-gap');
-	gallery.querySelectorAll('.gallery-item').forEach(function (item) {
-		var el = item;
-		el.style.gridRowEnd = "span " + Math.ceil((getHeight(item) + gap) / (altura + gap));
-	});
-};
-gallery.querySelectorAll('img').forEach(function (item) {
-	item.classList.add('byebye');
-	if (item.complete) {
-		console.log(item.src);
-	}
-	else {
-		item.addEventListener('load', function () {
-			var altura = getVal(gallery, 'grid-auto-rows');
-			var gap = getVal(gallery, 'grid-row-gap');
-			var gitem = item.parentElement.parentElement;
-			gitem.style.gridRowEnd = "span " + Math.ceil((getHeight(gitem) + gap) / (altura + gap));
-			item.classList.remove('byebye');
-		});
-	}
-});
-window.addEventListener('resize', resizeAll);
-gallery.querySelectorAll('.gallery-item').forEach(function (item) {
-	item.addEventListener('click', function () {        
-		item.classList.toggle('full');        
-	});
-});
- */

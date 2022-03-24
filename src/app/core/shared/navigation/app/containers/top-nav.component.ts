@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { NavigationService } from '../../../infrastructure/services';
+import { NavigationService } from '../../infrastructure/services';
 
 @Component({
 	selector: 'app-top-nav',

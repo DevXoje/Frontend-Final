@@ -4,9 +4,11 @@ export class AddProduct {
   static readonly type = '[Product] Add';
   constructor(public payload: Product) { }
 }
+export class GetProducts {
+  static readonly type = '[Products] Get';
+}
 export class GetProduct {
   static readonly type = '[Product] Get';
-  constructor(public payload: Product) { }
 }
 export class UpdateProduct {
   static readonly type = '[Product] Update';

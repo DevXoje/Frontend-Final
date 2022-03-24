@@ -43,7 +43,7 @@ const routes: Routes = [
 			import('@secure/dashboard/dashboard-routing.module').then(
 				m => m.DashboardRoutingModule
 			),
-		canActivate: [AuthRoleGuard],
+		canActivate: [AuthGuard],
 		data: {
 			expectedRole: 'admin'
 		}
