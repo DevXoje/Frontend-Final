@@ -23,6 +23,7 @@ import { ProductState } from '@shared/product/infrastructure/ngxs/product.state'
 import { CategoryState } from '@shared/category/infrastructure/ngxs/category.state';
 import { AuthState } from '@shared/auth/infrastructure/ngxs/auth.state';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { CartState } from '@public/cart/infrastructure/ngxs/cart.state';
 
 
 
@@ -49,7 +50,8 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 		NgxsModule.forRoot([
 			AuthState,
 			ProductState,
-			CategoryState
+			CategoryState,
+			CartState
 		], {
 			developmentMode: true,
 		}),

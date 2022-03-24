@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
 		<div class="sb-sidenav-menu">
 			<div class="nav">
 				<img src="https://via.placeholder.com/200x90.png?text=JODERRR" alt="imgBrand">
-				<app-cart-info></app-cart-info>
+				<app-top-nav-cart-info></app-top-nav-cart-info>
 				<app-top-nav-user></app-top-nav-user>
 				<app-list-links></app-list-links>
 			</div>

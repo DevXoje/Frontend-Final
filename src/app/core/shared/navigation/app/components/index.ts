@@ -4,7 +4,7 @@ import { SideNavItemComponent } from './side-nav-item.component';
 import { TopNavUserComponent } from './top-nav-user.component';
 import { StoreHeadComponent } from './store-head/store-head.component';
 import { SocialLinksComponent } from './social-links/social-links.component';
-import { CartInfoComponent } from './cart-info.component';
+import { CartInfoComponent } from './top-nav-cart-info.component';
 import { ListLinksComponent } from './list-links.component';
 import { MailInfoComponent } from './mail-info.component';
 
@@ -26,6 +26,6 @@ export * from './dashboard-head.component';
 export * from './top-nav-user.component';
 export * from './store-head/store-head.component';
 export * from './social-links/social-links.component';
-export * from './cart-info.component';
+export * from './top-nav-cart-info.component';
 export * from './list-links.component';
 export * from './mail-info.component';

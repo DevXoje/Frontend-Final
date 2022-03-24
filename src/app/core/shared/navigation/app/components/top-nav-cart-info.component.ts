@@ -5,7 +5,7 @@ import { Breadcrumb } from '../../domain/models';
 import { NavigationService } from '../../infrastructure/services';
 
 @Component({
-	selector: 'app-cart-info',
+	selector: 'app-top-nav-cart-info',
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `
 	<div class="d-flex justify-content-around">
@@ -13,7 +13,7 @@ import { NavigationService } from '../../infrastructure/services';
 			<fa-icon [icon]="heartIcon"></fa-icon>
 			<sup>{{num_whised}}</sup>
 		</a>
-		<a href="">
+		<a [routerLink]="['/tienda/cart']">
 			<fa-icon [icon]="bagIcon"></fa-icon>
 			<sup>{{num_added}}</sup>
 		</a>
