@@ -45,20 +45,15 @@ export class TableProductsComponent implements OnInit, OnChanges {
 		public productService: ProductService,
 		private changeDetectorRef: ChangeDetectorRef,
 	) { }
-	ngOnChanges(changes: SimpleChanges): void {
-		console.log(changes)
-
-	}
 
 	ngOnInit() {
 		this.productService.pageSize = this.pageSize;
 
 		this.products$ = this.productService.getProductsObservable();
 
-	
-
 		this.total$ = this.productService.total$;// TODO: asignar el tamaño de forma estatica para poder asignarlo en el paginador
 	}
+	ngOnChanges(changes: SimpleChanges): void { }
 
 	onSort({ column, direction }: SortEvent) {
 		this.sortedColumn = column;

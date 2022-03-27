@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthRoleGuard,  } from '@shared/auth/app/guards';
+import { AuthGuard, AuthRoleGuard, } from '@shared/auth/app/guards';
 
 /* export const routes: Routes = [
 	{ path: '**', redirectTo: 'secure' },
@@ -33,11 +33,6 @@ const routes: Routes = [
 
 	},
 	{
-		path: 'charts',
-		loadChildren: () =>
-			import('@secure/charts/charts-routing.module').then(m => m.ChartsRoutingModule),
-	},
-	{
 		path: 'dashboard',
 		loadChildren: () =>
 			import('@secure/dashboard/dashboard-routing.module').then(
@@ -49,26 +44,34 @@ const routes: Routes = [
 		}
 	},
 	{
-		path: 'error',
-		loadChildren: () =>
-			import('@shared/error/app/error-routing.module').then(m => m.ErrorRoutingModule),
-	},
-	{
-		path: 'tables',
-		loadChildren: () =>
-			import('@shared/tables/app/tables-routing.module').then(m => m.TablesRoutingModule),
-	},
-	/* {
-		path: 'version',
-		loadChildren: () =>
-			import('@secure/utility/utility-routing.module').then(m => m.UtilityRoutingModule),
-	}, */
-	{
 		path: '**',
 		pathMatch: 'full',
 		loadChildren: () =>
 			import('@shared/error/app/error-routing.module').then(m => m.ErrorRoutingModule),
 	},
+	/*
+		  {
+			path: 'charts',
+			loadChildren: () =>
+				import('@secure/charts/charts-routing.module').then(m => m.ChartsRoutingModule),
+		},
+		{
+			path: 'error',
+			loadChildren: () =>
+				import('@shared/error/app/error-routing.module').then(m => m.ErrorRoutingModule),
+		},
+		{
+			path: 'tables',
+			loadChildren: () =>
+				import('@shared/tables/app/tables-routing.module').then(m => m.TablesRoutingModule),
+		},
+		{
+			path: 'version',
+			loadChildren: () =>
+				import('@secure/utility/utility-routing.module').then(m => m.UtilityRoutingModule),
+		}, 
+	*/
+
 ];
 @NgModule({
 	imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],

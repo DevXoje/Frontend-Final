@@ -59,9 +59,7 @@ export class StoreListsCollectionComponent implements OnInit, OnChanges {
 				]
 			});
 	}
-	ngOnChanges(changes: SimpleChanges): void {
-		console.log(`changes storelist`, changes);
-	}
+	ngOnChanges(changes: SimpleChanges): void {	}
 
 
 }

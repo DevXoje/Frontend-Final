@@ -76,13 +76,8 @@ export class StoreCarrouselComponent implements OnInit, AfterViewInit, OnChanges
 
 		});  */
 	}
-	ngAfterViewInit(): void {
-	}
-	ngOnChanges(changes: SimpleChanges): void {
-
-		console.log('carrousel', changes);
-
-	}
+	ngAfterViewInit(): void { }
+	ngOnChanges(changes: SimpleChanges): void { }
 	leftClick() {
 		const cat = this.categories as Category[];
 		let index = 0;

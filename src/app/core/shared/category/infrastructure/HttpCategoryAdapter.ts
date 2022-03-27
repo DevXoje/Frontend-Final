@@ -13,6 +13,8 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.get<Category>(this.url).subscribe(
 				(categories) => {
+					console.log('CATEGORIES', categories);
+					
 					resolve(categories)
 				},
 				(error) => {

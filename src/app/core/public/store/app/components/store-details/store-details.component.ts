@@ -26,11 +26,7 @@ export class StoreDetailsComponent implements OnInit, AfterViewInit, OnChanges {
 		this.details.mainImage = this.details.images[0];
 	}
 
-	ngOnChanges(changes: SimpleChanges): void {
-		console.log(changes);
-	}
-	ngOnInit() {
-	}
+	ngOnInit() { }
 	ngAfterViewInit(): void {
 		this.activeImage = document.querySelector(".product-image .active") as HTMLImageElement;
 		this.productImages = document.querySelectorAll(".image-list img") as NodeListOf<HTMLImageElement>;
@@ -38,14 +34,11 @@ export class StoreDetailsComponent implements OnInit, AfterViewInit, OnChanges {
 			image =>
 				image.onclick = (e) => this.changeImage(e)
 		);
-
-
 	}
+	ngOnChanges(changes: SimpleChanges): void { }
+
 	changeImage(e: Event) {
-
 		const image = e.target as HTMLImageElement;
-
-
 		this.activeImage.src = image.src;
 	}
 	/* 

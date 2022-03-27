@@ -35,6 +35,13 @@ export class CategoryService {
 	}
 
 	getCategoriesObservable(): Observable<Category[]> {
+		const promise = this.categoryService.getCategories();
+		promise.then(
+			(categories) => console.log(categories)
+
+		);
+		console.log('getCategoriesObservable');
+
 		return from(this.categoryService.getCategories());
 	}
 	getCategoryObservable(id: number): Observable<Category> {

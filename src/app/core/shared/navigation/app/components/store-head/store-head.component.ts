@@ -3,6 +3,7 @@ import { faPhone, faPhoneSquare } from '@fortawesome/free-solid-svg-icons';
 import { Select, Store } from '@ngxs/store';
 import { ShopComponent } from '@public/store/app/containers';
 import { Category } from '@shared/category/domain/category.model';
+import { GetCategories } from '@shared/category/infrastructure/ngxs/category.actions';
 import { CategoryState } from '@shared/category/infrastructure/ngxs/category.state';
 import { Observable, of, OperatorFunction } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
@@ -32,7 +33,10 @@ export class StoreHeadComponent implements OnInit, OnChanges {
 		this.store = AppComponent.store;
 	}
 	ngOnInit() {
-		AppComponent.store.select(CategoryState.getCategoriesList).subscribe(categories => {
+		this.store.dispatch(GetCategories);
+
+		this.store.select(CategoryState.getCategoriesList).subscribe(categories => {
+			console.log("storehead", categories);
 			this.categories_names$ = of(categories.map(category => category.name));
 		});
 	}

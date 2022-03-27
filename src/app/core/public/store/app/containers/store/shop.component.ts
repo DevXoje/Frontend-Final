@@ -16,10 +16,10 @@ import { GetCategories } from '@shared/category/infrastructure/ngxs/category.act
 	template: `
 	<app-layout-store>
 		<app-shop-head title="Dashboard" [hideBreadcrumbs]="false"></app-shop-head>
-		<app-shop-carrousel></app-shop-carrousel>
+		<!-- <app-shop-carrousel></app-shop-carrousel>
 		<app-shop-galery></app-shop-galery>
 		<app-shop-calltoaction></app-shop-calltoaction>
-		<app-shop-lists-collection></app-shop-lists-collection>
+		<app-shop-lists-collection></app-shop-lists-collection> -->
 		<!-- <app-dashboard-tables></app-dashboard-tables>
 		<app-dashboard-cards></app-dashboard-cards>
 		<app-dashboard-charts></app-dashboard-charts>

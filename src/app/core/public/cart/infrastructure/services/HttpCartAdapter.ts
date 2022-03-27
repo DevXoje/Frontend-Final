@@ -22,7 +22,6 @@ export class HttpCartAdapter implements CartServiceInterface {
 				}
 			);
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Cart;
 	}
 	async createCart(user: Cart): Promise<Cart> {
@@ -30,11 +29,10 @@ export class HttpCartAdapter implements CartServiceInterface {
 			this.http.post<Cart>(this.url, user, { headers: this.headers }).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Cart;
 	}
 	async updateCart(user: Cart): Promise<Cart> {
@@ -42,11 +40,10 @@ export class HttpCartAdapter implements CartServiceInterface {
 			this.http.put<Cart>(this.url + '/' + user.id, user).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Cart;
 	}
 	async deleteCart(id: number): Promise<Cart> {
@@ -54,11 +51,10 @@ export class HttpCartAdapter implements CartServiceInterface {
 			this.http.delete<Cart>(this.url + '/' + id).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Cart;
 	}
 }

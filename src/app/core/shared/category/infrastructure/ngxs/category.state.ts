@@ -37,13 +37,18 @@ export class CategoryState {
     getState,
     setState,
   }: StateContext<CategoryStateModel>): Observable<Category[]> {
+    console.log('getCategories');
     return this.categorieservice.getCategoriesObservable().pipe(
-      tap((categories: Category[]) => {
-        const state = getState();
-        setState({ ...state, categories });
-        console.log(state);
+      tap(
+        (categories: Category[]) => {
+          console.log('categories-state', categories);
+          const state = getState();
+          setState({ ...state, categories });
+          console.log(state);
 
-      })
+        },
+        (error: Error) => { console.error('error', error); }
+      )
     );
   }
 

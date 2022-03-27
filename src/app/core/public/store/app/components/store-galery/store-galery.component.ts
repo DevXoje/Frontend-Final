@@ -45,9 +45,7 @@ export class StoreGaleryComponent implements OnInit, AfterViewInit, OnChanges {
 
 	}
 	ngAfterViewInit(): void { }
-	ngOnChanges(changes: SimpleChanges): void {
-		console.log('galery changes', changes);
-	}
+	ngOnChanges(changes: SimpleChanges): void { }
 	show_product(item: Product) {
 		this.route.navigate(['/tienda/details', item.id]);
 	}

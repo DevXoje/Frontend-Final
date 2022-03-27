@@ -83,7 +83,7 @@ export class LoginComponent implements OnInit {
 				.subscribe(success => {
 					console.log(success);
 				}, error => {
-					console.log(error);
+					console.error(error);
 				});
 		} else {
 			console.error('error en datos introducidos');
