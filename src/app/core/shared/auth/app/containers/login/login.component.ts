@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@shared/auth/infrastructure/services';
 import { Input } from '@shared/app-common/app/components/form/input';
 import { LoginData } from '@shared/app-common/app/components/form/login-data';
@@ -21,14 +21,15 @@ export class LoginComponent implements OnInit {
 		password: '',
 		remember: false
 	};
-	store: Store;
-	constructor(private authService: AuthService) {
-		this.store = AppComponent.store;
+	errors: any[] = [];
+	constructor(private store: Store, private fb: FormBuilder) {
 		this.inputs = [
 			{
-				id: 'email',
-				name: 'Email',
+				id: 'username',
+				label: 'Email',
 				type: 'email',
+				autocomplete: 'username',
+				placeholder: 'Enter email address',
 				validators: [
 					Validators.required,
 					Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
@@ -36,33 +37,36 @@ export class LoginComponent implements OnInit {
 			},
 			{
 				id: 'password',
-				name: 'Password',
+				label: 'Password',
 				type: 'password',
+				placeholder: 'Enter password',
+				autocomplete: 'current-password',
 				validators: [
 					Validators.required,
 					Validators.minLength(8),
 					Validators.maxLength(20)
 				]
+			},
+			{
+				id: 'remember',
+				label: 'Remember password',
+				type: 'checkbox',
+				validators: [
+					
+				]
 			}
 		]
+
 	}
 	ngOnInit(): void {
-		this.form = new FormGroup({
-			email: new FormControl(this.user.username, [
-				Validators.required,
-				Validators.minLength(4),
-				//forbiddenNameValidator(/bob/i) // <-- Here's how you pass in the custom validator.
-			]),
-			password: new FormControl(this.user.password),
-			remember: new FormControl(this.user.remember, Validators.required)
-		}, {
-			updateOn: 'blur',
-			validators: [
-				Validators.required,
-			],
-			asyncValidators: [],
-
+	
+		
+		this.form = this.fb.group({
+			username: ['', this.inputs.find(input => input.id == "username")?.validators],
+			password: ['', this.inputs.find(input => input.id == "password")?.validators],
+			remember: ['', this.inputs.find(input => input.id == "remember")?.validators]
 		});
+
 
 	}
 
@@ -71,23 +75,47 @@ export class LoginComponent implements OnInit {
 	get password() { return this.form.get('password'); }
 
 	onSubmit(event: Event) {
+		if (this.form.valid) {
+			console.log("Todos los datos son válidos");
+		} else {
+			console.log("Hay datos inválidos en el formulario");
+		}
+		const val = this.form.value as LoginData;
 
-		const val = this.form.value;
-		console.info(this.form.value);
+		if (val.username && val.password) {
+			console.warn('Your login has been submitted', this.form.value);
 
-		if (val.email && val.password) {
 			this.user = this.form.value;
-			this.authService.login(this.user);
+			console.log(this.user);
+
+			//this.authService.login(this.user);
 			this.store
 				.dispatch(new Login({ email: 'some@email.com', password: 'password' }))
 				.subscribe(success => {
-					console.log(success);
+					console.log(`Stored succes `, success);
 				}, error => {
 					console.error(error);
 				});
 		} else {
 			console.error('error en datos introducidos');
 
+		}
+
+
+
+
+
+		this.form.reset();
+
+	}
+
+	setErrors(arg: any) {
+		
+		if (arg) {
+			this.errors = Object.keys(arg);
+
+		} else {
+			this.errors = [];
 		}
 
 	}

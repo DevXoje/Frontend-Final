@@ -6,16 +6,18 @@ import { Input as InputModel } from '@shared/app-common/app/components/form/inpu
 
 @Component({
 	selector: 'app-form',
-	template: `
-	<div [formGroup]="formGroup">
-		<div class="form-group" *ngFor="let input of inputs">
-		<label class="control-label">{{input.name}}</label>
-		<input [type]="input.type" class="form-control" [formControlName]="input.name" *ngIf="input.type!=='textarea'"  autocomplete="on">
-		<textarea name="input.name" class="form-control" id="input.name" cols="30" rows="10" [formControlName]="input.name" *ngIf="input.type=='textarea'"></textarea>
-	</div>
-	<button class="btn btn-default" type="button" (click)="onReset()">Reset</button>
-	<button class="btn btn-primary pull-right" type="submit" (click)="onSubmit($event)">Submit</button>
-	</div>`
+	templateUrl: 'form.component.html',
+	/* `
+   <div [formGroup]="formGroup">
+   	
+	   <div class="form-group" *ngFor="let input of inputs">
+	   <label class="control-label">{{input.name}}</label>
+	   <input [type]="input.type" class="form-control" [formControlName]="input.name" *ngIf="input.type!=='textarea'"  autocomplete="on">
+	   <textarea name="input.name" class="form-control" id="input.name" cols="30" rows="10" [formControlName]="input.name" *ngIf="input.type=='textarea'"></textarea>
+   </div>
+   <button class="btn btn-default" type="button" (click)="onReset()">Reset</button>
+   <button class="btn btn-primary pull-right" type="submit" (click)="onSubmit($event)">Submit</button>
+   </div>` */
 })
 export class FormComponent implements OnInit {
 	formGroup: FormGroup = new FormGroup({});
@@ -35,17 +37,24 @@ export class FormComponent implements OnInit {
 	constructor(private fb: FormBuilder) { }
 
 	ngOnInit() {
-		//this.formGroup = this.fb.group({email: '',password: ''});
+		this.inputs.reduce((form, input) => {
+			form.addControl(input.id, new FormControl(null, input.validators));
+			return form;
+		}, this.formGroup);
+
+
+
+		/* //this.formGroup = this.fb.group({email: '',password: ''});
 		const controls = Object.assign({});
 		this.inputs.forEach(input => {
-			controls[input.name] = new FormControl('', input.validators)
+			// controls[input.name] = new FormControl('', input.validators) 
 		});
 		this.formGroup = this.fb.group(controls);
 		//this.formGroup = new FormGroup(controls);
 		this.formGroup.valueChanges.subscribe(
 			(value) => console.log(value),
 			(error) => console.error(error),
-		);
+		); */
 	}
 
 	onSubmit(event: Event) {

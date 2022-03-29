@@ -1,11 +1,13 @@
 import { ValidatorFn } from "@angular/forms";
 
-export interface Input {
+export type Input = {
 	//[key: string]: {
 	id: string,
-	name: string;
+	name?: string;
 	placeholder?: string,
+	label?: string,
 	type: string;
 	validators: ValidatorFn[];
+	autocomplete?: "username" | "current-password";
 	//}
 }

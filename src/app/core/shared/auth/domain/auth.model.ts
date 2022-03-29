@@ -1,4 +1,4 @@
-export interface Auth {
+export type Auth = {
 	id?: number;
 	name?: string;
 	email: string;
@@ -9,7 +9,7 @@ export interface Auth {
 	created_at?: string | Date;
 	updated_at?: string | Date;
 }
-export interface AuthResponse {
+export type AuthResponse = {
 	users: Auth[];
 }
 export type Roles = 'Admin' | 'Customer';
@@ -22,7 +22,7 @@ export interface AuthServiceInterface {
 	deleteUser(id: number): Promise<Auth>;
 }
 
-export class AuthStateModel {
+export type AuthStateModel = {
 	token?: string; // refreshToken?: string;
 	email?: string;
 	name?: string;

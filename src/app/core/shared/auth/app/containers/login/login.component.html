@@ -12,44 +12,40 @@
 					</div>
 					<div class="card-body">
 						<form (ngSubmit)="onSubmit($event)" [formGroup]="form">
-							<div class="form-group">
-								<label class="small mb-1" for="inputEmailAddress">Email</label>
-								<input class="form-control py-4" id="inputEmailAddress" type="email"
-									placeholder="Enter email address" name="inputEmailAddress" formControlName="email"
-									autocomplete="username" />
-								<div *ngIf="email?.invalid && (email?.dirty || email?.touched)" class="d-absolute">
-									<div *ngIf="email?.errors?.['required']">
-										<ngb-alert [type]="'danger'">{{ "Name is required." }}
-										</ngb-alert>
+							<div class="form-group" *ngFor="let input of this.inputs">
+								<ng-template #elseBlock>
+									<label class="small mb-1" for="{{input.id}}">{{input.label}}</label>
+									<input class="form-control py-4" [id]="input.id" [type]="input.type"
+										formControlName="{{input.id}}" placeholder="{{input.placeholder}}"
+										name="{{input.id}}" autocomplete="{{input.autocomplete}}"
+										(change)="setErrors(form.get(input.id)?.errors)" />
+								</ng-template>
+								<ng-container *ngIf="input.type=='checkbox';else elseBlock">
+									<div class="custom-control custom-checkbox">
+										<input class="custom-control-input" [id]="input.id" [type]="input.type"
+											formControlName="{{input.id}}" placeholder="{{input.placeholder}}"
+											name="{{input.id}}" autocomplete="{{input.autocomplete}}"
+											[checked]="user.remember" (change)="user.remember = !user.remember" />
+										<label class="custom-control-label" [for]="input.id">Remember
+											password</label>
 									</div>
-									<div *ngIf="email?.errors?.['minlength']">
+								</ng-container>
+								<ng-container *ngIf="form.get(input.id)?.dirty ||form.get(input.id)?.touched">
+									<ng-container *ngIf="form.get(input.id)?.errors as errores">
+										<!-- <pre>{{errores|json}}</pre> -->
+										<ng-container *ngFor="let item of errors">
+											<ngb-alert [type]="'danger'" [animation]="true" [dismissible]="false">{{
+												"Error in " +item }}
+											</ngb-alert>
+										</ng-container>
+									</ng-container>
+								</ng-container>
+							</div>
 
-										<ngb-alert [type]="'danger'">{{ "Name must be at least 4 characters long." }}
-										</ngb-alert>
-									</div>
-									<!-- <div *ngIf="email.errors?.['forbiddenName']">
-											Name cannot be Bob.
-										</div> -->
 
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="small mb-1" for="inputPassword">Password</label>
-								<input class="form-control py-4" id="inputPassword" type="password"
-									autocomplete="current-password" formControlName="password" />
-							</div>
-							<div class="form-group">
-								<div class="custom-control custom-checkbox">
-									<input class="custom-control-input" id="rememberPasswordCheck" type="checkbox"
-										name="rememberPasswordCheck" [checked]="user.remember"
-										(change)="user.remember = !user.remember" formControlName="remember" />
-									<label class="custom-control-label" for="rememberPasswordCheck">Remember
-										password</label>
-								</div>
-							</div>
 							<div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
 								<a class="small" routerLink="/forgot-password">Forgot Password?</a>
-								<button type="submit" class="btn btn-primary">Login</button>
+								<button type="submit" class="btn btn-primary" [disabled]="form.invalid">Login</button>
 							</div>
 						</form>
 					</div>
@@ -60,4 +56,5 @@
 			</div>
 		</div>
 	</div>
+	<app-form [inputs]="inputs"></app-form>
 </app-layout-auth>
