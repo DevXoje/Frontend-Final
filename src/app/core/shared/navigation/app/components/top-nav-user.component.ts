@@ -29,17 +29,18 @@ import { AppComponent } from 'src/app/app.component';
 		<div class="dropdown-menu dropdown-menu-right"
 		ngbDropdownMenu
 		aria-labelledby="dropdownUser">
-			<ng-template *ngIf="user.name!=='';else elseBlock">
+			<ng-container *ngIf="user.name!==undefined;else elseBlock">
 				<h6 class="dropdown-header">
 					<div class="dropdown-user-details">
 						<div class="dropdown-user-details-name">{{ user.name }} - {{ user.id }}</div>
-						<div class="dropdown-user-details-email">{{ user.email }}</div>
+						<div class="dropdown-user-details-email">{{ user.user_name }}</div>
 					</div>
 				</h6>
 				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" routerLink="/login" >Logout</a>
-			</ng-template>
+				<a class="dropdown-item" routerLink="/logout" >Logout</a>
+			</ng-container>
 			<ng-template #elseBlock>
+				<form action=""></form>
 				<a class="dropdown-item" routerLink="/login" >Login</a>
 			</ng-template>
 		</div>
@@ -49,13 +50,13 @@ export class TopNavUserComponent implements OnInit {
 	@Select(AuthState.userDetails) user$!: Observable<Auth>;
 	isLogged!: boolean;
 	userIcon = faUser;
-	store: Store;
-	constructor() {
-		this.store = AppComponent.store;
+	data = {};
+	constructor(private store: Store) {
 
 
 	}
 	ngOnInit() {
 		this.store.select(AuthState.userDetails);
+
 	}
 }

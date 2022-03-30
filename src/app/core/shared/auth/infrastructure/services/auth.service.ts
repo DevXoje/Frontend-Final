@@ -5,9 +5,7 @@ import { catchError, retry, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment.prod';
 import { HttpClientAdapter } from '../HttpClientAdapter';
 import { AuthResponse } from '../AuthResponse';
-import { SignUpData } from '@shared/app-common/app/components/form/sign-up-data';
-import { LoginData } from '@shared/app-common/app/components/form/login-data';
-import { Auth, AuthServiceInterface, AuthStateModel } from '@shared/auth/domain/auth.model';
+import { Auth, AuthServiceInterface, AuthStateModel, LoginData, SignUpData } from '@shared/auth/domain/auth.model';
 import { NotificationService } from '@shared/app-common/infrastructure/services/notification.service';
 import { NotificationType } from '@shared/app-common/domain/notification.message';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -76,8 +74,11 @@ export class AuthService {
 	login(data: LoginData): Observable<AuthStateModel> {
 		//return this.http.post<LoginData>(this.authUrl + '/login', data);
 		return of({
-			name: 'Some Name',
-			email: 'some@email.com'
+			selectedUser: {
+				name: 'Juan',
+				user_name: 'Mockeado@mail.com',
+				password: '123456',
+			}
 		});
 	}
 	logout(token: string) {

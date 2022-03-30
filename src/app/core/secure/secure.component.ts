@@ -13,6 +13,9 @@ export class SecureComponent implements OnInit {
 	constructor() { }
 
 	ngOnInit(): void {
+		const gola = "";
+		const gola2 = "";
+		const gola3 = "";
 	}
 
 }

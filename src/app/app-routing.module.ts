@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, AuthRoleGuard, } from '@shared/auth/app/guards';
+import { AuthGuard, AuthRoleGuard, } from '@shared/auth/app/routing/guards';
 
 /* export const routes: Routes = [
 	{ path: '**', redirectTo: 'secure' },

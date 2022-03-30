@@ -5,6 +5,10 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 	template: `<div class="bg-primary" id="layoutAuthentication">
 	<div id="layoutAuthentication_content">
+		<ul>
+		<li><a routerLink="/tienda" style="color: red;">tienda</a></li>
+		<li><a routerLink="/dashboard" style="color: red;">admin</a></li>
+	</ul>
 		<main>
 			<ng-content></ng-content>
 		</main>

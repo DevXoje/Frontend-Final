@@ -11,7 +11,7 @@ export class UserService {
 		this.user = {
 			id: -1,
 			name: 'Null Name',
-			email: '',
+			user_name: '',
 			email_verified_at: new Date(),
 			password: '',
 			remenber_token: '',

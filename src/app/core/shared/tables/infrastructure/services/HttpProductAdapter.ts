@@ -3,8 +3,8 @@
  */
 export const products = [];
 import { HttpClient } from "@angular/common/http";
-import { Product } from "src/app/core/products/domain/Products";
-import { ProductServiceInterface } from "src/app/core/products/domain/ProductServiceInterface";
+import { Product } from "@shared/product/domain/product.model";
+import { ProductServiceInterface } from "@shared/product/domain/ProductServiceInterface";
 
 
 export class HttpProductAdapter implements ProductServiceInterface {
@@ -21,7 +21,6 @@ export class HttpProductAdapter implements ProductServiceInterface {
 				}
 			);
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Product[]
 	}
 	async getProduct(id: number): Promise<Product> {
@@ -36,7 +35,6 @@ export class HttpProductAdapter implements ProductServiceInterface {
 				}
 			);
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Product;
 	}
 	async createProduct(user: Product): Promise<Product> {
@@ -44,11 +42,10 @@ export class HttpProductAdapter implements ProductServiceInterface {
 			this.http.post<Product>(this.url, user).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Product;
 	}
 	async updateProduct(user: Product): Promise<Product> {
@@ -56,11 +53,10 @@ export class HttpProductAdapter implements ProductServiceInterface {
 			this.http.put<Product>(this.url + '/' + user.id, user).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Product;
 	}
 	async deleteProduct(id: number): Promise<Product> {
@@ -68,11 +64,10 @@ export class HttpProductAdapter implements ProductServiceInterface {
 			this.http.delete<Product>(this.url + '/' + id).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Product;
 	}
 }

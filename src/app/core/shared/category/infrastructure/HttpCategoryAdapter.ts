@@ -13,8 +13,6 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.get<Category>(this.url).subscribe(
 				(categories) => {
-					console.log('CATEGORIES', categories);
-					
 					resolve(categories)
 				},
 				(error) => {
@@ -23,7 +21,6 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 				}
 			);
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Category[]
 	}
 
@@ -39,7 +36,6 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 				}
 			);
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Category;
 	}
 	async createCategory(category: Category): Promise<Category> {
@@ -47,11 +43,10 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 			this.http.post<Category>(this.url, category).subscribe(
 				(category) => resolve(category),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Category;
 	}
 	async updateCategory(category: Category): Promise<Category> {
@@ -59,11 +54,10 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 			this.http.put<Category>(this.url + '/' + category.id, category).subscribe(
 				(category) => resolve(category),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Category;
 	}
 	async deleteCategory(id: number): Promise<Category> {
@@ -71,11 +65,10 @@ export class HttpCategoryAdapter implements CategoryServiceInterface {
 			this.http.delete<Category>(this.url + '/' + id).subscribe(
 				(category) => resolve(category),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Category;
 	}
 }

@@ -17,7 +17,6 @@ export class HttpClientAdapter implements CustomerServiceInterface {
 				}
 			);
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Customer[]
 	}
 	async getUser(id: number): Promise<Customer> {
@@ -32,7 +31,6 @@ export class HttpClientAdapter implements CustomerServiceInterface {
 				}
 			);
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Customer;
 	}
 	async createUser(user: Customer): Promise<Customer> {
@@ -40,11 +38,10 @@ export class HttpClientAdapter implements CustomerServiceInterface {
 			this.http.post<Customer>(this.url, user).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Customer;
 	}
 	async updateUser(user: Customer): Promise<Customer> {
@@ -52,11 +49,10 @@ export class HttpClientAdapter implements CustomerServiceInterface {
 			this.http.put<Customer>(this.url + '/' + user.id, user).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Customer;
 	}
 	async deleteUser(id: number): Promise<Customer> {
@@ -64,11 +60,10 @@ export class HttpClientAdapter implements CustomerServiceInterface {
 			this.http.delete<Customer>(this.url + '/' + id).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Customer;
 	}
 }

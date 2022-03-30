@@ -10,16 +10,18 @@ import { NavigationModule } from '@shared/navigation/app/navigation.module';
 
 
 //Components
-import * as authComponents from './components';
+import * as authComponents from './views/components';
 
 //Containers
-import * as authContainers from './containers';
+import * as authContainers from './views/containers';
 
 //Guards
-import * as authGuards from './guards';
+import * as authGuards from './routing/guards';
 
 //Services
 import * as authServices from '../infrastructure/services';
+import { NgxsModule } from '@ngxs/store';
+import { AuthState } from '../infrastructure/ngxs/auth.state';
 
 
 @NgModule({
@@ -29,7 +31,8 @@ import * as authServices from '../infrastructure/services';
 		ReactiveFormsModule,
 		FormsModule,
 		AppCommonModule,
-		NavigationModule
+		NavigationModule,
+		NgxsModule.forFeature([AuthState])
 	],
 	providers: [...authServices.services, ...authGuards.guards],
 	declarations: [...authContainers.containers, ...authComponents.components],

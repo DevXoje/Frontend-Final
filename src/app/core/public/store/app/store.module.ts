@@ -11,10 +11,13 @@ import { TablesModule } from '@shared/tables/app/tables.module';
 
 
 //Components
-import * as storeComponents from './components';
+import * as storeComponents from './views/components';
 
 //Containers
-import * as storeContainers from './containers';
+import * as storeContainers from './views/containers';
+import { NgxsModule } from '@ngxs/store';
+import { ProductState } from '@shared/product/infrastructure/ngxs/product.state';
+import { CategoryState } from '@shared/category/infrastructure/ngxs/category.state';
 
 //Guards
 //import * as dashboardGuards from './guards';
@@ -32,6 +35,8 @@ import * as storeContainers from './containers';
 		AppCommonModule,
 		NavigationModule,
 		TablesModule,
+		NgxsModule.forFeature([ProductState,CategoryState])
+
 	],
 	//providers: [...dashboardServices.services, ...dashboardGuards.guards],
 	declarations: [...storeContainers.containers, ...storeComponents.components],

@@ -21,7 +21,6 @@ export class HttpClientAdapter implements AuthServiceInterface {
 				}
 			);
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Auth[]
 	}
 	async getUser(id: number): Promise<any> {
@@ -36,7 +35,6 @@ export class HttpClientAdapter implements AuthServiceInterface {
 				}
 			);
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Auth;
 	}
 	async createUser(user: Auth): Promise<Auth> {
@@ -44,11 +42,10 @@ export class HttpClientAdapter implements AuthServiceInterface {
 			this.http.post<Auth>(this.url, user, { headers: this.headers }).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Auth;
 	}
 	async updateUser(user: Auth): Promise<Auth> {
@@ -56,11 +53,10 @@ export class HttpClientAdapter implements AuthServiceInterface {
 			this.http.put<Auth>(this.url + '/' + user.id, user).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Auth;
 	}
 	async deleteUser(id: number): Promise<Auth> {
@@ -68,11 +64,10 @@ export class HttpClientAdapter implements AuthServiceInterface {
 			this.http.delete<Auth>(this.url + '/' + id).subscribe(
 				(user) => resolve(user),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Auth;
 	}
 }

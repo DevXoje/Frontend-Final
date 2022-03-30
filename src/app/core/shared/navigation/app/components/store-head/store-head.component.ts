@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { faPhone, faPhoneSquare } from '@fortawesome/free-solid-svg-icons';
 import { Select, Store } from '@ngxs/store';
-import { ShopComponent } from '@public/store/app/containers';
+import { ShopComponent } from '@public/store/app/views/containers';
 import { Category } from '@shared/category/domain/category.model';
 import { GetCategories } from '@shared/category/infrastructure/ngxs/category.actions';
 import { CategoryState } from '@shared/category/infrastructure/ngxs/category.state';
@@ -28,15 +28,11 @@ export class StoreHeadComponent implements OnInit, OnChanges {
 	icon = faPhone;
 	public model: any;
 	isCollapsed = true;
-	store: Store;
-	constructor() {
-		this.store = AppComponent.store;
-	}
+	constructor(private store: Store) { }
 	ngOnInit() {
 		this.store.dispatch(GetCategories);
 
 		this.store.select(CategoryState.getCategoriesList).subscribe(categories => {
-			console.log("storehead", categories);
 			this.categories_names$ = of(categories.map(category => category.name));
 		});
 	}

@@ -8,8 +8,8 @@ import {
 } from "ng-bootstrap-form-validation";
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { FormProductComponent } from './core/shared/product/app/components/form-product/form-product.component';
-import { ListProductsModule } from './core/shared/product/app/components/list-products/list-products.module';
+import { FormProductComponent } from './core/shared/product/app/view/components/form-product/form-product.component';
+import { ListProductsModule } from './core/shared/product/app/view/components/list-products/list-products.module';
 import { FooterComponent } from '@shared/footer/footer.component';
 import { CUSTOM_ERRORS } from "@shared/custom-errors";
 import { PublicModule } from '@public/public.module';
@@ -48,10 +48,10 @@ import { CartState } from '@public/cart/infrastructure/ngxs/cart.state';
 		NgBootstrapFormValidationModule.forRoot(),
 		ToastrModule.forRoot(),
 		NgxsModule.forRoot([
-			AuthState,
+			 /* AuthState,
 			ProductState,
 			CategoryState,
-			CartState
+			CartState */
 		], {
 			developmentMode: true,
 		}),

@@ -15,9 +15,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 export class DashboardComponent implements OnInit {
 	data: any;
 	constructor() {
-		/* this.userService.user$.subscribe(user => {
-			console.log('DashboardComponent user$', user);
-		}); */
+		
 	}
 	ngOnInit() { }
 }

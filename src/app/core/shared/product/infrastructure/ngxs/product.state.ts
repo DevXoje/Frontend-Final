@@ -43,8 +43,6 @@ export class ProductState {
       tap((products: Product[]) => {
         const state = getState();
         setState({ ...state, products });
-        console.log(state);
-
       })
     );
   }

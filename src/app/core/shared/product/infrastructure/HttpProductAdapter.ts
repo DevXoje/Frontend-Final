@@ -21,7 +21,6 @@ export class HttpProductAdapter implements ProductServiceInterface {
 				}
 			);
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Product[]
 	}
 	async getProduct(id: number): Promise<Product> {
@@ -36,7 +35,6 @@ export class HttpProductAdapter implements ProductServiceInterface {
 				}
 			);
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Product;
 	}
 	async createProduct(product: Product): Promise<Product> {
@@ -44,11 +42,10 @@ export class HttpProductAdapter implements ProductServiceInterface {
 			this.http.post<Product>(this.url, product).subscribe(
 				(product) => resolve(product),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Product;
 	}
 	async updateProduct(product: Product): Promise<Product> {
@@ -56,11 +53,10 @@ export class HttpProductAdapter implements ProductServiceInterface {
 			this.http.put<Product>(this.url + '/' + product.id, product).subscribe(
 				(product) => resolve(product),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Product;
 	}
 	async deleteProduct(id: number): Promise<Product> {
@@ -68,11 +64,10 @@ export class HttpProductAdapter implements ProductServiceInterface {
 			this.http.delete<Product>(this.url + '/' + id).subscribe(
 				(product) => resolve(product),
 				(error) => {
-					console.log('Error: ', error);
+					console.error('Error: ', error);
 					reject(error)
 				});
 		});
-		console.log('PAYLOAD', payload);
 		return payload as Product;
 	}
 }

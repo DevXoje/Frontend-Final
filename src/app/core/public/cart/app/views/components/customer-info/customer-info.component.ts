@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
 })
 
 export class CustomerInfoComponent implements OnInit {
-	@Select(CartState.userDetails) customer$!: Observable<Customer>;
+	@Select(CartState.userDetails) customer$?: Observable<Customer>;
 
 	constructor(private store: Store) { }
 

@@ -11,7 +11,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 	</app-layout-dashboard>`
 })
 export class LightComponent implements OnInit {
-	constructor() { console.log('LightComponent'); 
+	constructor() {
 	}
 	ngOnInit() { }
 }

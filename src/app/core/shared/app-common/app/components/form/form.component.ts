@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ErrorMessage } from 'ng-bootstrap-form-validation';
 import { Input as InputModel } from '@shared/app-common/app/components/form/input';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
 //type authData = LoginData | SignUpData;
 
 @Component({
@@ -24,6 +25,12 @@ export class FormComponent implements OnInit {
 	valor: string = "";
 	@Input() inputs: InputModel[] = [];
 	@Output() validSubmit = new EventEmitter<any>();
+	errors: any[] = [];
+	@Input() formControls = {
+		submit: { text: 'Login', },
+		reset: { text: 'Reset', action: () => { } }
+	}
+	eyeIcon = faEye;
 	customErrorMessages: ErrorMessage[] = [
 		{
 			error: 'required',
@@ -41,30 +48,39 @@ export class FormComponent implements OnInit {
 			form.addControl(input.id, new FormControl(null, input.validators));
 			return form;
 		}, this.formGroup);
-
-
-
-		/* //this.formGroup = this.fb.group({email: '',password: ''});
-		const controls = Object.assign({});
-		this.inputs.forEach(input => {
-			// controls[input.name] = new FormControl('', input.validators) 
-		});
-		this.formGroup = this.fb.group(controls);
-		//this.formGroup = new FormGroup(controls);
-		this.formGroup.valueChanges.subscribe(
-			(value) => console.log(value),
-			(error) => console.error(error),
-		); */
 	}
 
 	onSubmit(event: Event) {
-		this.validSubmit.emit(this.formGroup.value);
 		event.preventDefault();
+		this.validSubmit.emit(this.formGroup.value);
 	}
 
 	onReset() {
 		this.formGroup.reset();
 	}
+	setErrors(arg: any) {
+
+		if (arg) {
+			this.errors = Object.keys(arg);
+
+		} else {
+			this.errors = [];
+		}
+
+	}
+	togglePassword(e: Event) {// TODO: BUG - Solo funciona si el click es en un contenedor en concreto
+		const target = e.target as HTMLDivElement;
+		console.log("🚀 ~ file: form.component.ts ~ line 87 ~ FormComponent ~ togglePassword ~ target", target)
+		e.preventDefault();
+
+		let input = target.parentElement?.parentElement?.parentElement?.querySelector('input') as HTMLInputElement;
+		console.log("🚀 ~ file: form.component.ts ~ line 90 ~ FormComponent ~ togglePassword ~ input", input)
+
+
+		input.type = input.type === 'password' ? 'text' : 'password';
+
+	}
+
 }
 
 

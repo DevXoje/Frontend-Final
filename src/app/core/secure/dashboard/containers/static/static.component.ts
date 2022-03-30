@@ -22,7 +22,6 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 export class StaticComponent implements OnInit {
 	constructor() {
-		console.log('StaticComponent');
 
 	}
 	ngOnInit() { }

@@ -57,9 +57,6 @@ export class ListComponent implements OnInit {
 	}
 	ngOnInit(): void {
 		/* this.titulos = Object.keys(this.data[0]) as SortColumn[]; */
-		console.log(this.data);
-		console.log(this.titulos);
-
 
 	}
 }
