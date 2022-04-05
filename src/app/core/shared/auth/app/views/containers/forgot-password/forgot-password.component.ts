@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { Input } from '@shared/app-common/app/components/form/input';
+import { Input } from '@shared/app-common/app/views/components/form/input';
 
 @Component({
 	selector: 'app-forgot-password',

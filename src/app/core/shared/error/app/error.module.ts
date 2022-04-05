@@ -9,13 +9,13 @@ import { AppCommonModule } from '@shared/app-common/app/app-common.module';
 import { NavigationModule } from '@shared/navigation/app/navigation.module';
 
 //Components
-import * as errorComponents from './components';
+import * as errorComponents from './views/components';
 
 //Containers
-import * as errorContainers from './containers';
+import * as errorContainers from './views/containers';
 
 //Guards
-import * as errorGuards from './guards';
+import * as errorGuards from './routing/guards';
 
 //Services
 import * as errorServices from '../infrastructure/services';

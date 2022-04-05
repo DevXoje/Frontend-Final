@@ -13,13 +13,13 @@ import { IconsModule } from '@shared/icons/icons.module';
 const thirdParty = [IconsModule, NgbModule];
 
 //Containers
-import * as appCommonContainers from './containers';
+import * as appCommonContainers from './views/containers';
 
 //Components
-import * as appCommonComponents from './components';
+import * as appCommonComponents from './views/components';
 
 //Guards
-import * as appCommonGuards from './guards';
+import * as appCommonGuards from './routing/guards';
 
 //Services
 import * as appCommonServices from '../infrastructure/services';

@@ -35,7 +35,7 @@ const routes: Routes = [
 	{
 		path: 'dashboard',
 		loadChildren: () =>
-			import('@secure/dashboard/dashboard-routing.module').then(
+			import('@secure/dashboard/app/routing/dashboard-routing.module').then(
 				m => m.DashboardRoutingModule
 			),
 		canActivate: [AuthGuard],
@@ -47,7 +47,7 @@ const routes: Routes = [
 		path: '**',
 		pathMatch: 'full',
 		loadChildren: () =>
-			import('@shared/error/app/error-routing.module').then(m => m.ErrorRoutingModule),
+			import('@shared/error/app/routing/error-routing.module').then(m => m.ErrorRoutingModule),
 	},
 	/*
 		  {
@@ -65,16 +65,12 @@ const routes: Routes = [
 			loadChildren: () =>
 				import('@shared/tables/app/tables-routing.module').then(m => m.TablesRoutingModule),
 		},
-		{
-			path: 'version',
-			loadChildren: () =>
-				import('@secure/utility/utility-routing.module').then(m => m.UtilityRoutingModule),
-		}, 
+ 
 	*/
 
 ];
 @NgModule({
 	imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
-	exports: [RouterModule]
+	exports: [RouterModule],
 })
 export class AppRoutingModule { }

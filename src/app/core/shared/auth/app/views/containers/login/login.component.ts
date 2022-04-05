@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@shared/auth/infrastructure/services';
-import { Input } from '@shared/app-common/app/components/form/input';
+import { Input } from '@shared/app-common/app/views/components/form/input';
 import { Auth, AuthStateModel, LoginData } from '@shared/auth/domain/auth.model';
 import { NgbPopover } from '@ng-bootstrap/ng-bootstrap';
 import { Login } from '@shared/auth/infrastructure/ngxs/auth.actions';

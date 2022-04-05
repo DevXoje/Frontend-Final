@@ -8,16 +8,16 @@ import { FormsModule } from '@angular/forms';
 import { AppCommonModule } from '../../app-common/app/app-common.module';
 
 //Components
-import * as navigationComponents from './components';
+import * as navigationComponents from './view/components';
 
 //Containers
-import * as navigationContainers from './containers';
+import * as navigationContainers from './view/containers';
 
 //Layouts
 import * as appCommonLayouts from './layouts';
 
 //Guards
-import * as navigationGuards from './guards';
+import * as navigationGuards from './routing/guards';
 
 //Services
 import * as navigationServices from '../infrastructure/services';

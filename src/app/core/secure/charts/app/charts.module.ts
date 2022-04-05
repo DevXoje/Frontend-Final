@@ -8,18 +8,17 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppCommonModule } from '@shared/app-common/app/app-common.module';
 import { NavigationModule } from '@shared/navigation/app/navigation.module';
 
-
 //Components
-import * as authComponents from './views/components';
+import * as chartsComponents from './views/components';
 
 //Containers
-import * as authContainers from './views/containers';
+import * as chartsContainers from './views/containers';
 
 //Guards
-import * as authGuards from './routing/guards';
+import * as chartsGuards from './routing/guards';
 
 //Services
-import * as authServices from '../infrastructure/services';
+import * as chartsServices from '../infrastructure/services';
 
 
 @NgModule({
@@ -29,10 +28,10 @@ import * as authServices from '../infrastructure/services';
 		ReactiveFormsModule,
 		FormsModule,
 		AppCommonModule,
-		NavigationModule
+		NavigationModule,
 	],
-	providers: [...authServices.services, ...authGuards.guards],
-	declarations: [...authContainers.containers, ...authComponents.components],
-	exports: [...authContainers.containers, ...authComponents.components],
+	providers: [...chartsServices.services, ...chartsGuards.guards],
+	declarations: [...chartsContainers.containers, ...chartsComponents.components],
+	exports: [...chartsContainers.containers, ...chartsComponents.components],
 })
-export class ProductModule { }
+export class ChartsModule { }

@@ -8,19 +8,19 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AppCommonModule } from '@shared/app-common/app/app-common.module';
 import { NavigationModule } from '@shared/navigation/app/navigation.module';
 import { TablesModule } from '@shared/tables/app/tables.module';
-import { ChartsModule } from '@secure/charts/charts.module';
+import { ChartsModule } from '@secure/charts/app/charts.module';
 
 //Components
-import * as dashboardComponents from './components';
+import * as dashboardComponents from './app/views/components';
 
 //Containers
-import * as dashboardContainers from './containers';
+import * as dashboardContainers from './app/views/containers';
 
 //Guards
-import * as dashboardGuards from './guards';
+import * as dashboardGuards from './app/routing/guards';
 
 //Services
-import * as dashboardServices from './services';
+import * as dashboardServices from './infrastructure/services';
 
 
 @NgModule({

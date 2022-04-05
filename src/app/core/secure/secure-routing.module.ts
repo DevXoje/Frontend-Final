@@ -7,7 +7,7 @@ const routes: Routes = [
 	{
 		path: 'dashboard',
 		loadChildren: () =>
-			import('@secure/dashboard/dashboard-routing.module')
+			import('@secure/dashboard/app/routing/dashboard-routing.module')
 				.then(m => m.DashboardRoutingModule)
 	}
 ];

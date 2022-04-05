@@ -10,16 +10,16 @@ import { NavigationModule } from '@shared/navigation/app/navigation.module';
 
 
 /* Components */
-import * as tablesComponents from './components';
+import * as tablesComponents from './views/components';
 
 /* Containers */
-import * as tablesContainers from './containers';
+import * as tablesContainers from './views/containers';
 
 /* Directives */
 import * as tablesDirectives from './directives';
 
 /* Guards */
-import * as tablesGuards from './guards';
+import * as tablesGuards from './routing/guards';
 
 /* Services */
 import * as tablesServices from '../infrastructure/services';
