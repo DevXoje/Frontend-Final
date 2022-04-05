@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ListProductsRoutingModule } from './list-products-routing.module';
 import { ListProductsComponent } from './list-products.component';
-import { ListModule } from '../../../../../list/list.module';
+import { ListModule } from '../../../../../app-common/app/views/components/list/list.module';
 
 
 @NgModule({

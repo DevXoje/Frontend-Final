@@ -3,8 +3,17 @@ import { faStripe } from '@fortawesome/free-brands-svg-icons';
 
 @Component({
 	selector: 'app-footer',
-	templateUrl: './footer.component.html',
-	styleUrls: ['./footer.component.scss']
+	template: `
+	<footer class="py-4 bg-light mt-auto">
+		<div class="container-fluid">
+			<div class="d-flex align-items-center justify-content-between small">
+				<div class="text-muted">Copyright &copy; Your Website 2020</div>
+				<div><a href="#">Privacy Policy &middot;</a><a href="#">Terms &amp; Conditions</a></div>
+			</div>
+		</div>
+	</footer>`,
+	//templateUrl: './footer.component.html',
+	//styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
 	@Input() contactData = {

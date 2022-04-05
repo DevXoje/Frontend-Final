@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from '@environment/environment.prod';
+import { environment } from '@environment/environment';
 import { Cart, CartServiceInterface } from '@public/cart/domain/cart.model';
 import { from, Observable, of } from 'rxjs';
 import { HttpCartAdapter } from './HttpCartAdapter';

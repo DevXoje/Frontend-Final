@@ -12,6 +12,11 @@ import { IconsModule } from '@shared/icons/icons.module';
 
 const thirdParty = [IconsModule, NgbModule];
 
+// Custom Modules
+import { ListProductsModule } from '@shared/product/app/view/components/list-products/list-products.module';
+
+const customModules: any[] = [];
+
 //Containers
 import * as appCommonContainers from './views/containers';
 
@@ -21,14 +26,17 @@ import * as appCommonComponents from './views/components';
 //Guards
 import * as appCommonGuards from './routing/guards';
 
+//Interceptors
+import * as appCommonInterceptors from './routing/interceptors';
+
 //Services
 import * as appCommonServices from '../infrastructure/services';
 import * as authServices from '@shared/auth/infrastructure/services';
 
 @NgModule({
-	imports: [...angularNative, ...thirdParty],
-	providers: [...appCommonServices.services, ...authServices.services, ...appCommonGuards.guards],
+	imports: [...angularNative, ...thirdParty, ...customModules],
+	providers: [...appCommonServices.services, ...authServices.services, ...appCommonGuards.guards, ...appCommonInterceptors.interceptors],
 	declarations: [...appCommonContainers.containers, ...appCommonComponents.components],
-	exports: [...appCommonContainers.containers, ...appCommonComponents.components, ...thirdParty],
+	exports: [...appCommonContainers.containers, ...appCommonComponents.components, ...thirdParty, ...customModules],
 })
 export class AppCommonModule { }

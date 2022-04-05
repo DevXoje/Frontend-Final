@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { compare, SortableHeaderDirective, SortColumn, SortEvent } from 'src/app/core/shared/list/sortable-header.directive';
+import { compare, SortableHeaderDirective, SortColumn, SortEvent } from '@shared/app-common/app/views/components/list/sortable-header.directive';
 
 @Component({
 	selector: 'app-list',

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { SortColumn } from 'src/app/core/shared/list/sortable-header.directive';
+import { SortColumn } from '@shared/app-common/app/views/components/list/sortable-header.directive';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '@shared/product/infrastructure/services';
 import { Product } from '@shared/product/domain/product.model';
