@@ -19,6 +19,7 @@ export class StoreDetailsComponent implements OnInit, AfterViewInit, OnChanges {
 	};
 	@ViewChild('mainImg') activeImage!: HTMLImageElement;
 	@Output() addToCart: EventEmitter<Product> = new EventEmitter<Product>();
+	@Output() buyNow: EventEmitter<Product> = new EventEmitter<Product>();
 	//activeImage!: HTMLImageElement;
 	productImages!: NodeListOf<HTMLImageElement>;
 	constructor(
@@ -56,6 +57,9 @@ export class StoreDetailsComponent implements OnInit, AfterViewInit, OnChanges {
 
 	addToCartHandler(product: Product) {
 		this.addToCart.emit(product);
+	}
+	buyNowHandler(product: Product) {
+		this.buyNow.emit(product);
 	}
 
 }

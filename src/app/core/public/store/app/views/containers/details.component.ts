@@ -27,4 +27,7 @@ export class DetailsComponent implements OnInit {
 		this.msg.sendMessage(msg);
 		console.log(product);
 	}
+	buyNow(product: any) { 	
+		
+	}
 }
