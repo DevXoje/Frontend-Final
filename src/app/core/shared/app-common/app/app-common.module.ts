@@ -9,8 +9,10 @@ const angularNative = [CommonModule, RouterModule, FormsModule, ReactiveFormsMod
 //Third Party
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { IconsModule } from '@shared/icons/icons.module';
+import { TranslateModule } from '@ngx-translate/core';
 
-const thirdParty = [IconsModule, NgbModule];
+
+const thirdParty = [IconsModule, NgbModule, TranslateModule];
 
 // Custom Modules
 import { ListProductsModule } from '@shared/product/app/view/components/list-products/list-products.module';

@@ -8,12 +8,14 @@ import { Login } from '@shared/auth/infrastructure/ngxs/auth.actions';
 import { Store } from '@ngxs/store';
 import { AppComponent } from 'src/app/app.component';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
+
 	inputs: Input[] = [];
 	form = new FormGroup({});
 	formControls = {

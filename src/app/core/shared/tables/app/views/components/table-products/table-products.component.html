@@ -22,7 +22,7 @@
 			<tr
 				*ngFor="let product of products$|async|slice: (productService.page-1) * productService.pageSize  : productService.page * productService.pageSize ;">
 				<td>
-					<ngb-highlight [result]="product.id.toString()" [term]="productService.searchTerm"></ngb-highlight>
+					<ngb-highlight [result]="product.id?.toString()" [term]="productService.searchTerm"></ngb-highlight>
 				</td>
 				<td>
 					<ngb-highlight [result]="product.name" [term]="productService.searchTerm"></ngb-highlight>
@@ -46,7 +46,7 @@
 					</ngb-highlight>
 				</td>
 				<td>
-					<ngb-highlight [result]="product.image" [term]="productService.searchTerm">
+					<ngb-highlight [result]="product.mainImage" [term]="productService.searchTerm">
 					</ngb-highlight>
 				</td>
 

@@ -20,10 +20,20 @@
 			"root": "",
 			"sourceRoot": "src",
 			"prefix": "app",
+			"i18n": {
+				"sourceLocale": "es-ES",
+				"locales": {
+					"es": {
+						"translation": "src/locale/es.json",
+						"baseHref": ""
+					}
+				}
+			},
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
+						"localize": true,
 						"outputPath": "dist/Frontend-Final",
 						"index": "src/index.html",
 						"main": "src/main.ts",
@@ -43,7 +53,8 @@
 						"styles": [
 							"src/styles/styles.scss"
 						],
-						"scripts": []
+						"scripts": [],
+						"i18nMissingTranslation": "error"
 					},
 					"configurations": {
 						"production": {
@@ -68,6 +79,7 @@
 							"outputHashing": "all"
 						},
 						"development": {
+							"localize": false,
 							"buildOptimizer": false,
 							"optimization": false,
 							"vendorChunk": true,

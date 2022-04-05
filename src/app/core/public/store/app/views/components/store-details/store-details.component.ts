@@ -1,4 +1,5 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Product } from '@shared/product/domain/product.model';
 import { ProductService } from '@shared/product/infrastructure/services';
 import { Observable } from 'rxjs';
 
@@ -9,24 +10,35 @@ import { Observable } from 'rxjs';
 	styleUrls: ['./store-details.component.scss']
 })
 export class StoreDetailsComponent implements OnInit, AfterViewInit, OnChanges {
-	details: any = {
+	details: Product = {
 		name: '',
-		desciption: '',
+		description: "",
 		price: 0,
-		images: [''],
+		images: [],
 		mainImage: '',
 	};
 	@ViewChild('mainImg') activeImage!: HTMLImageElement;
+	@Output() addToCart: EventEmitter<Product> = new EventEmitter<Product>();
 	//activeImage!: HTMLImageElement;
 	productImages!: NodeListOf<HTMLImageElement>;
 	constructor(
 		private productService: ProductService
 	) {
-		this.details.images = ['https://source.unsplash.com/W1yjvf5idqA', 'https://source.unsplash.com/VgbUxvW3gS4', 'https://source.unsplash.com/5WbYFH0kf_8'];
-		this.details.mainImage = this.details.images[0];
+
+		this.details = {
+			name: 'bonsai',
+			description: "The purposes of bonsai are primarily contemplation for the viewer, and the pleasant exercise of effort	and ingenuity for the grower. By contrast with other plant cultivation practices, bonsai is not intended for production of food or formedicine.Instead, bonsai practice focuses on long- term cultivation and shaping of one or more small trees growing in a container.",
+			price: 19.99,
+			images: ['https://source.unsplash.com/W1yjvf5idqA', 'https://source.unsplash.com/VgbUxvW3gS4', 'https://source.unsplash.com/5WbYFH0kf_8'],
+			mainImage: '',
+		};
+
 	}
 
-	ngOnInit() { }
+	ngOnInit() {
+		const images = this.details.images as string[];
+		this.details.mainImage = images[0];
+	}
 	ngAfterViewInit(): void {
 		this.activeImage = document.querySelector(".product-image .active") as HTMLImageElement;
 		this.productImages = document.querySelectorAll(".image-list img") as NodeListOf<HTMLImageElement>;
@@ -41,20 +53,9 @@ export class StoreDetailsComponent implements OnInit, AfterViewInit, OnChanges {
 		const image = e.target as HTMLImageElement;
 		this.activeImage.src = image.src;
 	}
-	/* 
-	const activeImage = document.querySelector(".product-image .active");
-const productImages = document.querySelectorAll(".image-list img");
-const navItem = document.querySelector('a.toggle-nav');
 
-function changeImage(e) {
-  activeImage.src = e.target.src;
-}
-
-function toggleNavigation(){
-  this.nextElementSibling.classList.toggle('active');
-}
-
-productImages.forEach(image => image.addEventListener("click", changeImage));
-navItem.addEventListener('click', toggleNavigation); */
+	addToCartHandler(product: Product) {
+		this.addToCart.emit(product);
+	}
 
 }

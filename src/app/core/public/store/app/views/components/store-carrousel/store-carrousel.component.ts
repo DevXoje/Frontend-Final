@@ -48,9 +48,7 @@ export class StoreCarrouselComponent implements OnInit, AfterViewInit, OnChanges
 	lastIndex: number;
 	size: number;
 	mediator!: Observable<Category[]>;
-	store: Store;
-	constructor() {
-		this.store = AppComponent.store;
+	constructor(private store:Store) {
 		this.categories = [] as Category[];
 		this.size = 3;
 		this.iterator = 0;

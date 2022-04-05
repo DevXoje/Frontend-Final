@@ -25,11 +25,8 @@ export class StoreListsCollectionComponent implements OnInit, OnChanges {
 	list_new_products: Product[] = [];
 	list_top_products: Product[] = [];
 
-	store: Store;
 	pageSize = 3;
-	constructor() {
-		this.store = AppComponent.store;
-	}
+	constructor(private store: Store) { }
 	ngOnInit() {
 		this.store.dispatch(GetProducts);
 		//this.products$ = this.store.select(ProductState.getProductsList);
@@ -59,7 +56,7 @@ export class StoreListsCollectionComponent implements OnInit, OnChanges {
 				]
 			});
 	}
-	ngOnChanges(changes: SimpleChanges): void {	}
+	ngOnChanges(changes: SimpleChanges): void { }
 
 
 }

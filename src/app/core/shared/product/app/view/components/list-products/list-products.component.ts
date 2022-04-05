@@ -17,7 +17,7 @@ export class ListProductsComponent implements OnInit {
 		category: 'all',
 		description: '',
 		price: 0,
-		image: '',
+		mainImage: '',
 		remenber_token: '',
 		created_at: '',
 		updated_at: '',

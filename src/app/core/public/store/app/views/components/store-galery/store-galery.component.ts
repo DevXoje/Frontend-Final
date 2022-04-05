@@ -24,14 +24,12 @@ export class StoreGaleryComponent implements OnInit, AfterViewInit, OnChanges {
 
 	controls!: NodeListOf<HTMLButtonElement>;
 
-	store: Store;
 	activeCategory: string = 'all';
 
 	constructor(
-		private route: Router
-	) {
-		this.store = AppComponent.store;
-	}
+		private route: Router,
+		private store: Store
+	) { }
 
 	ngOnInit() {
 		this.store.dispatch(GetProducts);

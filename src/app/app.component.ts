@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ChildActivationEnd, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Actions, ofActionDispatched, Store } from '@ngxs/store';
 import { Logout } from '@shared/auth/infrastructure/ngxs/auth.actions';
 import { filter } from 'rxjs/operators';
@@ -8,14 +9,17 @@ import { filter } from 'rxjs/operators';
 @Component({
 	selector: 'app-root',
 	template: `<router-outlet></router-outlet>
-	<app-loader></app-loader>`,
+	<app-loader></app-loader>
+	`,
 })
 export class AppComponent {
-
+	private idiomas: string[];
 	title = 'AppComponent';
-	static store: Store;
-	constructor(public router: Router, private titleService: Title, private stor: Store, private actions: Actions) {
-		AppComponent.store = stor;
+	constructor(public router: Router, private titleService: Title, private store: Store, private actions: Actions, public translate: TranslateService) {
+		//lenguajes
+		this.idiomas = ['es', 'en'];
+		translate.addLangs(this.idiomas);
+		translate.setDefaultLang('es');
 		//title
 		this.router.events
 			.pipe(
