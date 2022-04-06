@@ -24,7 +24,7 @@
 				"sourceLocale": "es-ES",
 				"locales": {
 					"es": {
-						"translation": "src/locale/es.json",
+						"translation": "src/assets/i18n/es.json",
 						"baseHref": ""
 					}
 				}
