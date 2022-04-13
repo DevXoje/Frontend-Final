@@ -19,12 +19,12 @@ app.use(cors(corsOptions));
 
 // Send all requests to index.html
 app.get("/*", function (req, res) {
-	/* res.set('Access-Control-Allow-Origin', "https://back-final-xoje.herokuapp.com");
+	res.set('Access-Control-Allow-Origin', "https://back-final-xoje.herokuapp.com");
 	res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	res.setHeader("Access-Control-Allow-Credentials", "true");
 	res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
-	res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers"); */
+	res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 	res.sendFile(path.join(folder_path + "/index.html"));
 });
 app.options("*", cors());
