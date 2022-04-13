@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const { env } = require('process');
-const cors = require('cors');
+//const cors = require('cors');
 const app = express();
 const PORT = 5000;// default Heroku port
 const app_name = "Frontend-Final";
