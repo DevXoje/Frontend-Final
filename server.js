@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const { env } = require('process');
-//const cors = require('cors');
+const cors = require('cors');
 const app = express();
 const PORT = 5000;// default Heroku port
 const app_name = "frontend-final";
@@ -11,7 +11,7 @@ const folder_path = `${__dirname}/dist/${app_name}`;
 
 // Serve static files
 app.use(express.static(folder_path));
-//app.use(cors())
+app.use(cors())
 
 // Send all requests to index.html
 app.get('/*', function (req, res) {
