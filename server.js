@@ -24,6 +24,7 @@ app.get('/*', function (req, res) {
 	res.sendFile(path.join(folder_path + '/index.html'));
 
 });
+app.options('*', cors());
 
 const port = process.env.PORT || PORT;
 
