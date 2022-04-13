@@ -6,7 +6,7 @@ const app = express();
 const PORT = 5000;// default Heroku port
 const app_name = "frontend-final";
 //const folder_path = `${__dirname}/dist/${app_name}`;
-const folder_path = `/dist/${app_name}`;
+const folder_path = `${__dirname}/dist/${app_name}`;
 
 
 // Serve static files
