@@ -17,9 +17,9 @@ export class AppComponent {
 	title = 'AppComponent';
 	constructor(public router: Router, private titleService: Title, private store: Store, private actions: Actions, public translate: TranslateService) {
 		//lenguajes
-		this.idiomas = ['es', 'en'];
+		this.idiomas = ['es-ES', 'en'];
 		translate.addLangs(this.idiomas);
-		translate.setDefaultLang('es');
+		translate.setDefaultLang('es-ES');
 		//title
 		this.router.events
 			.pipe(

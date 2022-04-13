@@ -23,8 +23,8 @@
 			"i18n": {
 				"sourceLocale": "es-ES",
 				"locales": {
-					"es": {
-						"translation": "src/assets/i18n/es.json",
+					"es-ES": {
+						"translation": "src/assets/i18n/es-ES.json",
 						"baseHref": ""
 					}
 				}
