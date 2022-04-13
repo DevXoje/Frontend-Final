@@ -1,80 +1,45 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { BrowserModule, Title } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
-import {
-	CUSTOM_ERROR_MESSAGES, NgBootstrapFormValidationModule
-} from "ng-bootstrap-form-validation";
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { FormProductComponent } from './core/shared/product/app/view/components/form-product/form-product.component';
-import { FooterComponent } from '@shared/app-common/app/views/components/footer/footer.component';
-import { CUSTOM_ERRORS } from "@shared/custom-errors";
-
-import { ToastrModule } from 'ngx-toastr';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgxsModule } from '@ngxs/store';
-import { NgxsLoggerPluginModule } from '@ngxs/logger-plugin';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
-import { environment } from '@environment/environment';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { environment } from 'src/environments/environment';
+import { AppCommonModule } from './app-common/app-common.module';
 
-
-// Custom Modules
-import { AppCommonModule } from '@shared/app-common/app/app-common.module';
-import { PublicModule } from '@public/public.module';
-import { SecureModule } from '@secure/secure.module';
-
-const customModules = [AppCommonModule, PublicModule, SecureModule];
+import { AppComponent } from './app.component';
+import { AuthState } from './auth/state/auth.state';
+import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { ProductState } from './product/state/product.state';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { APP_ROUTES } from './app.routes';
 
 @NgModule({
-	declarations: [
-		AppComponent,
-	],
+	declarations: [AppComponent],
 	imports: [
-		...customModules,
 		BrowserModule,
-		FormsModule,
-		ReactiveFormsModule,
-		RouterModule,
-		HttpClientModule,
-		AppRoutingModule,
-		NgBootstrapFormValidationModule,
-		NgBootstrapFormValidationModule.forRoot(),
-		ToastrModule.forRoot(),
-		NgxsModule.forRoot([
-			/* AuthState,
-		   ProductState,
-		   CategoryState,
-		   CartState */
-		], {
-			developmentMode: !environment.production
+		BrowserAnimationsModule,
+		APP_ROUTES,
+		AppCommonModule,
+		NgxsModule.forRoot([AuthState, ProductState], {
+			developmentMode: !environment.production,
 		}),
-		NgxsStoragePluginModule.forRoot(
-			{ key: ['auth.token ', 'auth.email ', 'auth.name '] }
-		),
-		NgxsLoggerPluginModule.forRoot(),
 		NgxsReduxDevtoolsPluginModule.forRoot(),
-		TranslateModule.forRoot(
-			{
-				loader: {
-					provide: TranslateLoader,
-					useFactory: httpTranslateLoader,
-					deps: [HttpClient]
-				}
-			}
-		)
+		/* JwtModule.forRoot({
+			config: {
+				tokenGetter: () => {
+					return localStorage.getItem('token');
+				},
+				//allowedDomains: ["example.com"],
+				//disallowedRoutes: ["http://example.com/examplebadroute/"],
+			},
+		}), */
 	],
-	providers: [{
-		provide: CUSTOM_ERROR_MESSAGES,
-		useValue: CUSTOM_ERRORS,
-		multi: true
-	}, Title],
-	bootstrap: [AppComponent]
+	providers: [
+		{
+			provide: JWT_OPTIONS,
+			useValue: JWT_OPTIONS,
+		},
+		JwtHelperService,
+	],
+	bootstrap: [AppComponent],
 })
-export class AppModule { }
-export function httpTranslateLoader(http: HttpClient) {
-	return new TranslateHttpLoader(http);
-}
+export class AppModule {}

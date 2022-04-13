@@ -1,0 +1,45 @@
+<form>
+	<div class="mb-3 row">
+		<label for="table-filtering-search" class="col-xs-3 col-sm-auto col-form-label">Full text search:</label>
+		<div class="col-xs-3 col-sm-auto">
+			<input id="table-filtering-search" class="form-control" type="text" [formControl]="filter">
+		</div>
+	</div>
+</form>
+
+<table class="table table-striped">
+	<caption>{{title}}</caption>
+	<thead>
+		<tr>
+			<th scope="col">#</th>
+			<th scope="col" *ngFor="let titulo of titulos" [sortable]="titulo" (sort)="onSort($event)"
+				style="cursor: pointer;">{{titulo}}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let item of DATA_DEFAULT|async; index as i" class="col">
+			<th scope="row">
+				<fa-icon [icon]="iconPen" (click)="onEdit.emit(item['id'])"></fa-icon>
+				<fa-icon [icon]="iconTrash" (click)="onDelete.emit(item['id'])"></fa-icon>
+			</th>
+			<td *ngFor="let titulo of titulos">
+				<ngb-highlight [result]="item[titulo]" [term]="filter.value"></ngb-highlight>
+			</td>
+		</tr>
+
+	</tbody>
+</table>
+
+<div class="d-flex justify-content-between p-2">
+	<ng-container *ngIf="checkPaginator()">
+		<ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+			(pageChange)="refreshData()">
+		</ngb-pagination>
+	</ng-container>
+
+	<select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshData()">
+		<option [ngValue]="1">1 items per page</option>
+		<option [ngValue]="2">2 items per page</option>
+		<option [ngValue]="3">3 items per page</option>
+	</select>
+</div>
