@@ -1,58 +1,40 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpResponse,
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
+	HttpResponse,
+	HttpRequest,
+	HttpHandler,
+	HttpEvent,
+	HttpInterceptor,
 } from '@angular/common/http';
-import { Observable, Observer } from 'rxjs';
+import { finalize, Observable, Observer } from 'rxjs';
 import { LoaderService } from '../services/loader.service';
 
 @Injectable()
 export class LoaderInterceptor implements HttpInterceptor {
-  private requests: HttpRequest<any>[] = [];
+	totalRequests = 0;
+	requestsCompleted = 0;
 
-  constructor(private loaderService: LoaderService) { }
+	constructor(private loader: LoaderService) {}
 
-  removeRequest(req: HttpRequest<any>) {
-    const i = this.requests.indexOf(req);
-    if (i >= 0) {
-      this.requests.splice(i, 1);
-    }
-    this.loaderService.isLoading.next(this.requests.length > 0);
-  }
+	intercept(
+		request: HttpRequest<unknown>,
+		next: HttpHandler
+	): Observable<HttpEvent<unknown>> {
+		this.loader.show();
+		this.totalRequests++;
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+		return next.handle(request).pipe(
+			finalize(() => {
+				this.requestsCompleted++;
 
-    this.requests.push(req);
+				console.log(this.requestsCompleted, this.totalRequests);
 
-    console.log("No of requests--->" + this.requests.length);
-
-    this.loaderService.isLoading.next(true);
-    return Observable.create((observer: Observer<any>) => {
-      const subscription = next.handle(req)
-        .subscribe(
-          event => {
-            if (event instanceof HttpResponse) {
-              this.removeRequest(req);
-              observer.next(event);
-            }
-          },
-          (err: Error) => {
-            alert('error' + err);
-            this.removeRequest(req);
-            observer.error(err);
-          },
-          () => {
-            this.removeRequest(req);
-            observer.complete();
-          });
-      // remove request from queue when cancelled
-      return () => {
-        this.removeRequest(req);
-        subscription.unsubscribe();
-      };
-    });
-  }
+				if (this.requestsCompleted === this.totalRequests) {
+					this.loader.hide();
+					this.totalRequests = 0;
+					this.requestsCompleted = 0;
+				}
+			})
+		);
+	}
 }

@@ -7,35 +7,27 @@ import { Login, Logout } from './auth/state/auth.actions';
 import { AuthState } from './auth/state/auth.state';
 
 @Component({
-  selector: 'app-root',
-  template: `
-  <button (click)="logoutHandler()">Logout</button>
-  <router-outlet></router-outlet>
-  `
+	selector: 'app-root',
+	template: `
+		<button (click)="logoutHandler()">Logout</button>
+		<app-loader></app-loader>
+		<router-outlet></router-outlet>
+	`,
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private store: Store,
-    public authService: AuthService
-  ) { }
+	constructor(private store: Store, public authService: AuthService) {}
 
-  ngOnInit() {
-    /* const jwtToken = this.authService.checkToken();
-    // Replace this with real object
-    const userMokeado: Auth = {
-      id: 1,
-      username: "",
-      password: "",
-      token: jwtToken,
-      role: "customer"
-    }
+	ngOnInit() {
+		const jwtToken = this.authService.printToken();
+		// Replace this with real object
+		console.log(jwtToken);
 
-    if (jwtToken) {
+		/* if (jwtToken) {
       this.store.dispatch(new Login(userMokeado));
       this.authService.checkRole(jwtToken);
     } */
-  }
-  logoutHandler() {
-    this.store.dispatch(new Logout(0));
-  }
+	}
+	logoutHandler() {
+		this.store.dispatch(new Logout(0));
+	}
 }

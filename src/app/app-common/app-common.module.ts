@@ -13,40 +13,34 @@ import * as commonComponents from './components';
 import { SortableHeaderDirective } from './components/table/directives/sortable.directive';
 import { LoaderInterceptor } from './routing/loader.interceptor';
 
+const nativeModules = [
+	CommonModule,
+	FormsModule,
+	ReactiveFormsModule,
+	RouterModule,
+	HttpClientModule,
+];
+const thirdsModules = [
+	NgbModule,
+	FontAwesomeModule,
+	NgApexchartsModule,
+	ToastrModule.forRoot({
+		timeOut: 1000,
+		positionClass: 'toast-top-right',
+		preventDuplicates: true,
+	}),
+];
 
 @NgModule({
-  declarations: [
-    ...commonComponents.components,
-    SortableHeaderDirective,
-  ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    NgbModule,
-    FontAwesomeModule,
-    NgApexchartsModule,
-	HttpClientModule,
-
-    ToastrModule.forRoot(
-      {
-        timeOut: 1000,
-        positionClass: 'toast-top-right',
-        preventDuplicates: true,
-      }
-    ),
-  ],
-  exports: [
-    ...commonComponents.components,
-  ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoaderInterceptor,
-      multi: true
-    }
-  ],
-
+	declarations: [...commonComponents.components, SortableHeaderDirective],
+	imports: [...nativeModules, ...thirdsModules],
+	exports: [...commonComponents.components],
+	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: LoaderInterceptor,
+			multi: true,
+		},
+	],
 })
-export class AppCommonModule { }
+export class AppCommonModule {}
