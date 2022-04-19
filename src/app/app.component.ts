@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
 	constructor(private store: Store, public authService: AuthService) {}
 
 	ngOnInit() {
-		this.checkLastConnection();
+		//this.checkLastConnection();
 	}
 	logoutHandler() {
 		this.store.dispatch(new Logout(0));

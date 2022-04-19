@@ -11,6 +11,7 @@ import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { ProductState } from './product/state/product.state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_ROUTES } from './app.routes';
+import { OrderState } from './shop/state/shop.state';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -19,7 +20,7 @@ import { APP_ROUTES } from './app.routes';
 		BrowserAnimationsModule,
 		APP_ROUTES,
 		AppCommonModule,
-		NgxsModule.forRoot([AuthState, ProductState], {
+		NgxsModule.forRoot([AuthState, ProductState, OrderState], {
 			developmentMode: !environment.production,
 		}),
 		NgxsReduxDevtoolsPluginModule.forRoot(),

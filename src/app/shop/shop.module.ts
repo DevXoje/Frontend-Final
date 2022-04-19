@@ -5,6 +5,7 @@ import { AppCommonModule } from '../app-common/app-common.module';
 import { SHOP_ROUTES } from './shop.routes';
 
 import * as shopContainers from './containers';
+import { ProductModule } from '../product/product.module';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import * as shopContainers from './containers';
   imports: [
     CommonModule,
     AppCommonModule,
+	ProductModule,
     SHOP_ROUTES,
   ]
 })
