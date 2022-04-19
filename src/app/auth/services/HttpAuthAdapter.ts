@@ -12,6 +12,7 @@ import {
 	AuthServiceInterface,
 	LoginData,
 	LoginResponse,
+	RestoreData,
 } from '../domain/auth.model';
 
 export class HttpAuthAdapter
@@ -21,18 +22,19 @@ export class HttpAuthAdapter
 	constructor(http: HttpClient, authUrl: string) {
 		super(http, authUrl);
 	}
-	async login(user: LoginData): Promise<LoginResponse
-	> {
+	async login(user: LoginData): Promise<LoginResponse> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http
 				.post<LoginResponse>(this.url + '/login', user, {
-					headers: this.headers,
+					//headers: this.headers,
 				})
 				.subscribe({
 					next: (data) => resolve(data),
 					error: (err: HttpErrorResponse) => reject(err),
 				});
 		});
-		return payload as LoginResponse;		;
+		console.log('loginResponse', payload);
+		return payload as LoginResponse;
 	}
+	
 }

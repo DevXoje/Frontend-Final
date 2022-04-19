@@ -26,9 +26,6 @@ export class LoaderInterceptor implements HttpInterceptor {
 		return next.handle(request).pipe(
 			finalize(() => {
 				this.requestsCompleted++;
-
-				console.log(this.requestsCompleted, this.totalRequests);
-
 				if (this.requestsCompleted === this.totalRequests) {
 					this.loader.hide();
 					this.totalRequests = 0;

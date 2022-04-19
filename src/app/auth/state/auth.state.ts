@@ -1,21 +1,22 @@
-import { Injectable } from "@angular/core";
-import { Action, Selector, State, StateContext } from "@ngxs/store";
-import { Observable, tap } from "rxjs";
-import { CreateResponse } from "src/app/app-common/services/HttpGenericAdapter";
-import { Auth, AuthStateModel, LoginResponse } from "../domain/auth.model";
-import { AuthService } from "../services/auth.service";
-import { GetAllUsers, Login, Logout, Signup } from "./auth.actions";
+import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { catchError, Observable, of, tap, throwError } from 'rxjs';
+import { CreateResponse } from 'src/app/app-common/services/HttpGenericAdapter';
+import { Auth, AuthStateModel, LoginResponse } from '../domain/auth.model';
+import { AuthService } from '../services/auth.service';
+import { GetAllUsers, Login, Logout, Restore, Signup } from './auth.actions';
 const defaults = {
 	users: [] as Auth[],
-	selectedUser: {} as Auth
-}
+	selectedUser: {} as Auth,
+};
 @State<AuthStateModel>({
 	name: 'auth',
-	defaults
+	defaults,
 })
 @Injectable()
 export class AuthState {
-	constructor(private readonly authService: AuthService) { }
+	constructor(private readonly authService: AuthService) {}
 
 	@Selector()
 	public static getAuthList({ users }: AuthStateModel): Auth[] {
@@ -35,12 +36,30 @@ export class AuthState {
 		return this.authService.login(loginData).pipe(
 			tap((auth: LoginResponse) => {
 				const state = getState();
-				localStorage.setItem('token', auth.access_token);
-				console.log(this.authService.printToken());
+				localStorage.setItem('token', JSON.stringify(auth));
+				console.log(this.authService.getStoredToken());
 
 				patchState({
 					users: [...state.users],
-					selectedUser: auth.user
+					selectedUser: auth.user,
+				});
+			})
+		);
+	}
+	@Action(Restore)
+	restore(
+		{ getState, patchState }: StateContext<AuthStateModel>,
+		{ restoreData }: Restore
+	): Observable<LoginResponse> {
+		return this.authService.restore(restoreData).pipe(
+			tap((auth: LoginResponse) => {
+				const state = getState();
+				localStorage.setItem('token', JSON.stringify(auth));
+				console.log(this.authService.getStoredToken());
+
+				patchState({
+					users: [...state.users],
+					selectedUser: auth.user,
 				});
 			})
 		);
@@ -55,8 +74,17 @@ export class AuthState {
 				const state = getState();
 				patchState({
 					users: [...state.users],
-					selectedUser: {} as Auth
+					selectedUser: {} as Auth,
 				});
+			}),
+			catchError((error: HttpErrorResponse): Observable<any> => {
+				// we expect 404, it's not a failure for us.
+				if (error.status === 404) {
+					return of(null); // or any other stream like of('') etc.
+				}
+
+				// other errors we don't know how to handle and throw them further.
+				return throwError(() => error);
 			})
 		);
 	}
@@ -66,9 +94,9 @@ export class AuthState {
 		{ registerData }: Signup
 	): Observable<Auth> {
 		return this.authService.signup(registerData).pipe(
-			tap((auth:any) => {
+			tap((auth: any) => {
 				const state = getState();
-console.log(auth);
+				console.log(auth);
 
 				/* patchState({
 					users: [...state.users],
@@ -78,15 +106,16 @@ console.log(auth);
 		);
 	}
 	@Action(GetAllUsers)
-	getAll(
-		{ getState, patchState }: StateContext<AuthStateModel>,
-	): Observable<Auth[]> {
+	getAll({
+		getState,
+		patchState,
+	}: StateContext<AuthStateModel>): Observable<Auth[]> {
 		return this.authService.getAll().pipe(
 			tap((users: Auth[]) => {
 				const state = getState();
 				patchState({
 					users: [...users],
-					selectedUser: state.selectedUser as Auth
+					selectedUser: state.selectedUser as Auth,
 				});
 			})
 			/* tap((auth: Auth) => {
@@ -98,8 +127,6 @@ console.log(auth);
 			}) */
 		);
 	}
-
-
 
 	/* @Action(GetAuths)
 	getAuth({

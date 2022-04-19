@@ -35,10 +35,7 @@ export class LoaderComponent implements OnInit {
 	loading: boolean = true;
 	@Input() message = '';
 	constructor(private loaderService: LoaderService) {
-		this.loaderService.loading$.subscribe((v) => {
-			console.log(v);
-			this.loading = v;
-		});
+		this.loaderService.loading$.subscribe((v) => (this.loading = v));
 	}
 	ngOnInit() {}
 }

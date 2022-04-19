@@ -8,6 +8,10 @@ export type RegisterData = {
 	username: string;
 	password: string;
 }
+export type RestoreData = {
+	id: number;
+	token: string;
+}
 export type Auth = LoginData & {
 	id: number;
 	role: string;
@@ -19,6 +23,7 @@ export type AuthStateModel = {
 }
 export type AuthServiceInterface = {
 	getAll(): Promise<Auth[]>;
+	getById(id: number): Promise<Auth>;
 	create(user: RegisterData): Promise<CreateResponse<Auth>>;
 	login(user: LoginData): Promise<LoginResponse
 	>;

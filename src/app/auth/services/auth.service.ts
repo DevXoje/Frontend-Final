@@ -14,6 +14,7 @@ import {
 	LoginData,
 	LoginResponse,
 	RegisterData,
+	RestoreData,
 } from '../domain/auth.model';
 import { HttpAuthAdapter } from './HttpAuthAdapter';
 
@@ -35,32 +36,19 @@ export class AuthService {
 		private http: HttpClient
 	) {}
 
-	private authMocked: Auth[] = [
-		{
-			id: 1,
-			email: 'admin',
-			password: 'admin',
-			role: 'admin',
-			token: '',
-		},
-		{
-			id: 1,
-			email: 'admin',
-			password: 'admin',
-			role: 'admin',
-			token: '',
-		},
-	];
-
-	mockAuth(role = 'admin') {
-		localStorage.setItem(
-			'token',
-			role == 'admin' ? mockAdmin : mockCustomer
-		);
-	}
-	login(user: LoginData): Observable<LoginResponse
-	> {
+	login(user: LoginData): Observable<LoginResponse> {
 		return from(this.authService.login(user));
+	}
+	restore(user: RestoreData): Observable<LoginResponse> {
+		let loginResponse: Observable<LoginResponse> =
+			new Observable<LoginResponse>();
+		console.log(this.jwtHelper.decodeToken(user.token));
+		this.getById(user.id).subscribe((auth) => {
+			loginResponse = from(
+				this.login({ email: auth.email, password: auth.password })
+			);
+		});
+		return loginResponse;
 	}
 	logout(id: number): Observable<Auth> {
 		localStorage.clear();
@@ -97,15 +85,43 @@ export class AuthService {
 		}
 		this.router.navigateByUrl(route);
 	}
-	checkToken(): string {
-		return localStorage.getItem('token') as string;
+	getStoredToken(): LoginResponse {
+		return JSON.parse(
+			localStorage.getItem('token') as string
+		) as LoginResponse;
 	}
 	printToken(): string {
-		return  this.jwtHelper.decodeToken(this.checkToken());
+		return this.jwtHelper.decodeToken(this.getStoredToken().access_token);
 	}
 	getAll(): Observable<Auth[]> {
 		//return of(this.authMocked);
 		return from(this.authService.getAll());
+	}
+	getById(id: number): Observable<Auth> {
+		return from(this.authService.getById(id));
+	}
+
+	mockAuth(role = 'admin') {
+		const authMocked: Auth[] = [
+			{
+				id: 1,
+				email: 'admin',
+				password: 'admin',
+				role: 'admin',
+				token: '',
+			},
+			{
+				id: 1,
+				email: 'admin',
+				password: 'admin',
+				role: 'admin',
+				token: '',
+			},
+		];
+		localStorage.setItem(
+			'token',
+			role == 'admin' ? mockAdmin : mockCustomer
+		);
 	}
 	/* addAuth(book: Auth): Observable<Auth> {
     this.authMocked.push(book);

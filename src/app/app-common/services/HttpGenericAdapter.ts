@@ -23,6 +23,15 @@ export class HttpGenericAdapter<Dato> {
 		});
 		return payload as Dato[];
 	}
+	async getById(id:number): Promise<Dato> {
+		const payload = await new Promise((resolve, reject) => {
+			this.http.get<Dato>(`${this.url}/${id}`).subscribe({
+				next: (data) => resolve(data),
+				error: (err: HttpErrorResponse) => reject(err),
+			});
+		});
+		return payload as Dato;
+	}
 	async create(dato: Partial<Dato>): Promise<CreateResponse<Dato>> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http

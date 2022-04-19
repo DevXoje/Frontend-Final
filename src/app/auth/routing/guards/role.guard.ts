@@ -14,7 +14,7 @@ export class RoleGuard implements CanActivate {
 		// on the data property
 		//const expectedRole = route.data['expectedRole'];
 		const expectedRole = "admin";
-		const token = this.authService.checkToken();
+		const token = this.authService.getStoredToken().access_token;
 		console.log('roleguard');
 
 		// decode the token to get its payload

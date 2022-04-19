@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { Auth } from './auth/domain/auth.model';
+import { Auth, RestoreData } from './auth/domain/auth.model';
 import { AuthService } from './auth/services/auth.service';
-import { Login, Logout } from './auth/state/auth.actions';
+import { Login, Logout, Restore } from './auth/state/auth.actions';
 import { AuthState } from './auth/state/auth.state';
 
 @Component({
@@ -18,14 +18,16 @@ export class AppComponent implements OnInit {
 	constructor(private store: Store, public authService: AuthService) {}
 
 	ngOnInit() {
-		const jwtToken = this.authService.printToken();
+		const jwtToken = this.authService.getStoredToken();
 		// Replace this with real object
 		console.log(jwtToken);
-
-		/* if (jwtToken) {
-      this.store.dispatch(new Login(userMokeado));
-      this.authService.checkRole(jwtToken);
-    } */
+		const restoreData: RestoreData = {
+			id: jwtToken.user.id,
+			token: jwtToken.access_token,
+		};
+		if (jwtToken) {
+			this.store.dispatch(new Restore(restoreData));
+		}
 	}
 	logoutHandler() {
 		this.store.dispatch(new Logout(0));
