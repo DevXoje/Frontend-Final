@@ -33,8 +33,6 @@ export class HttpAuthAdapter
 					error: (err: HttpErrorResponse) => reject(err),
 				});
 		});
-		console.log('loginResponse', payload);
 		return payload as LoginResponse;
 	}
-	
 }

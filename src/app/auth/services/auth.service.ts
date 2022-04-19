@@ -67,14 +67,13 @@ export class AuthService {
 		return true;
 	}
 	isAdmin(token: string): boolean {
-		return true;
-		//return this.jwtHelper.decodeToken(token).role === 'admin';
+		return this.jwtHelper.decodeToken(token).role === 'admin';
 	}
 	isCustomer(token: string): boolean {
-		return true;
-		//return this.jwtHelper.decodeToken(token).role === 'customer';
+		return this.jwtHelper.decodeToken(token).role === 'customer';
 	}
 	checkRole(token: string) {
+		console.log(this.jwtHelper.decodeToken(token));
 		let route = '';
 		if (this.isAdmin(token)) {
 			route = '/dashboard';

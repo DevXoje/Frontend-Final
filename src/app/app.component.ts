@@ -18,18 +18,22 @@ export class AppComponent implements OnInit {
 	constructor(private store: Store, public authService: AuthService) {}
 
 	ngOnInit() {
-		const jwtToken = this.authService.getStoredToken();
-		// Replace this with real object
-		console.log(jwtToken);
-		const restoreData: RestoreData = {
-			id: jwtToken.user.id,
-			token: jwtToken.access_token,
-		};
-		if (jwtToken) {
-			this.store.dispatch(new Restore(restoreData));
-		}
+		this.checkLastConnection();
 	}
 	logoutHandler() {
 		this.store.dispatch(new Logout(0));
+	}
+	checkLastConnection() {
+		const jwtToken = this.authService.getStoredToken();
+		// Replace this with real object
+		console.log(jwtToken);
+
+		if (jwtToken) {
+			const restoreData: RestoreData = {
+				id: jwtToken.user.id,
+				token: jwtToken.access_token,
+			};
+			this.store.dispatch(new Restore(restoreData));
+		}
 	}
 }

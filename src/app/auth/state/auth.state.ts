@@ -38,6 +38,7 @@ export class AuthState {
 				const state = getState();
 				localStorage.setItem('token', JSON.stringify(auth));
 				console.log(this.authService.getStoredToken());
+				this.authService.checkRole(auth.access_token);
 
 				patchState({
 					users: [...state.users],
