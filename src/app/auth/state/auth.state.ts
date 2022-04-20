@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { catchError, Observable, of, tap, throwError } from 'rxjs';
-import { CreateResponse } from 'src/app/app-common/services/HttpGenericAdapter';
+import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
 import { Auth, AuthStateModel, LoginResponse } from '../domain/auth.model';
 import { AuthService } from '../services/auth.service';
 import { GetAllUsers, Login, Logout, Restore, Signup } from './auth.actions';
@@ -128,6 +128,22 @@ export class AuthState {
 			}) */
 		);
 	}
+	/* 	@Action(GetSelectedUser)
+	getSelectedUser({
+		getState,
+		patchState,
+	}: StateContext<AuthStateModel>): Observable<Auth[]> {
+		return this.authService.getAll().pipe(
+			tap((users: Auth[]) => {
+				const state = getState();
+				patchState({
+					users: [...users],
+					selectedUser: state.selectedUser as Auth,
+				});
+			})
+
+		);
+	} */
 
 	/* @Action(GetAuths)
 	getAuth({

@@ -7,32 +7,29 @@ import {
 	HttpResponse,
 	HttpGenericAdapter,
 } from 'src/app/app-common/services/HttpGenericAdapter';
-import {
-	Auth,
-	AuthServiceInterface,
-	LoginData,
-	LoginResponse,
-	RestoreData,
-} from '../domain/auth.model';
+import { Order, OrderItem, OrderServiceInterface } from '../domain/shop.model';
 
-export class HttpAuthAdapter
-	extends HttpGenericAdapter<Auth>
-	implements AuthServiceInterface
+export class HttpShopAdapter
+	extends HttpGenericAdapter<Order>
+	implements OrderServiceInterface
 {
 	constructor(http: HttpClient, authUrl: string) {
 		super(http, authUrl);
 	}
-	async login(user: LoginData): Promise<LoginResponse> {
+	async addOrderItem(order: Order, orderItem: OrderItem): Promise<Order> {
+		console.log('- addOrderItem -');
+		console.log('order', order);
+		console.log('orderItemRaw', orderItem);
+
 		const payload = await new Promise((resolve, reject) => {
 			this.http
-				.post<LoginResponse>(this.url + '/login', user, {
-					//headers: this.headers,
-				})
+				.post<Order>(`${this.url}/${order.id}`, orderItem)
 				.subscribe({
 					next: (data) => resolve(data),
 					error: (err: HttpErrorResponse) => reject(err),
 				});
 		});
-		return payload as LoginResponse;
+		return payload as Order;
 	}
+
 }

@@ -19,3 +19,6 @@ export class Signup {
 export class GetAllUsers {
 	static readonly type = '[Auth] GetAll';
 }
+/* export class GetSelectedUser {
+	static readonly type = '[Auth] GetAll';
+} */

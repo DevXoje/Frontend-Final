@@ -5,6 +5,7 @@ import { ModalComponent } from './modal/modal.component';
 import { ChartComponent } from './chart/chart.component';
 import { LoaderComponent } from './loader.component';
 import { GalleryCardsComponent } from './gallery-cards/gallery-cards.component';
+import { CardComponent } from './gallery-cards/card/card.component';
 
 export const components = [
 	FormComponent,
@@ -14,6 +15,7 @@ export const components = [
 	ChartComponent,
 	LoaderComponent,
 	GalleryCardsComponent,
+	CardComponent
 ];
 
 export * from './form/form.component';
@@ -23,3 +25,4 @@ export * from './modal/modal.component';
 export * from './chart/chart.component';
 export * from './loader.component';
 export * from './gallery-cards/gallery-cards.component';
+export * from './gallery-cards/card/card.component';

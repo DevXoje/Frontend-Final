@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { from, Observable, of } from 'rxjs';
 import {
-	CreateResponse,
+	HttpResponse,
 	HttpGenericAdapter,
 } from 'src/app/app-common/services/HttpGenericAdapter';
 import { environment } from 'src/environments/environment';
@@ -56,7 +56,7 @@ export class AuthService {
 		this.router.navigateByUrl('/login');
 		return of({} as Auth);
 	}
-	signup(user: RegisterData): Observable<CreateResponse<Auth>> {
+	signup(user: RegisterData): Observable<HttpResponse<Auth>> {
 		return from(this.authService.create(user));
 	}
 	public isAuthenticated(): boolean {
@@ -82,6 +82,9 @@ export class AuthService {
 		} else {
 			route = '/';
 		}
+		//mockeado
+		route = '/home';
+
 		this.router.navigateByUrl(route);
 	}
 	getStoredToken(): LoginResponse {

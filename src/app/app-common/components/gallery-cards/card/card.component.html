@@ -1,0 +1,19 @@
+<div class="card text-center border-info" style="max-width: 540px">
+	<div class="row g-0">
+		<div class="col-md-4">
+			<img [src]="imagePath" class="card-img-top" alt="..." />
+		</div>
+		<div class="col-md-8">
+			<h5 class="card-header">{{ title }}</h5>
+			<div class="card-body">
+				<p class="card-text">
+					{{ content }}
+				</p>
+				<a class="btn btn-primary mb-3" (click)="handleClick($event)">{{btn_content}}</a>
+				<p class="card-footer text-muted">
+					<small class="text-muted">Last updated 3 mins ago</small>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>

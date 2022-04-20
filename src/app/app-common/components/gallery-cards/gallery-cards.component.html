@@ -1,1 +1,10 @@
-gallery
+<div class="row row-cols-2 row-cols-md-4 g-4">
+	<div class="col" *ngFor="let card of datos | async">
+		<app-card
+			[title]="card.name"
+			[content]="card.description"
+			[btn_content]="'Add'"
+			(clicked)="handleClick(card.id)"
+		></app-card>
+	</div>
+</div>

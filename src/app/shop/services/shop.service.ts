@@ -1,15 +1,29 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { Order } from '../domain/shop.model';
+import { from, map, Observable, of } from 'rxjs';
+import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { environment } from 'src/environments/environment';
+import { Order, OrderItem, OrderServiceInterface } from '../domain/shop.model';
+import { HttpShopAdapter } from './HttpShopAdapter';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-	constructor(private router: Router) {}
+	private productUrl = environment.baseUrl + '/orders';
+	private orderService: OrderServiceInterface = new HttpShopAdapter(
+		this.http,
+		this.productUrl
+	);
+	constructor(
+		private router: Router,
+		private http: HttpClient,
+		private authService: AuthService
+	) {}
 	private orderMocked: Order[] = [
 		{
 			id: 4,
-			customer_id: '4',
+			customer_id: 4,
 			amount: 100,
 			order_items: [
 				{
@@ -23,25 +37,25 @@ export class OrderService {
 		},
 	];
 	getAll(): Observable<Order[]> {
-		return of(this.orderMocked);
+		return from(this.orderService.getAll());
+		//return of(this.orderMocked);
 	}
 	getById(id: number): Observable<Order> {
-		const order = this.orderMocked.filter((order) => order.id == id)[0];
-		return of(order as Order);
+		/* const order = this.orderMocked.filter((order) => order.id == id)[0];
+		return of(order as Order); */
+		return from(this.orderService.getById(id));
 	}
-	updateOrder(order: Partial<Order>): Observable<Order> {
-		let newOrder: Order = {} as Order;
-		if (order.id) {
-			const oldOrder = this.getById(order.id).subscribe((oldOrder) => {
-				console.log(oldOrder);
-				console.log(order);
+/* 	getLastByUser(customer_id: number): Observable<Order> {
 
-				newOrder = { ...oldOrder, ...order };
-				newOrder = { ...order, ...oldOrder };
-				console.log(newOrder);
-			});
-		}
-
-		return of(newOrder);
+		//return from(this.orderService.getById(id));
+	} */
+	addOrderItem(order: Order, orderItem: OrderItem): Observable<Order> {
+		return from(this.orderService.addOrderItem(order, orderItem));
+	}
+	update(order: Partial<Order>): Observable<HttpResponse<Order>> {
+		return from(this.orderService.update(order));
+	}
+	create(order: Partial<Order>): Observable<HttpResponse<Order>> {
+		return from(this.orderService.create(order));
 	}
 }

@@ -1,4 +1,4 @@
-import { CreateResponse } from "src/app/app-common/services/HttpGenericAdapter";
+import { HttpResponse } from "src/app/app-common/services/HttpGenericAdapter";
 
 export type LoginData = {
 	email: string;
@@ -24,7 +24,7 @@ export type AuthStateModel = {
 export type AuthServiceInterface = {
 	getAll(): Promise<Auth[]>;
 	getById(id: number): Promise<Auth>;
-	create(user: RegisterData): Promise<CreateResponse<Auth>>;
+	create(user: RegisterData): Promise<HttpResponse<Auth>>;
 	login(user: LoginData): Promise<LoginResponse
 	>;
 }
