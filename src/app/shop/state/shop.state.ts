@@ -69,6 +69,22 @@ export class OrderState {
 		addProductToOrder: AddProductToOrder
 	): Observable<Order> {
 		const state = getState();
+
+		addProductToOrder.customer_id;
+		const orderItem: OrderItem = {
+			product_id: addProductToOrder.product_id,
+			quantity: 1,
+		};
+		return this.orderService.addOrderItem(state.selectedOrder, orderItem).pipe(
+			tap((order: Order) => {
+				console.log('Order Complete', order);
+				patchState({
+					orders: [...state.orders],
+					selectedOrder: order,
+				});
+			})
+		);
+		/* const state = getState();
 		let order: Observable<Order> = new Observable();
 		if (!state.selectedOrder) {
 			const orderRaw = {
@@ -97,7 +113,7 @@ export class OrderState {
 				})
 			);
 		});
-		return order;
+		return order; */
 	}
 
 	@Action(SetLastOrder)

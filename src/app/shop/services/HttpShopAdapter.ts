@@ -23,7 +23,7 @@ export class HttpShopAdapter
 
 		const payload = await new Promise((resolve, reject) => {
 			this.http
-				.post<Order>(`${this.url}/${order.id}`, orderItem)
+				.post<Order>(`${this.url}/${order.id}/items`, orderItem)
 				.subscribe({
 					next: (data) => resolve(data),
 					error: (err: HttpErrorResponse) => reject(err),
@@ -31,6 +31,6 @@ export class HttpShopAdapter
 		});
 		return payload as Order;
 	}
-	
+
 
 }
