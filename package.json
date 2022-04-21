@@ -6,15 +6,7 @@
 		"npm": "8.5.0"
 	},
 	"scripts": {
-		"ng": "ng",
-		"start": "node server.js",
-		"test-start": "ng build && node server.js",
-		"build": "ng build",
-		"test": "ng test",
-		"lint": "ng lint",
-		"e2e": "ng e2e",
-		"lite": "lite-server",
-		"postinstall": "ng build --prod"
+		
 	},
 	"private": true,
 	"dependencies": {

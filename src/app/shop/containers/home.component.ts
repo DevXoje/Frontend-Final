@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Auth } from 'src/app/auth/domain/auth.model';
 import { AuthState } from 'src/app/auth/state/auth.state';
 import { Order } from '../domain/shop.model';
-import { SetSelectedOrder } from '../state/shop.actions';
+import { SetLastOrder, SetSelectedOrder } from '../state/shop.actions';
 import { OrderState } from '../state/shop.state';
 
 @Component({
@@ -19,8 +19,10 @@ export class HomeComponent implements OnInit {
 	constructor(private store: Store) {}
 
 	ngOnInit(): void {
-		this.customer$?.subscribe((user) =>
-			this.store.dispatch(SetSelectedOrder)
-		);
+		this.customer$?.subscribe((user) => {
+			console.log('user', user);
+
+			this.store.dispatch(new SetLastOrder(user.id));
+		});
 	}
 }

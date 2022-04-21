@@ -105,9 +105,11 @@ export class OrderState {
 		{ getState, patchState }: StateContext<OrderStateModel>,
 		toLastOrder: SetLastOrder
 	): Observable<Order> {
-		return this.orderService.getById(toLastOrder.customer_id).pipe(
+		return this.orderService.getLastByUser(toLastOrder.customer_id).pipe(
 			tap((order: Order) => {
 				const state = getState();
+				console.log('order', order);
+
 				patchState({
 					orders: [...state.orders],
 					selectedOrder: order,
@@ -115,6 +117,4 @@ export class OrderState {
 			})
 		);
 	}
-
-
 }
