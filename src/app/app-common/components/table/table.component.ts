@@ -57,10 +57,6 @@ export class TableComponent implements OnChanges {
     } else {
       this.datos?.subscribe(data => {
         this.DATA_DEFAULT = of(data.sort((a, b) => {
-          console.log(data);
-          console.log(a[column]);
-          console.log(b[column]);
-          console.log(a[column] < b[column]);
 
           const res = a[column] < b[column] ? -1 : a[column] > b[column] ? 1 : 0;
           return direction === 'asc' ? res : -res;

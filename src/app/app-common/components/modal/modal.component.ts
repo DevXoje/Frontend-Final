@@ -29,7 +29,6 @@ export class ModalComponent implements OnInit {
   open(modalRef: NgbModalRef) {
     modalRef.result.then(
       result => {
-        console.log(result);
         this.closeResult = `Closed with: ${result}`;
       },
       reason => this.closeResult = `Dismissed ${this.getDismissReason(reason)}`

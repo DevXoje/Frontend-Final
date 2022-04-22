@@ -23,4 +23,5 @@ export type OrderServiceInterface = {
 	create(order: Partial<Order>): Promise<HttpResponse<Order>>;
 	update(order: Partial<Order>): Promise<HttpResponse<Order>>;
 	addOrderItem(order: Order, orderItem: OrderItem): Promise<Order>;
+	getOrderItems(order: Order): Promise<OrderItem[]>;
 };

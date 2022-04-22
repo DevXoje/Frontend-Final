@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Auth, RestoreData } from './auth/domain/auth.model';
@@ -15,18 +16,22 @@ import { AuthState } from './auth/state/auth.state';
 	`,
 })
 export class AppComponent implements OnInit {
-	constructor(private store: Store, public authService: AuthService) {}
+	constructor(
+		private store: Store,
+		public authService: AuthService,
+		private router: Router
+	) {}
 
 	ngOnInit() {
 		//this.checkLastConnection();
 	}
 	logoutHandler() {
-		this.store.dispatch(new Logout(0));
+		this.store.dispatch(new Logout(0)).subscribe(() => {
+			this.router.navigate(['/login']);
+		});
 	}
 	checkLastConnection() {
 		const jwtToken = this.authService.getStoredToken();
-		// Replace this with real object
-		console.log(jwtToken);
 
 		if (jwtToken) {
 			const restoreData: RestoreData = {

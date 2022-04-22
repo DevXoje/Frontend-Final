@@ -33,8 +33,8 @@ const thirdsModules = [
 
 @NgModule({
 	declarations: [...commonComponents.components, SortableHeaderDirective],
-	imports: [...nativeModules, ...thirdsModules],
-	exports: [...commonComponents.components],
+	imports: [...nativeModules, thirdsModules],
+	exports: [...commonComponents.components, thirdsModules],
 	providers: [
 		{
 			provide: HTTP_INTERCEPTORS,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Auth } from 'src/app/auth/domain/auth.model';
@@ -8,12 +9,14 @@ import { SetLastOrder, SetSelectedOrder } from '../state/shop.actions';
 import { OrderState } from '../state/shop.state';
 
 @Component({
-	selector: 'app-home',
-	template: ` <app-cart-nav></app-cart-nav>
-
-		<app-gallery-products></app-gallery-products>`,
+	selector: 'app-cart-nav',
+	template: `
+		<fa-icon [icon]="cartIcon" [routerLink]="'checkout'"></fa-icon>
+		<p>user:{{ (customer$ | async)?.email }}</p>
+		<p>order:{{ (order$ | async)?.amount }}</p>
+	`,
 })
-export class HomeComponent implements OnInit {
+export class CartNavComponent implements OnInit {
 	@Select(AuthState.getSelectedAuth)
 	customer$?: Observable<Auth>;
 	@Select(OrderState.getSelectedOrder)
@@ -21,8 +24,7 @@ export class HomeComponent implements OnInit {
 	constructor(private store: Store) {}
 
 	ngOnInit(): void {
-		this.customer$?.subscribe((user) => {
-			this.store.dispatch(new SetLastOrder(user.id));
-		});
+		
 	}
+	cartIcon = faShoppingCart;
 }

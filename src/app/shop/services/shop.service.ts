@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { from, map, Observable, of } from 'rxjs';
 import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
 import { AuthService } from 'src/app/auth/services/auth.service';
@@ -11,13 +10,12 @@ import { HttpShopAdapter } from './HttpShopAdapter';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-	private productUrl = environment.baseUrl + '/orders';
+	private orderUrl = environment.baseUrl + '/orders';
 	private orderService: OrderServiceInterface = new HttpShopAdapter(
 		this.http,
-		this.productUrl
+		this.orderUrl
 	);
 	constructor(
-		private router: Router,
 		private http: HttpClient,
 		private customerService: CustomerService
 	) {}
@@ -58,5 +56,8 @@ export class OrderService {
 	}
 	create(order: Partial<Order>): Observable<HttpResponse<Order>> {
 		return from(this.orderService.create(order));
+	}
+	getOrderItems(order: Order): Observable<OrderItem[]> {
+		return from(this.orderService.getOrderItems(order));
 	}
 }

@@ -1,4 +1,5 @@
 import { HttpResponse } from "src/app/app-common/services/HttpGenericAdapter";
+import { Customer } from "src/app/customer/domain/customer.model";
 
 export type LoginData = {
 	email: string;
@@ -32,5 +33,5 @@ export type LoginResponse = {
 	access_token: string;
 	token_type: string;
 	expires_in: number;
-	user: Auth;
+	user: Customer|Auth;
 }

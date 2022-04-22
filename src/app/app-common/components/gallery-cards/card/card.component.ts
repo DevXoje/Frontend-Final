@@ -37,28 +37,4 @@ export class CardComponent implements OnInit {
 
 	ngOnInit(): void {}
 
-	/*
-	closeResult: string = '';
-	open(modalRef: NgbModalRef) {
-		modalRef.result.then(
-			(result) => {
-				console.log(result);
-				this.closeResult = `Closed with: ${result}`;
-			},
-			(reason) =>
-				(this.closeResult = `Dismissed ${this.getDismissReason(
-					reason
-				)}`)
-		);
-	}
-
-	getDismissReason(reason: any): string {
-		if (reason === ModalDismissReasons.ESC) {
-			return 'by pressing ESC';
-		} else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-			return 'by clicking on a backdrop';
-		} else {
-			return `with: ${reason}`;
-		}
-	} */
 }

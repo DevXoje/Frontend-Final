@@ -24,7 +24,7 @@ const authRoutes: Routes = [
 			import('../../admin/admin.module').then((m) => m.AdminModule),
 	},
 	{
-		path: 'home',
+		path: 'shop',
 		loadChildren: () =>
 			import('../../shop/shop.module').then((m) => m.ShopModule),
 	},

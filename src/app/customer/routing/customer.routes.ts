@@ -1,12 +1,12 @@
 import { RouterModule, Routes } from '@angular/router';
-import { ProfileComponent } from '../containers/profile.component';
+import { CustomerProfileComponent } from '../containers/profile.component';
 
 
 const customerRoutes: Routes = [
 
 	{
 		path: 'profile',
-		component: ProfileComponent,
+		component: CustomerProfileComponent,
 		//canActivate: [AuthGuard],
 	}
 ];

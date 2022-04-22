@@ -18,10 +18,6 @@ import {
 } from '../domain/auth.model';
 import { HttpAuthAdapter } from './HttpAuthAdapter';
 
-const mockAdmin =
-	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlhvamUgQWRtaW4iLCJpYXQiOjE1MTYyMzkwMjIsInJvbGUiOiJhZG1pbiJ9.2-k2VNsmSCVuI5ddpF6QelIIC7yUoHSOtg-y5nZbJiU'; //admin
-const mockCustomer =
-	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFtYW5kZXIgUHJpbmdhbyIsImlhdCI6MTUxNjIzOTAyMiwicm9sZSI6ImN1c3RvbWVyIn0.61r67MyEOMJVAmlx02xRBdF59RFBkFq9au9zSDpEhV4'; //customer
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -32,7 +28,6 @@ export class AuthService {
 	);
 	constructor(
 		public jwtHelper: JwtHelperService,
-		private router: Router,
 		private http: HttpClient
 	) {}
 
@@ -42,7 +37,6 @@ export class AuthService {
 	restore(user: RestoreData): Observable<LoginResponse> {
 		let loginResponse: Observable<LoginResponse> =
 			new Observable<LoginResponse>();
-		console.log(this.jwtHelper.decodeToken(user.token));
 		this.getById(user.id).subscribe((auth) => {
 			loginResponse = from(
 				this.login({ email: auth.email, password: auth.password })
@@ -53,7 +47,7 @@ export class AuthService {
 	logout(id: number): Observable<Auth> {
 		localStorage.clear();
 
-		this.router.navigateByUrl('/login');
+		//this.router.n(['/login']);
 		return of({} as Auth);
 	}
 	signup(user: RegisterData): Observable<HttpResponse<Auth>> {
@@ -72,21 +66,7 @@ export class AuthService {
 	isCustomer(token: string): boolean {
 		return this.jwtHelper.decodeToken(token).role === 'customer';
 	}
-	checkRole(token: string) {
-		console.log(this.jwtHelper.decodeToken(token));
-		let route = '';
-		if (this.isAdmin(token)) {
-			route = '/dashboard';
-		} else if (this.isCustomer(token)) {
-			route = '/home';
-		} else {
-			route = '/';
-		}
-		//mockeado
-		route = '/home';
 
-		this.router.navigateByUrl(route);
-	}
 	getStoredToken(): LoginResponse {
 		return JSON.parse(
 			localStorage.getItem('token') as string
@@ -103,28 +83,7 @@ export class AuthService {
 		return from(this.authService.getById(id));
 	}
 
-	mockAuth(role = 'admin') {
-		const authMocked: Auth[] = [
-			{
-				id: 1,
-				email: 'admin',
-				password: 'admin',
-				role: 'admin',
-				token: '',
-			},
-			{
-				id: 1,
-				email: 'admin',
-				password: 'admin',
-				role: 'admin',
-				token: '',
-			},
-		];
-		localStorage.setItem(
-			'token',
-			role == 'admin' ? mockAdmin : mockCustomer
-		);
-	}
+
 	/* addAuth(book: Auth): Observable<Auth> {
     this.authMocked.push(book);
     return of(book);
@@ -136,7 +95,6 @@ export class AuthService {
     const { id } = book;
     this.authMocked = this.authMocked.filter((item) => item.id !== id);
     this.authMocked.push(book);
-    console.log(this.authMocked);
     return of(this.authMocked);
   }
   deleteAuth(id: number): Observable<Auth[]> {

@@ -75,15 +75,16 @@ export class OrderState {
 			product_id: addProductToOrder.product_id,
 			quantity: 1,
 		};
-		return this.orderService.addOrderItem(state.selectedOrder, orderItem).pipe(
-			tap((order: Order) => {
-				console.log('Order Complete', order);
-				patchState({
-					orders: [...state.orders],
-					selectedOrder: order,
-				});
-			})
-		);
+		return this.orderService
+			.addOrderItem(state.selectedOrder, orderItem)
+			.pipe(
+				tap((order: Order) => {
+					patchState({
+						orders: [...state.orders],
+						selectedOrder: order,
+					});
+				})
+			);
 		/* const state = getState();
 		let order: Observable<Order> = new Observable();
 		if (!state.selectedOrder) {
@@ -124,8 +125,6 @@ export class OrderState {
 		return this.orderService.getLastByUser(toLastOrder.customer_id).pipe(
 			tap((order: Order) => {
 				const state = getState();
-				console.log('order', order);
-
 				patchState({
 					orders: [...state.orders],
 					selectedOrder: order,

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 		profile
 	</div>`,
 })
-export class ProfileComponent implements OnInit {
+export class CustomerProfileComponent implements OnInit {
 
 	constructor(
 		private store: Store,
