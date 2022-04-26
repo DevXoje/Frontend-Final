@@ -6,7 +6,6 @@ import { AuthGuard } from './routing/guards/auth.guard';
 
 //Guards
 import * as authGuards from './routing/guards';
-import * as authInterceptors from './routing/interceptors';
 import * as authComponents from './components';
 import * as authContainers from './containers';
 import { AUTH_ROUTES } from './routing/auth.routes';
@@ -18,7 +17,6 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 	providers: [
 		//JwtHelperService
 		//...authGuards.guards,
-		//...authInterceptors.interceptors
 	],
 	exports: [...authComponents.components],
 })

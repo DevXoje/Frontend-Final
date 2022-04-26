@@ -10,43 +10,23 @@ import { HttpShopAdapter } from './HttpShopAdapter';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-	private orderUrl = environment.baseUrl + '/orders';
-	private orderService: OrderServiceInterface = new HttpShopAdapter(
-		this.http,
-		this.orderUrl
-	);
+	private orderUrl: string;
+	private orderService: OrderServiceInterface;
 	constructor(
 		private http: HttpClient,
 		private customerService: CustomerService
-	) {}
-	private orderMocked: Order[] = [
-		{
-			id: 4,
-			customer_id: 4,
-			amount: 100,
-			order_items: [
-				{
-					id: 4,
-					order_id: 4,
-					product_id: 4,
-					quantity: 1,
-					amount: 100,
-				},
-			],
-		},
-	];
+	) {
+		this.orderUrl = environment.baseUrl + '/orders';
+		this.orderService = new HttpShopAdapter(this.http, this.orderUrl);
+	}
 	getAll(): Observable<Order[]> {
 		return from(this.orderService.getAll());
-		//return of(this.orderMocked);
 	}
 	getById(id: number): Observable<Order> {
-		/* const order = this.orderMocked.filter((order) => order.id == id)[0];
-		return of(order as Order); */
 		return from(this.orderService.getById(id));
 	}
 	getLastByUser(customer_id: number): Observable<Order> {
 		return this.customerService.getLastOrder(customer_id);
-		//return from(this.orderService.getById(id));
 	}
 	addOrderItem(order: Order, orderItem: OrderItem): Observable<Order> {
 		return from(this.orderService.addOrderItem(order, orderItem));

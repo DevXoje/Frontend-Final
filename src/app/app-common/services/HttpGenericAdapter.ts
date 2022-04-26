@@ -1,16 +1,6 @@
-import {
-	HttpClient,
-	HttpErrorResponse,
-	HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 export class HttpGenericAdapter<Dato> {
-	headers = new HttpHeaders({
-		'Content-Type': 'application/json',
-		'Access-Control-Allow-Origin': '*',
-		'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-		/* Authorization: 'my-auth-token' */
-	});
 	constructor(protected http: HttpClient, protected url: string) {}
 
 	async getAll(): Promise<Dato[]> {
@@ -33,26 +23,19 @@ export class HttpGenericAdapter<Dato> {
 	}
 	async create(dato: Partial<Dato>): Promise<HttpResponse<Dato>> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http
-				.post(
-					`${this.url}/create`,
-					dato /* , { headers: this.headers } */
-				)
-				.subscribe({
-					next: (data) => resolve(data),
-					error: (err: HttpErrorResponse) => reject(err),
-				});
+			this.http.post(`${this.url}/create`, dato).subscribe({
+				next: (data) => resolve(data),
+				error: (err: HttpErrorResponse) => reject(err),
+			});
 		});
 		return payload as HttpResponse<Dato>;
 	}
 	async update(dato: Partial<Dato>): Promise<HttpResponse<Dato>> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http
-				.put(`${this.url}`, dato /* , { headers: this.headers } */)
-				.subscribe({
-					next: (data) => resolve(data),
-					error: (err: HttpErrorResponse) => reject(err),
-				});
+			this.http.put(`${this.url}`, dato).subscribe({
+				next: (data) => resolve(data),
+				error: (err: HttpErrorResponse) => reject(err),
+			});
 		});
 		return payload as HttpResponse<Dato>;
 	}

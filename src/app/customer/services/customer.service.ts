@@ -15,7 +15,11 @@ export class CustomerService {
 		this.http,
 		this.customerUrl
 	);
-	constructor(private router: Router, private http: HttpClient,private authService:AuthService) {}
+	constructor(
+		private router: Router,
+		private http: HttpClient,
+		private authService: AuthService
+	) {}
 	getLastOrder(customer_id: number): Observable<Order> {
 		return from(this.customerService.getLastOrder(customer_id));
 	}
@@ -23,5 +27,8 @@ export class CustomerService {
 		/* const customerBase= this.customerService.getById(auth_id);
 		const customerAuth=this.authService.getById(auth_id); */
 		return from(this.customerService.getById(auth_id));
+	}
+	getProfile(): Observable<Customer> {
+		return from(this.customerService.getProfile());
 	}
 }

@@ -1,7 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { HttpGenericAdapter } from 'src/app/app-common/services/HttpGenericAdapter';
-import { Auth } from 'src/app/auth/domain/auth.model';
-import { HttpAuthAdapter } from 'src/app/auth/services/HttpAuthAdapter';
 import { Order } from 'src/app/shop/domain/shop.model';
 import { environment } from 'src/environments/environment';
 
@@ -11,10 +9,10 @@ export class HttpCustomerAdapter
 	extends HttpGenericAdapter<Customer>
 	implements CustomerServiceInterface
 {
-	private authHttp: HttpAuthAdapter = new HttpAuthAdapter(
+	/* private authHttp: HttpAuthAdapter = new HttpAuthAdapter(
 		this.http,
 		environment.baseUrl + '/customers'
-	);
+	); */
 
 	constructor(http: HttpClient, authUrl: string) {
 		super(http, authUrl);
@@ -30,7 +28,18 @@ export class HttpCustomerAdapter
 		});
 		return payload as Order;
 	}
-/* 	override async getById(auth_id: number): Promise<Customer> {
+	async getProfile(): Promise<Customer> {
+		const payload = await new Promise((resolve, reject) => {
+			this.http
+				.get<Customer>(`${environment.baseUrl}/api/auth/user-profile`)
+				.subscribe({
+					next: (data) => resolve(data),
+					error: (err: HttpErrorResponse) => reject(err),
+				});
+		});
+		return payload as Customer;
+	}
+	/* 	override async getById(auth_id: number): Promise<Customer> {
 		const customer = super.getById(auth_id);
 		const auth = this.authHttp.getById(auth_id);
 		let customerComplete: Promise<Customer>;

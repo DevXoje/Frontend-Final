@@ -31,6 +31,8 @@ const thirdsModules = [
 	}),
 ];
 
+import * as authInterceptors from '../auth/routing/interceptors';
+
 @NgModule({
 	declarations: [...commonComponents.components, SortableHeaderDirective],
 	imports: [...nativeModules, thirdsModules],
@@ -41,6 +43,7 @@ const thirdsModules = [
 			useClass: LoaderInterceptor,
 			multi: true,
 		},
+		...authInterceptors.interceptors,
 	],
 })
 export class AppCommonModule {}

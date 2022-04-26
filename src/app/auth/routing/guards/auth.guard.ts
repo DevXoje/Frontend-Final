@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { TokenService } from '../../services/token.service';
 @Injectable()
 export class AuthGuard implements CanActivate {
-	constructor(public authService: AuthService, public router: Router) { }
+	constructor(public token: TokenService, public router: Router) {}
 	canActivate(): boolean {
-		if (!this.authService.isAuthenticated()) {
+		if (!this.token.isValidToken()) {
 			this.router.navigateByUrl('/login');
 			return false;
 		}

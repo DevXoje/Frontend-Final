@@ -20,7 +20,7 @@
 			[id]="field.key"
 			[type]="field.type"
 			[placeholder]="field.placeholder"
+			(blur)="checkIsInvalid($event)"
 		/>
 	</div>
-	<pre *ngIf="isInvalid">{{ getErrors | json }}</pre>
 </div>

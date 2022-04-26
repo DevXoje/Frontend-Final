@@ -4,8 +4,10 @@ import { Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Field } from 'src/app/app-common/domain/field';
 import { FieldControlService } from 'src/app/app-common/services/field-control.service';
+import { NotificationService } from 'src/app/app-common/services/notification.service';
 import { LoginData, LoginResponse } from '../domain/auth.model';
 import { AuthService } from '../services/auth.service';
+import { TokenService } from '../services/token.service';
 import { Login } from '../state/auth.actions';
 
 @Component({
@@ -26,7 +28,9 @@ export class LoginComponent implements OnInit {
 		fieldService: FieldControlService,
 		private store: Store,
 		private authService: AuthService,
-		private router: Router
+		private router: Router,
+		private notification: NotificationService,
+		private token: TokenService
 	) {
 		this.fields$ = fieldService.getLoginFields();
 	}
@@ -37,8 +41,9 @@ export class LoginComponent implements OnInit {
 			.dispatch(new Login(event)) // O SET CUSTOMER DATA
 			.subscribe((response) => {
 				let route = '/';
+				const user_name = response.auth.selectedUser;
+				//Deberia estar gestionado con el tokenService
 				const role = response.auth.selectedUser.role;
-
 				if (role === 'admin') {
 					route = '/dashboard';
 				} else if (role === 'customer') {
@@ -47,8 +52,14 @@ export class LoginComponent implements OnInit {
 				} else {
 					route = '/';
 				}
+				//MOCK
+				route = '/customer/profile';
 
-				this.router.navigate([route]);
+				this.notification.showSuccess(
+					'Bienvenido ' + user_name,
+					'Login'
+				);
+				//this.router.navigate([route]);
 			});
 		//this.authService.mockAuth('customer'); //MOCK
 		//const savedToken = this.authService.checkToken();

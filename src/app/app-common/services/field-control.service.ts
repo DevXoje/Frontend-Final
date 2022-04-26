@@ -86,17 +86,37 @@ export class FieldControlService {
 				key: 'email',
 				label: 'Email',
 				type: 'email',
-				validators: [Validators.required],
+				validators: [Validators.required, Validators.email],
 				order: 2,
 			}),
 			new PasswordInput({
 				key: 'password',
 				label: 'Password',
 				type: 'password',
+				validators: [Validators.required, Validators.minLength(6)],
+				order: 3,
+			}),
+			new PasswordInput({
+				key: 'password-confirm',
+				label: 'Password confirm',
+				type: 'password',
+				validators: [Validators.required, Validators.minLength(6), this.matchOtherValidator('password')],
 				order: 3,
 			}),
 		];
 
 		return of(fields.sort((a, b) => a.order - b.order));
+	}
+	matchOtherValidator(otherControlName: string) {
+		return (control: FormControl) => {
+			const otherControl: FormControl = control.root.get(otherControlName) as FormControl;
+			if (otherControl) {
+				const subscription: any = otherControl.valueChanges.subscribe(() => {
+					control.updateValueAndValidity();
+					subscription.unsubscribe();
+				});
+			}
+			return otherControl && control.value !== otherControl.value ? { match: true } : null;
+		};
 	}
 }

@@ -3,8 +3,14 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { catchError, Observable, of, tap, throwError } from 'rxjs';
 import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
-import { Auth, AuthStateModel, LoginResponse } from '../domain/auth.model';
+import {
+	Auth,
+	AuthStateModel,
+	LoginData,
+	LoginResponse,
+} from '../domain/auth.model';
 import { AuthService } from '../services/auth.service';
+import { TokenService } from '../services/token.service';
 import { GetAllUsers, Login, Logout, Restore, Signup } from './auth.actions';
 const defaults = {
 	users: [] as Auth[],
@@ -16,7 +22,10 @@ const defaults = {
 })
 @Injectable()
 export class AuthState {
-	constructor(private readonly authService: AuthService) {}
+	constructor(
+		private readonly authService: AuthService,
+		private token: TokenService
+	) {}
 
 	@Selector()
 	public static getAuthList({ users }: AuthStateModel): Auth[] {
@@ -32,50 +41,46 @@ export class AuthState {
 	login(
 		{ getState, patchState }: StateContext<AuthStateModel>,
 		{ loginData }: Login
-	): Observable<LoginResponse> {
+	): Observable<HttpResponse<LoginData>> {
 		return this.authService.login(loginData).pipe(
-			tap((auth: LoginResponse) => {
-				const state = getState();
-				localStorage.setItem('token', JSON.stringify(auth));
-				
+			tap((auth: any) => {
+				this.token.handleData(JSON.stringify(auth.data.token));
 				patchState({
-					users: [...state.users],
-					selectedUser: auth.user,
+					users: [...getState().users],
+					selectedUser: auth.data.name,
 				});
 			})
 		);
 	}
 	@Action(Restore)
-	restore(
-		{ getState, patchState }: StateContext<AuthStateModel>,
-		{ restoreData }: Restore
-	): Observable<LoginResponse> {
-		return this.authService.restore(restoreData).pipe(
-			tap((auth: LoginResponse) => {
-				const state = getState();
-				localStorage.setItem('token', JSON.stringify(auth));
-				console.log(this.authService.getStoredToken());
+	restore({
+		getState,
+		patchState,
+	}: StateContext<AuthStateModel>): //{ restoreData }: Restore
+	Observable<HttpResponse<Auth>> {
+		return this.authService.restore().pipe(
+			tap((auth: HttpResponse<Auth>) => {
+				console.log(auth);
+
+				//this.token.handleData(JSON.stringify(auth));
+				//console.log(this.token.getToken());
 
 				patchState({
-					users: [...state.users],
-					selectedUser: auth.user,
+					users: [...getState().users],
+					selectedUser: auth.data,
 				});
 			})
 		);
 	}
 	@Action(Logout)
-	logout(
-		{ getState, patchState }: StateContext<AuthStateModel>,
-		{ id }: Logout
-	) {
-		return this.authService.logout(id).pipe(
-			tap(() => {
-				const state = getState();
+	logout({ getState, patchState }: StateContext<AuthStateModel>) {
+		return this.authService.logout().pipe(
+			tap(() =>
 				patchState({
-					users: [...state.users],
+					users: [...getState().users],
 					selectedUser: {} as Auth,
-				});
-			}),
+				})
+			),
 			catchError((error: HttpErrorResponse): Observable<any> => {
 				// we expect 404, it's not a failure for us.
 				if (error.status === 404) {
@@ -111,10 +116,9 @@ export class AuthState {
 	}: StateContext<AuthStateModel>): Observable<Auth[]> {
 		return this.authService.getAll().pipe(
 			tap((users: Auth[]) => {
-				const state = getState();
 				patchState({
 					users: [...users],
-					selectedUser: state.selectedUser as Auth,
+					selectedUser: getState().selectedUser,
 				});
 			})
 			/* tap((auth: Auth) => {

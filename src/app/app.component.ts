@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
-import { Auth, RestoreData } from './auth/domain/auth.model';
-import { AuthService } from './auth/services/auth.service';
+import { Store } from '@ngxs/store';
+import { Auth } from './auth/domain/auth.model';
+import { TokenService } from './auth/services/token.service';
 import { Login, Logout, Restore } from './auth/state/auth.actions';
-import { AuthState } from './auth/state/auth.state';
 
 @Component({
 	selector: 'app-root',
@@ -18,27 +16,34 @@ import { AuthState } from './auth/state/auth.state';
 export class AppComponent implements OnInit {
 	constructor(
 		private store: Store,
-		public authService: AuthService,
-		private router: Router
+		private router: Router,
+		private token: TokenService
 	) {}
 
 	ngOnInit() {
-		//this.checkLastConnection();
+		if (this.token.isValidToken()) {
+			this.store.dispatch(Restore).subscribe((auth: any) => {
+				let route = '/';
+
+				const role = auth.auth.selectedUser.role;
+				if (role === 'admin') {
+					route = '/dashboard';
+				} else if (role === 'customer') {
+					route = '/shop';
+					// O SET CUSTOMER DATA
+				} else {
+					route = '/';
+				}
+				//MOCK
+				route = '/customer/profile';
+
+				this.router.navigate([route]);
+			});
+		}
 	}
 	logoutHandler() {
 		this.store.dispatch(new Logout(0)).subscribe(() => {
 			this.router.navigate(['/login']);
 		});
-	}
-	checkLastConnection() {
-		const jwtToken = this.authService.getStoredToken();
-
-		if (jwtToken) {
-			const restoreData: RestoreData = {
-				id: jwtToken.user.id,
-				token: jwtToken.access_token,
-			};
-			this.store.dispatch(new Restore(restoreData));
-		}
 	}
 }

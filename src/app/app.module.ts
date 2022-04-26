@@ -12,7 +12,6 @@ import { ProductState } from './product/state/product.state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_ROUTES } from './app.routes';
 import { OrderState } from './shop/state/shop.state';
-
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
@@ -38,8 +37,10 @@ import { OrderState } from './shop/state/shop.state';
 		{
 			provide: JWT_OPTIONS,
 			useValue: JWT_OPTIONS,
+			//useClass: JwtHelperService,
 		},
 		JwtHelperService,
+		//...authInterceptors.interceptors,
 	],
 	bootstrap: [AppComponent],
 })

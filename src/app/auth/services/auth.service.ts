@@ -1,12 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { from, Observable, of } from 'rxjs';
-import {
-	HttpResponse,
-	HttpGenericAdapter,
-} from 'src/app/app-common/services/HttpGenericAdapter';
+import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
 import { environment } from 'src/environments/environment';
 import {
 	Auth,
@@ -14,10 +10,9 @@ import {
 	LoginData,
 	LoginResponse,
 	RegisterData,
-	RestoreData,
 } from '../domain/auth.model';
 import { HttpAuthAdapter } from './HttpAuthAdapter';
-
+import { TokenService } from './token.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -28,61 +23,30 @@ export class AuthService {
 	);
 	constructor(
 		public jwtHelper: JwtHelperService,
-		private http: HttpClient
+		private http: HttpClient,
+		private token: TokenService
 	) {}
 
-	login(user: LoginData): Observable<LoginResponse> {
+	login(user: LoginData): Observable<HttpResponse<LoginResponse>> {
 		return from(this.authService.login(user));
 	}
-	restore(user: RestoreData): Observable<LoginResponse> {
-		let loginResponse: Observable<LoginResponse> =
-			new Observable<LoginResponse>();
-		this.getById(user.id).subscribe((auth) => {
-			loginResponse = from(
-				this.login({ email: auth.email, password: auth.password })
-			);
-		});
-		return loginResponse;
+	restore(): Observable<HttpResponse<Auth>> {
+		return from(this.authService.restore());
 	}
-	logout(id: number): Observable<Auth> {
+	logout(): Observable<Auth> {
 		localStorage.clear();
 
-		//this.router.n(['/login']);
 		return of({} as Auth);
 	}
 	signup(user: RegisterData): Observable<HttpResponse<Auth>> {
 		return from(this.authService.create(user));
 	}
-	public isAuthenticated(): boolean {
-		const token = localStorage.getItem('token') as string;
-		// Check whether the token is expired and return
-		// true or false
-		//return !this.jwtHelper.isTokenExpired(token);
-		return true;
-	}
-	isAdmin(token: string): boolean {
-		return this.jwtHelper.decodeToken(token).role === 'admin';
-	}
-	isCustomer(token: string): boolean {
-		return this.jwtHelper.decodeToken(token).role === 'customer';
-	}
-
-	getStoredToken(): LoginResponse {
-		return JSON.parse(
-			localStorage.getItem('token') as string
-		) as LoginResponse;
-	}
-	printToken(): string {
-		return this.jwtHelper.decodeToken(this.getStoredToken().access_token);
-	}
 	getAll(): Observable<Auth[]> {
-		//return of(this.authMocked);
 		return from(this.authService.getAll());
 	}
 	getById(id: number): Observable<Auth> {
 		return from(this.authService.getById(id));
 	}
-
 
 	/* addAuth(book: Auth): Observable<Auth> {
     this.authMocked.push(book);

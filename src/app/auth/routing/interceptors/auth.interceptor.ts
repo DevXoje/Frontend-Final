@@ -8,29 +8,31 @@ import {
 } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { TokenService } from '../../services/token.service';
 
-@Injectable()
+@Injectable({
+	providedIn: 'root',
+})
 export class AuthInterceptor implements HttpInterceptor {
-	constructor(private router: Router) {}
+	constructor(private router: Router, private token: TokenService) {}
 
 	intercept(
 		req: HttpRequest<unknown>,
 		next: HttpHandler
 	): Observable<HttpEvent<unknown>> {
-		const token: string = localStorage.getItem('token') as string;
-
-		let request = req;
-
-		if (token) {
-			request = req.clone({
+		let authReq = req;
+		if (this.token.isValidToken()) {
+			authReq = req.clone({
 				setHeaders: {
-					authorization: `Bearer ${token}`,
+					Authorization: `Bearer ${this.token.getToken()}`,
 				},
 			});
 		}
 
-		return next.handle(request).pipe(
+		return next.handle(authReq).pipe(
 			catchError((err: HttpErrorResponse) => {
+				console.log('err', err);
+
 				if (err.status === 401) {
 					this.router.navigateByUrl('/login');
 				}

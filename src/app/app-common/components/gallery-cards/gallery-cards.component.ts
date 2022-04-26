@@ -1,11 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-	ModalDismissReasons,
-	NgbActiveModal,
-	NgbModal,
-	NgbModalRef,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
+import { Card } from '../../domain/card';
 
 @Component({
 	selector: 'app-gallery-cards',
@@ -13,14 +9,11 @@ import { Observable } from 'rxjs';
 	styleUrls: ['./gallery-cards.component.scss'],
 	providers: [NgbActiveModal, NgbModal],
 })
-export class GalleryCardsComponent implements OnInit {
+export class GalleryCardsComponent {
 	@Input() datos: Observable<any[]> | undefined = new Observable<any[]>();
 	@Output() outClicked: EventEmitter<any> = new EventEmitter<any>();
 
 	handleClick(e: any) {
 		this.outClicked.emit(e);
 	}
-	constructor() {}
-
-	ngOnInit(): void {}
 }

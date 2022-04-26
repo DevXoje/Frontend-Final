@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LoaderService } from '../services/loader.service';
 
 @Component({
@@ -6,7 +6,11 @@ import { LoaderService } from '../services/loader.service';
 	template: `
 		<ng-container *ngIf="loading">
 			<div class="overlay"></div>
-			<div class="spinner">loading...</div>
+			<div class="spinner">
+				<div class="spinner-border" role="status">
+					<!-- <span class="sr-only">Loading...</span> -->
+				</div>
+			</div>
 		</ng-container>
 	`,
 	styles: [
@@ -31,11 +35,12 @@ import { LoaderService } from '../services/loader.service';
 		`,
 	],
 })
-export class LoaderComponent implements OnInit {
+export class LoaderComponent {
 	loading: boolean = true;
 	@Input() message = '';
 	constructor(private loaderService: LoaderService) {
-		this.loaderService.loading$.subscribe((v) => (this.loading = v));
+		this.loaderService.loading$.subscribe(
+			(isLoading) => (this.loading = isLoading)
+		);
 	}
-	ngOnInit() {}
 }

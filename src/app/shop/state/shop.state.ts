@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Order, OrderItem, OrderStateModel } from '../domain/shop.model';
 import { OrderService } from '../services/shop.service';
 import {
@@ -39,10 +39,9 @@ export class OrderState {
 	}: StateContext<OrderStateModel>): Observable<Order[]> {
 		return this.orderService.getAll().pipe(
 			tap((orders: Order[]) => {
-				const state = getState();
 				patchState({
 					orders: [...orders],
-					selectedOrder: state.selectedOrder,
+					selectedOrder: getState().selectedOrder,
 				});
 			})
 		);
@@ -55,9 +54,8 @@ export class OrderState {
 	): Observable<Order> {
 		return this.orderService.getById(toStoreOrder.id).pipe(
 			tap((order: Order) => {
-				const state = getState();
 				patchState({
-					orders: [...state.orders],
+					orders: [...getState().orders],
 					selectedOrder: order,
 				});
 			})
@@ -69,8 +67,6 @@ export class OrderState {
 		addProductToOrder: AddProductToOrder
 	): Observable<Order> {
 		const state = getState();
-
-		addProductToOrder.customer_id;
 		const orderItem: OrderItem = {
 			product_id: addProductToOrder.product_id,
 			quantity: 1,
@@ -85,36 +81,6 @@ export class OrderState {
 					});
 				})
 			);
-		/* const state = getState();
-		let order: Observable<Order> = new Observable();
-		if (!state.selectedOrder) {
-			const orderRaw = {
-				customer_id: addProductToOrder.customer_id,
-			};
-			this.orderService.create(orderRaw).subscribe((orderCreated) => {
-				order = of(orderCreated.data);
-				console.log('order created', orderCreated);
-			});
-		} else {
-			order = of(state.selectedOrder);
-		}
-		order.subscribe((order) => {
-			const orderItem: OrderItem = {
-				product_id: addProductToOrder.product_id,
-				quantity: 1,
-			};
-			return this.orderService.addOrderItem(order, orderItem).pipe(
-				tap((order: Order) => {
-					console.log('Order Complete', order);
-
-					patchState({
-						orders: [...state.orders],
-						selectedOrder: order,
-					});
-				})
-			);
-		});
-		return order; */
 	}
 
 	@Action(SetLastOrder)
@@ -123,13 +89,12 @@ export class OrderState {
 		toLastOrder: SetLastOrder
 	): Observable<Order> {
 		return this.orderService.getLastByUser(toLastOrder.customer_id).pipe(
-			tap((order: Order) => {
-				const state = getState();
+			tap((order: Order) =>
 				patchState({
-					orders: [...state.orders],
+					orders: [...getState().orders],
 					selectedOrder: order,
-				});
-			})
+				})
+			)
 		);
 	}
 }
