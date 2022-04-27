@@ -3,9 +3,7 @@ import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Auth } from 'src/app/auth/domain/auth.model';
 import { AuthState } from 'src/app/auth/state/auth.state';
-import { Order } from '../domain/shop.model';
-import { SetLastOrder, SetSelectedOrder } from '../state/shop.actions';
-import { OrderState } from '../state/shop.state';
+import { SetLastOrder } from '../state/shop.actions';
 
 @Component({
 	selector: 'app-home',
@@ -16,13 +14,14 @@ import { OrderState } from '../state/shop.state';
 export class HomeComponent implements OnInit {
 	@Select(AuthState.getSelectedAuth)
 	customer$?: Observable<Auth>;
-	@Select(OrderState.getSelectedOrder)
-	order$?: Observable<Order>;
+
 	constructor(private store: Store) {}
 
 	ngOnInit(): void {
 		this.customer$?.subscribe((user) => {
-			this.store.dispatch(new SetLastOrder(user.id));
+			if (user.id != undefined) {
+				this.store.dispatch(new SetLastOrder(user.id));
+			}
 		});
 	}
 }

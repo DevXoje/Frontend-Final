@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { from, Observable } from 'rxjs';
+import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { Order } from 'src/app/shop/domain/shop.model';
 import { environment } from 'src/environments/environment';
@@ -20,12 +21,13 @@ export class CustomerService {
 		private http: HttpClient,
 		private authService: AuthService
 	) {}
-	getLastOrder(customer_id: number): Observable<Order> {
+	getLastOrder(customer_id: number): Observable<HttpResponse<Order>> {
 		return from(this.customerService.getLastOrder(customer_id));
 	}
-	getById(auth_id: number): Observable<Customer> {
-		/* const customerBase= this.customerService.getById(auth_id);
-		const customerAuth=this.authService.getById(auth_id); */
+	getOrders(customer_id: number): Observable<HttpResponse<Order[]>> {
+		return from(this.customerService.getOrders(customer_id));
+	}
+	getById(auth_id: number): Observable<HttpResponse<Customer>> {
 		return from(this.customerService.getById(auth_id));
 	}
 	getProfile(): Observable<Customer> {

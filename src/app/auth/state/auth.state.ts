@@ -56,15 +56,9 @@ export class AuthState {
 	restore({
 		getState,
 		patchState,
-	}: StateContext<AuthStateModel>): //{ restoreData }: Restore
-	Observable<HttpResponse<Auth>> {
+	}: StateContext<AuthStateModel>): Observable<HttpResponse<Auth>> {
 		return this.authService.restore().pipe(
 			tap((auth: HttpResponse<Auth>) => {
-				console.log(auth);
-
-				//this.token.handleData(JSON.stringify(auth));
-				//console.log(this.token.getToken());
-
 				patchState({
 					users: [...getState().users],
 					selectedUser: auth.data,
@@ -72,6 +66,7 @@ export class AuthState {
 			})
 		);
 	}
+
 	@Action(Logout)
 	logout({ getState, patchState }: StateContext<AuthStateModel>) {
 		return this.authService.logout().pipe(
@@ -113,11 +108,11 @@ export class AuthState {
 	getAll({
 		getState,
 		patchState,
-	}: StateContext<AuthStateModel>): Observable<Auth[]> {
+	}: StateContext<AuthStateModel>): Observable<HttpResponse<Auth[]>> {
 		return this.authService.getAll().pipe(
-			tap((users: Auth[]) => {
+			tap((resp: HttpResponse<Auth[]>) => {
 				patchState({
-					users: [...users],
+					users: [...resp.data],
 					selectedUser: getState().selectedUser,
 				});
 			})

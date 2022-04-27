@@ -13,6 +13,7 @@ import { AddProductToOrder } from 'src/app/shop/state/shop.actions';
 	selector: 'app-gallery-products',
 	template: `<app-gallery-cards
 		[datos]="products$"
+		[btn_text]="'Add to cart'"
 		(outClicked)="handleClick($event)"
 	></app-gallery-cards>`,
 })

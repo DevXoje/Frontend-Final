@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Field } from 'src/app/app-common/domain/field';
 import { FieldControlService } from 'src/app/app-common/services/field-control.service';
 import { NotificationService } from 'src/app/app-common/services/notification.service';
-import { LoginData, LoginResponse } from '../domain/auth.model';
+import { LoginData } from '../domain/auth.model';
 import { AuthService } from '../services/auth.service';
 import { TokenService } from '../services/token.service';
 import { Login } from '../state/auth.actions';
@@ -21,21 +21,17 @@ import { Login } from '../state/auth.actions';
 		<a routerLink="/register">¡ Necesito una cuenta !</a>
 	</div>`,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 	fields$?: Observable<Field<any>[]>;
 
 	constructor(
 		fieldService: FieldControlService,
 		private store: Store,
-		private authService: AuthService,
-		private router: Router,
-		private notification: NotificationService,
-		private token: TokenService
+		private notification: NotificationService
 	) {
 		this.fields$ = fieldService.getLoginFields();
 	}
 
-	ngOnInit(): void {}
 	loginHandler(event: LoginData) {
 		this.store
 			.dispatch(new Login(event)) // O SET CUSTOMER DATA

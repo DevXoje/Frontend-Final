@@ -1,5 +1,13 @@
-import { Order } from '../domain/shop.model';
+import { Order } from "../domain/shop.model";
 
+/* export class SetOrders {
+	static readonly type = '[Orders] SetAll';
+	constructor(public customer_id: number) {}
+} */
+export class SetOrders {
+	static readonly type = '[Orders] SetAll';
+	constructor(public orders: Order[]) {}
+}
 export class GetAllOrders {
 	static readonly type = '[Orders] GetAll';
 }

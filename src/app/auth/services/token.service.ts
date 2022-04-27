@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -7,16 +8,25 @@ export class TokenService {
 		login: environment.baseUrl + '/auth/login',
 		register: environment.baseUrl + '/auth/register',
 	};
+	constructor(private jwtHelper: JwtHelperService) {}
+
 	handleData(token: any) {
 		localStorage.setItem('auth_token', token);
 	}
-	getToken(): string {
-		return (localStorage.getItem('auth_token') as string).replace(/"/g, '');
+	getToken(): string | undefined {
+		if (localStorage.getItem('auth_token')) {
+			return (localStorage.getItem('auth_token') as string).replace(
+				/"/g,
+				''
+			);
+		} else {
+			return undefined;
+		}
 	}
 	// Verify the token
 	isValidToken(): boolean {
-		const token = this.getToken() as string;
-
+		return !this.jwtHelper.isTokenExpired(this.getToken());
+		/* const token = this.getToken();
 		let isValid = false;
 		if (token && token.length > 10) {
 			const payload = this.payload(token);
@@ -27,7 +37,7 @@ export class TokenService {
 						: false;
 			}
 		}
-		return isValid;
+		return isValid; */
 	}
 	payload(token: any) {
 		const jwtPayload = token.split('.')[1];

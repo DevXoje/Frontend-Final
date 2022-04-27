@@ -48,9 +48,9 @@ export class CustomerCheckoutComponent implements OnInit {
 					placeholder: auth.email,
 				}),
 			];
-			this.customerService.getById(auth.id).subscribe((customer) => {
+			/* this.customerService.getById(auth.id).subscribe((customer) => {
 				console.log(customer, 'oninit');
-			});
+			}); */
 		});
 	}
 }

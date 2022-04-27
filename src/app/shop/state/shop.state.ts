@@ -1,12 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Observable, tap } from 'rxjs';
+import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
 import { Order, OrderItem, OrderStateModel } from '../domain/shop.model';
 import { OrderService } from '../services/shop.service';
 import {
 	AddProductToOrder,
 	GetAllOrders,
 	SetLastOrder,
+	SetOrders,
 	SetSelectedOrder,
 } from './shop.actions';
 
@@ -36,11 +38,11 @@ export class OrderState {
 	getAll({
 		getState,
 		patchState,
-	}: StateContext<OrderStateModel>): Observable<Order[]> {
+	}: StateContext<OrderStateModel>): Observable<HttpResponse<Order[]>> {
 		return this.orderService.getAll().pipe(
-			tap((orders: Order[]) => {
+			tap((resp: HttpResponse<Order[]>) => {
 				patchState({
-					orders: [...orders],
+					orders: [...resp.data],
 					selectedOrder: getState().selectedOrder,
 				});
 			})
@@ -51,16 +53,41 @@ export class OrderState {
 	public setSelectedOrder(
 		{ getState, patchState }: StateContext<OrderStateModel>,
 		toStoreOrder: SetSelectedOrder
-	): Observable<Order> {
+	): Observable<HttpResponse<Order>> {
 		return this.orderService.getById(toStoreOrder.id).pipe(
-			tap((order: Order) => {
+			tap((resp: HttpResponse<Order>) => {
 				patchState({
 					orders: [...getState().orders],
-					selectedOrder: order,
+					selectedOrder: resp.data,
 				});
 			})
 		);
 	}
+	/* @Action(SetOrders)
+	public setOrders(
+		{ getState, patchState }: StateContext<OrderStateModel>,
+		toSetOrder: SetOrders
+	): Observable<HttpResponse<Order[]>> {
+		return this.orderService.getByUser(toSetOrder.customer_id).pipe(
+			tap((resp: HttpResponse<Order[]>) =>
+				patchState({
+					orders: [...resp.data],
+					selectedOrder: getState().selectedOrder,
+				})
+			)
+		);
+	} */
+	@Action(SetOrders)
+	public setOrders(
+		{ getState, patchState }: StateContext<OrderStateModel>,
+		toSetOrder: SetOrders
+	) {
+		patchState({
+			orders: [...toSetOrder.orders],
+			selectedOrder: getState().selectedOrder,
+		});
+	}
+
 	@Action(AddProductToOrder)
 	public addProductToOrder(
 		{ getState, patchState }: StateContext<OrderStateModel>,
@@ -89,10 +116,10 @@ export class OrderState {
 		toLastOrder: SetLastOrder
 	): Observable<Order> {
 		return this.orderService.getLastByUser(toLastOrder.customer_id).pipe(
-			tap((order: Order) =>
+			tap((order: any) =>
 				patchState({
 					orders: [...getState().orders],
-					selectedOrder: order,
+					selectedOrder: order.data,
 				})
 			)
 		);

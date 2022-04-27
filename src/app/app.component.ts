@@ -1,19 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { faUserSlash } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngxs/store';
-import { Auth } from './auth/domain/auth.model';
 import { TokenService } from './auth/services/token.service';
-import { Login, Logout, Restore } from './auth/state/auth.actions';
+import { Logout, Restore } from './auth/state/auth.actions';
+import { SetSelectedProduct } from './product/state/product.actions';
+import { SetLastOrder, SetOrders } from './shop/state/shop.actions';
 
 @Component({
 	selector: 'app-root',
 	template: `
-		<button (click)="logoutHandler()">Logout</button>
+		<button (click)="logoutHandler()">
+			<fa-icon [icon]="unauthIcon"></fa-icon> Logout
+		</button>
 		<app-loader></app-loader>
 		<router-outlet></router-outlet>
 	`,
 })
 export class AppComponent implements OnInit {
+	unauthIcon = faUserSlash;
+
 	constructor(
 		private store: Store,
 		private router: Router,
@@ -22,23 +28,29 @@ export class AppComponent implements OnInit {
 
 	ngOnInit() {
 		if (this.token.isValidToken()) {
-			this.store.dispatch(Restore).subscribe((auth: any) => {
-				let route = '/';
+			this.store.dispatch(Restore).subscribe((store_data: any) => {
+				this.store.dispatch(
+					new SetOrders(store_data.auth.selectedUser.orders)
+				);
+				this.store.dispatch(
+					new SetLastOrder(store_data.auth.selectedUser.id)
+				);
 
-				const role = auth.auth.selectedUser.role;
-				if (role === 'admin') {
-					route = '/dashboard';
-				} else if (role === 'customer') {
-					route = '/shop';
-					// O SET CUSTOMER DATA
-				} else {
-					route = '/';
-				}
+				const paths = {
+					admin: '/dashboard',
+					customer: '/shop',
+				};
+				type UserRole = 'admin' | 'customer';
+				const role: UserRole = store_data.auth.selectedUser.role;
+				let route: string = paths[role];
+
 				//MOCK
 				route = '/customer/profile';
 
 				this.router.navigate([route]);
 			});
+		} else {
+			this.router.navigate(['/shop']);
 		}
 	}
 	logoutHandler() {

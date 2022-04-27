@@ -33,11 +33,7 @@ export class HttpAuthAdapter
 	async restore(): Promise<HttpResponse<Auth>> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.get<any>(this.url + '/profile').subscribe({
-				next: (data) => {
-					console.log(data);
-
-					return resolve(data);
-				},
+				next: (data) => resolve(data),
 				error: (err: HttpErrorResponse) => reject(err),
 			});
 		});

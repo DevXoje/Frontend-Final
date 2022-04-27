@@ -11,6 +11,7 @@ import { Card } from '../../domain/card';
 })
 export class GalleryCardsComponent {
 	@Input() datos: Observable<any[]> | undefined = new Observable<any[]>();
+	@Input() btn_text: string = 'click me';
 	@Output() outClicked: EventEmitter<any> = new EventEmitter<any>();
 
 	handleClick(e: any) {

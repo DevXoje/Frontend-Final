@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Observable, tap } from 'rxjs';
+import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
 import {
 	Product,
-	ProductSearch,
 	ProductStateModel,
 } from '../domain/product.model';
 import { ProductService } from '../services/product.service';
 import {
 	GetAllProducts,
-	GetSortedProducts,
 	SetSelectedProduct,
-	SetSelectedProductToUpdate,
 } from './product.actions';
 
 const defaults: ProductStateModel = {
@@ -40,18 +38,19 @@ export class ProductState {
 	getAll({
 		getState,
 		patchState,
-	}: StateContext<ProductStateModel>): Observable<Product[]> {
+	}: StateContext<ProductStateModel>): Observable<HttpResponse<Product[]>> {
 		return this.productService.getAll().pipe(
-			tap((products: Product[]) => {
-				const state = getState();
+			tap((resp: HttpResponse<Product[]>) => {
+				console.log(resp);
+
 				patchState({
-					products: [...products],
-					selectedProduct: state.selectedProduct,
+					products: [...resp.data],
+					selectedProduct: getState().selectedProduct,
 				});
 			})
 		);
 	}
-	@Action(GetSortedProducts)
+	/* @Action(GetSortedProducts)
 	getSortedAll(
 		{ getState, patchState }: StateContext<ProductStateModel>,
 		order: ProductSearch
@@ -65,24 +64,22 @@ export class ProductState {
 				});
 			})
 		);
-	}
+	} */
 	@Action(SetSelectedProduct)
 	public setSelectedProduct(
 		{ getState, patchState }: StateContext<ProductStateModel>,
 		toStoreProduct: SetSelectedProduct
-	): Observable<Product> {
+	): Observable<HttpResponse<Product>> {
 		return this.productService.getById(toStoreProduct.id).pipe(
-			tap((product: Product) => {
-				const state = getState();
-
+			tap((resp: HttpResponse<Product>) => {
 				patchState({
-					products: [...state.products],
-					selectedProduct: product,
+					products: [...getState().products],
+					selectedProduct: resp.data,
 				});
 			})
 		);
 	}
-	@Action(SetSelectedProductToUpdate)
+	/* 	@Action(SetSelectedProductToUpdate)
 	public setSelectedProductToUpdate(
 		{ getState, patchState }: StateContext<ProductStateModel>,
 		toStoreProduct: SetSelectedProductToUpdate
@@ -97,5 +94,5 @@ export class ProductState {
 				});
 			})
 		);
-	}
+	} */
 }

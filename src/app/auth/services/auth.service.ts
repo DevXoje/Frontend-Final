@@ -41,10 +41,10 @@ export class AuthService {
 	signup(user: RegisterData): Observable<HttpResponse<Auth>> {
 		return from(this.authService.create(user));
 	}
-	getAll(): Observable<Auth[]> {
+	getAll(): Observable<HttpResponse<Auth[]>> {
 		return from(this.authService.getAll());
 	}
-	getById(id: number): Observable<Auth> {
+	getById(id: number): Observable<HttpResponse<Auth>> {
 		return from(this.authService.getById(id));
 	}
 

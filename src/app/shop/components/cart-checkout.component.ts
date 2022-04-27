@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {
+	Component,
+	Input,
+	OnChanges,
+	OnInit,
+	SimpleChanges,
+} from '@angular/core';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Auth } from 'src/app/auth/domain/auth.model';
 import { AuthState } from 'src/app/auth/state/auth.state';
 import { Order, OrderItem } from '../domain/shop.model';
@@ -13,22 +19,29 @@ import { OrderState } from '../state/shop.state';
 	selector: 'app-cart-checkout',
 	template: `
 		<app-table
-			[datos]="orderItems$"
+			[datos]="orderItemsToSend$"
 			(onEdit)="editHadler($event)"
 			(onDelete)="deleteHadler($event)"
 		></app-table>
 	`,
 })
-export class CartCheckoutComponent implements OnInit {
-	@Select(OrderState.getSelectedOrder)
-	order$?: Observable<Order>;
+export class CartCheckoutComponent implements OnChanges {
+	@Input() orderItems$?: OrderItem[];
+	orderItemsToSend$?: Observable<OrderItem[]>;
 	constructor(private store: Store, private orderService: OrderService) {}
-	orderItems$: Observable<OrderItem[]> = new Observable<OrderItem[]>();
-	ngOnInit(): void {
-		this.order$?.subscribe((order) => {
-			this.orderItems$ = this.orderService.getOrderItems(order);
-		});
+	ngOnChanges(changes: SimpleChanges): void {
+		console.log('ngOnChanges', changes);
+
+		let orderItems;
+		if (changes['orderItems$'].currentValue !== undefined) {
+			orderItems = changes['orderItems$'];
+			//if (this.orderItems$ instanceof Observable)
+			console.log('orderItems', orderItems);
+
+			this.orderItemsToSend$ = of(orderItems.currentValue);
+		}
 	}
+	//orderItems$: Observable<OrderItem[]> = new Observable<OrderItem[]>();
 	cartIcon = faShoppingCart;
 	editHadler(id: number) {
 		console.log('editHadler', id);

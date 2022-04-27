@@ -19,14 +19,18 @@ export class OrderService {
 		this.orderUrl = environment.baseUrl + '/orders';
 		this.orderService = new HttpShopAdapter(this.http, this.orderUrl);
 	}
-	getAll(): Observable<Order[]> {
+	getAll(): Observable<HttpResponse<Order[]>> {
+		/* : Promise<>; */
 		return from(this.orderService.getAll());
 	}
-	getById(id: number): Observable<Order> {
+	getById(id: number): Observable<HttpResponse<Order>> {
 		return from(this.orderService.getById(id));
 	}
-	getLastByUser(customer_id: number): Observable<Order> {
+	getLastByUser(customer_id: number): Observable<HttpResponse<Order>> {
 		return this.customerService.getLastOrder(customer_id);
+	}
+	getByUser(customer_id: number): Observable<HttpResponse<Order[]>> {
+		return this.customerService.getOrders(customer_id);
 	}
 	addOrderItem(order: Order, orderItem: OrderItem): Observable<Order> {
 		return from(this.orderService.addOrderItem(order, orderItem));

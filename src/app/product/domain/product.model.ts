@@ -1,3 +1,8 @@
+import {
+	HttpGenericService,
+	HttpResponse,
+} from 'src/app/app-common/services/HttpGenericAdapter';
+
 export type Product = {
 	id: number;
 	name: string;
@@ -23,8 +28,6 @@ export type ProductStateModel = {
 	selectedProduct: Product;
 };
 
-export type ProductServiceInterface = {
-	getAll(): Promise<Product[]>;
-	getById(id: number): Promise<Product>;
+export type ProductServiceInterface = HttpGenericService<Product> & {
 	//create(user: RegisterData): Promise<CreateResponse<Auth>>;
 };

@@ -1,13 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Validators } from '@angular/forms';
 import { Select, Store } from '@ngxs/store';
-import { Observable, of } from 'rxjs';
-import { Field, PasswordInput, TextInput } from 'src/app/app-common/domain';
-import { Auth } from 'src/app/auth/domain/auth.model';
-import { AuthState } from 'src/app/auth/state/auth.state';
+import { Observable } from 'rxjs';
 import { Order } from '../domain/shop.model';
-import { SetLastOrder, SetSelectedOrder } from '../state/shop.actions';
 import { OrderState } from '../state/shop.state';
 
 @Component({
@@ -16,19 +11,27 @@ import { OrderState } from '../state/shop.state';
 		<app-customer-checkout
 			(completed)="completeOrder($event)"
 		></app-customer-checkout>
-		<app-cart-checkout></app-cart-checkout>
+		<app-cart-checkout
+			[orderItems$]="order.order_items"
+			*ngIf="order$ | async as order"
+		></app-cart-checkout>
 	`,
 })
-export class CheckoutComponent implements OnInit {
+export class CheckoutComponent {
 	@Select(OrderState.getSelectedOrder)
 	order$?: Observable<Order>;
-	constructor(private store: Store,private http:HttpClient) {}
+	constructor(private store: Store, private http: HttpClient) {
+		this.order$?.subscribe((order) => {
+			console.log('order', order.order_items);
+		});
+	}
 
-	ngOnInit(): void {}
 	completeOrder(a: any) {
 		this.order$?.subscribe((order) => {
 			this.connectStripe();
-			console.log('completeOrder', a, order);
+			console.log('completeOrder');
+			console.log('order', order);
+			console.log('evento', a);
 		});
 	}
 	connectStripe() {

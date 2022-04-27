@@ -1,10 +1,11 @@
-import { HttpResponse } from "src/app/app-common/services/HttpGenericAdapter";
+import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
 
 export type Order = {
 	id?: number;
 	customer_id: number;
 	amount?: number;
 	order_items?: OrderItem[];
+	updated_at?: Date;
 };
 export type OrderItem = {
 	id?: number;
@@ -18,8 +19,8 @@ export type OrderStateModel = {
 	selectedOrder: Order;
 };
 export type OrderServiceInterface = {
-	getAll(): Promise<Order[]>;
-	getById(id: number): Promise<Order>;
+	getAll(): Promise<HttpResponse<Order[]>>;
+	getById(id: number): Promise<HttpResponse<Order>>;
 	create(order: Partial<Order>): Promise<HttpResponse<Order>>;
 	update(order: Partial<Order>): Promise<HttpResponse<Order>>;
 	addOrderItem(order: Order, orderItem: OrderItem): Promise<Order>;
