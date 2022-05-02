@@ -10,15 +10,12 @@ import { SetLastOrder, SetOrders } from './shop/state/shop.actions';
 @Component({
 	selector: 'app-root',
 	template: `
-		<button (click)="logoutHandler()">
-			<fa-icon [icon]="unauthIcon"></fa-icon> Logout
-		</button>
+
 		<app-loader></app-loader>
 		<router-outlet></router-outlet>
 	`,
 })
 export class AppComponent implements OnInit {
-	unauthIcon = faUserSlash;
 
 	constructor(
 		private store: Store,
@@ -28,6 +25,8 @@ export class AppComponent implements OnInit {
 
 	ngOnInit() {
 		if (this.token.isValidToken()) {
+			console.log('token valid');
+
 			this.store.dispatch(Restore).subscribe((store_data: any) => {
 				this.store.dispatch(
 					new SetOrders(store_data.auth.selectedUser.orders)
@@ -36,26 +35,28 @@ export class AppComponent implements OnInit {
 					new SetLastOrder(store_data.auth.selectedUser.id)
 				);
 
-				const paths = {
+				/* const paths = {
 					admin: '/dashboard',
 					customer: '/shop',
 				};
 				type UserRole = 'admin' | 'customer';
 				const role: UserRole = store_data.auth.selectedUser.role;
-				let route: string = paths[role];
+				let route: string = paths[role]; */
 
 				//MOCK
-				route = '/customer/profile';
+				let route = '/customer/profile';
+				console.log('route', route);
+				console.log(this.router);
 
-				this.router.navigate([route]);
+				try {
+					this.router.navigate([route]);
+				} catch (error) {
+					console.log('error', error);
+				}
 			});
 		} else {
 			this.router.navigate(['/shop']);
 		}
 	}
-	logoutHandler() {
-		this.store.dispatch(new Logout(0)).subscribe(() => {
-			this.router.navigate(['/login']);
-		});
-	}
+
 }

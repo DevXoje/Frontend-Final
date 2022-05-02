@@ -37,5 +37,6 @@ app.get("*", function (req, res) {
 });
 
 const port = process.env.PORT || PORT;
+const url=process.env.URL || `http://localhost:${port}`;
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on ${url}`));

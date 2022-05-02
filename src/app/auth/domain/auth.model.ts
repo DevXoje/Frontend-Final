@@ -31,8 +31,7 @@ export type AuthServiceInterface = HttpGenericService<Auth> & {
 	restore(): Promise<HttpResponse<Auth>>;
 };
 export type LoginResponse = {
-	access_token: string;
-	token_type: string;
-	expires_in: number;
-	user: Customer | Auth;
+	token: string;
+	auth: Customer | Auth;
+	//name: string;
 };

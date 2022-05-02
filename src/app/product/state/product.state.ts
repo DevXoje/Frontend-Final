@@ -2,15 +2,9 @@ import { Injectable } from '@angular/core';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { Observable, tap } from 'rxjs';
 import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
-import {
-	Product,
-	ProductStateModel,
-} from '../domain/product.model';
+import { Product, ProductStateModel } from '../domain/product.model';
 import { ProductService } from '../services/product.service';
-import {
-	GetAllProducts,
-	SetSelectedProduct,
-} from './product.actions';
+import { GetAllProducts, SetSelectedProduct } from './product.actions';
 
 const defaults: ProductStateModel = {
 	products: [],
@@ -40,14 +34,12 @@ export class ProductState {
 		patchState,
 	}: StateContext<ProductStateModel>): Observable<HttpResponse<Product[]>> {
 		return this.productService.getAll().pipe(
-			tap((resp: HttpResponse<Product[]>) => {
-				console.log(resp);
-
+			tap((resp: HttpResponse<Product[]>) =>
 				patchState({
 					products: [...resp.data],
 					selectedProduct: getState().selectedProduct,
-				});
-			})
+				})
+			)
 		);
 	}
 	/* @Action(GetSortedProducts)

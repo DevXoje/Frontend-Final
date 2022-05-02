@@ -27,7 +27,8 @@ export class LoginComponent {
 	constructor(
 		fieldService: FieldControlService,
 		private store: Store,
-		private notification: NotificationService
+		private notification: NotificationService,
+		private router: Router
 	) {
 		this.fields$ = fieldService.getLoginFields();
 	}
@@ -37,7 +38,7 @@ export class LoginComponent {
 			.dispatch(new Login(event)) // O SET CUSTOMER DATA
 			.subscribe((response) => {
 				let route = '/';
-				const user_name = response.auth.selectedUser;
+				const user_name = response.auth.selectedUser.name;
 				//Deberia estar gestionado con el tokenService
 				const role = response.auth.selectedUser.role;
 				if (role === 'admin') {
@@ -55,7 +56,7 @@ export class LoginComponent {
 					'Bienvenido ' + user_name,
 					'Login'
 				);
-				//this.router.navigate([route]);
+				this.router.navigate([route]);
 			});
 		//this.authService.mockAuth('customer'); //MOCK
 		//const savedToken = this.authService.checkToken();

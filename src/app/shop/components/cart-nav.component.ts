@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
-import { faShoppingCart, faUser, faUserSlash } from '@fortawesome/free-solid-svg-icons';
+import {
+	faShoppingCart,
+	faUser,
+	faUserSlash,
+} from '@fortawesome/free-solid-svg-icons';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Auth } from 'src/app/auth/domain/auth.model';
@@ -10,16 +14,18 @@ import { OrderState } from '../state/shop.state';
 @Component({
 	selector: 'app-cart-nav',
 	template: `
-		<ng-container *ngIf="false; else notLogged">
+		<!-- <div *ngIf="customer$|async as customer; else notLogged"> -->
+		<div>
 			<fa-icon [icon]="cartIcon" [routerLink]="'checkout'"></fa-icon>
 			<p>user:{{ (customer$ | async)?.email }}</p>
 			<p>order:{{ (order$ | async)?.amount }}</p>
-		</ng-container>
-		<ng-template #notLogged>
+		</div>
+		<!-- <div #notLogged> -->
+		<div>
 			<button [routerLink]="'/login'">
 				Login<fa-icon [icon]="authIcon"> </fa-icon>
 			</button>
-		</ng-template>
+		</div>
 	`,
 })
 export class CartNavComponent {

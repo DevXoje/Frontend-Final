@@ -9,10 +9,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { ToastrModule } from 'ngx-toastr';
-import * as commonComponents from './components';
 import { SortableHeaderDirective } from './components/table/directives/sortable.directive';
-import { LoaderInterceptor } from './routing/loader.interceptor';
-
 const nativeModules = [
 	CommonModule,
 	FormsModule,
@@ -32,17 +29,27 @@ const thirdsModules = [
 ];
 
 import * as authInterceptors from '../auth/routing/interceptors';
+import * as commonInterceptors from './routing/interceptors';
+
+import * as commonContainers from './containers';
+import * as commonComponents from './components';
+import * as commonLayouts from './layouts';
 
 @NgModule({
-	declarations: [...commonComponents.components, SortableHeaderDirective],
+	declarations: [
+		...commonComponents.components,
+		...commonContainers.containers,
+		...commonLayouts.layouts,
+		SortableHeaderDirective,
+	],
 	imports: [...nativeModules, thirdsModules],
-	exports: [...commonComponents.components, thirdsModules],
+	exports: [
+		...commonComponents.components,
+		...commonLayouts.layouts,
+		thirdsModules,
+	],
 	providers: [
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: LoaderInterceptor,
-			multi: true,
-		},
+		...commonInterceptors.interceptors,
 		...authInterceptors.interceptors,
 	],
 })

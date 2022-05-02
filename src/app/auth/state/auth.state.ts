@@ -41,13 +41,15 @@ export class AuthState {
 	login(
 		{ getState, patchState }: StateContext<AuthStateModel>,
 		{ loginData }: Login
-	): Observable<HttpResponse<LoginData>> {
+	): Observable<HttpResponse<LoginResponse>> {
 		return this.authService.login(loginData).pipe(
-			tap((auth: any) => {
-				this.token.handleData(JSON.stringify(auth.data.token));
+			tap((resp: HttpResponse<LoginResponse>) => {
+				console.log(resp);
+
+				this.token.handleData(JSON.stringify(resp.data.token));
 				patchState({
 					users: [...getState().users],
-					selectedUser: auth.data.name,
+					selectedUser: resp.data.auth,
 				});
 			})
 		);

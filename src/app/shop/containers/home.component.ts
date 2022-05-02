@@ -7,9 +7,14 @@ import { SetLastOrder } from '../state/shop.actions';
 
 @Component({
 	selector: 'app-home',
-	template: ` <app-cart-nav></app-cart-nav>
+	template: `
+		<app-shop-layout>
+			<app-cart-nav topHeader></app-cart-nav>
+			<app-gallery-products content></app-gallery-products>
+		</app-shop-layout>
 
-		<app-gallery-products></app-gallery-products>`,
+	<!-- 	<app-cart-nav></app-cart-nav> -->
+	`,
 })
 export class HomeComponent implements OnInit {
 	@Select(AuthState.getSelectedAuth)
@@ -19,6 +24,8 @@ export class HomeComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.customer$?.subscribe((user) => {
+			console.log('user', user);
+
 			if (user.id != undefined) {
 				this.store.dispatch(new SetLastOrder(user.id));
 			}
