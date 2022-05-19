@@ -1,5 +1,5 @@
-import { RouterModule, Routes } from '@angular/router';
-import { CustomerProfileComponent } from '../containers/profile/profile.component';
+import {RouterModule, Routes} from '@angular/router';
+import {CustomerProfileComponent} from '../containers/profile/profile.component';
 
 
 const customerRoutes: Routes = [

@@ -40,14 +40,6 @@ export class CustomerProfileComponent implements OnInit {
 	constructor(private store: Store, private http: HttpClient) {}
 	iconMark = faMapMarker;
 	ngOnInit(): void {
-		/* const path = environment.baseUrl + '/auth/profile';
-		this.http.get(path).subscribe({
-			next: (data) => {
-				console.log('data fetch', data);
-			},
-			error: (err) => {
-				console.error('profile error', err);
-			},
-		}); */
+
 	}
 }

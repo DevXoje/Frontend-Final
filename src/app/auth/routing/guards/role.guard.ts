@@ -1,37 +1,40 @@
-import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot } from '@angular/router';
-import decode, { JwtDecodeOptions } from 'jwt-decode';
-import { AuthService } from '../../services/auth.service';
-import { TokenService } from '../../services/token.service';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router} from '@angular/router';
+import {AuthService} from '../../services/auth.service';
+import {TokenService} from '../../services/token.service';
+import {Select, Store} from "@ngxs/store";
+import {AuthState} from "../../state";
+import {Observable, of} from "rxjs";
+import {Auth} from "../../domain/auth.model";
+
 @Injectable()
 export class RoleGuard implements CanActivate {
+	@Select(AuthState.getSelectedAuth) auth$?: Observable<Auth>;
+
+	/*
+	* 	@Select(OrderState.getSelectedOrder)
+	order$?: Observable<Order>;
+	* */
 	constructor(
 		public authService: AuthService,
 		public router: Router,
-		private token: TokenService
-	) {}
-	canActivate(route: ActivatedRouteSnapshot): boolean {
-		// this will be passed from the route config
-		// on the data property
-		//const expectedRole = route.data['expectedRole'];
-		const expectedRole = 'admin';
-		//const token = this.authService.getStoredToken().access_token;
-		const token = this.token.getToken() as string;
-		console.log('roleguard');
+		private token: TokenService,
+		private store: Store
+	) {
+	}
 
-		// decode the token to get its payload
-		const tokenPayload = decode<any>(token); // as any;
-		/* if (
-			!this.authService.isAuthenticated() ||
-			tokenPayload.role !== expectedRole
-		) {
-			this.router.navigate(['/login']);
-			return false;
-		} */
-		if (!this.token.isValidToken() || tokenPayload.role !== expectedRole) {
-			this.router.navigate(['/login']);
-			return false;
+	canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+		let canPass: Observable<boolean> = new Observable<boolean>();
+		if (!this.token.isValidToken()) {
+			this.token.removeToken();
+			this.router.navigateByUrl('/shop');
+			canPass = of(false);
+		} else {
+			this.auth$?.subscribe((auth: Auth) => {
+				canPass = of(auth.role === 'admin');
+			});
 		}
-		return true;
+		return canPass;
+
 	}
 }

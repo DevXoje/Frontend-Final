@@ -15,13 +15,15 @@ export class HttpShopAdapter
 	extends HttpGenericAdapter<Order>
 	implements OrderServiceInterface
 {
-	private authHttp: HttpProductAdapter = new HttpProductAdapter(
+	/* 	private authHttp: HttpProductAdapter = new HttpProductAdapter(
 		this.http,
 		environment.baseUrl + '/products'
-	);
+	); */
+
 	constructor(http: HttpClient, orderUrl: string) {
 		super(http, orderUrl);
 	}
+
 	async addOrderItem(order: Order, orderItem: OrderItem): Promise<Order> {
 		console.log('- addOrderItem -');
 		console.log('order', order);
@@ -47,5 +49,19 @@ export class HttpShopAdapter
 				});
 		});
 		return payload as OrderItem[];
+	}
+	async completeOrder(order: Order): Promise<Order> {
+		const payload = await new Promise((resolve, reject) => {
+			this.http
+				.post<Order>(
+					`${environment.baseUrl}/create-checkout-session`,
+					order
+				)
+				.subscribe({
+					next: (data) => resolve(data),
+					error: (err: HttpErrorResponse) => reject(err),
+				});
+		});
+		return payload as Order;
 	}
 }

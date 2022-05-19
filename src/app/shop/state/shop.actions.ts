@@ -24,3 +24,8 @@ export class SetLastOrder {
 	static readonly type = '[Orders] SetLast';
 	constructor(public customer_id: number) {}
 }
+
+export class CompleteOrder
+{
+	static readonly type = '[Orders] Complete';
+}

@@ -1,7 +1,7 @@
 export type Card = {
 	title?: string;
 	name?: string;
-	id: string;
+	id: number;
 	content?: string;
 	btn_content?: string;
 	imagePath?: string;
@@ -9,4 +9,6 @@ export type Card = {
 		path: string;
 		alt?: string;
 	};
+	footer?: string;
+	disabled?: boolean;
 };

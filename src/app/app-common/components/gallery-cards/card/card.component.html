@@ -1,21 +1,28 @@
-<div class="card text-center border-info" style="max-width: 540px">
-	<div class="row g-0">
-		<div class="col-md-4">
-			<img [src]="card.image?.path" class="card-img-top" alt="..." />
-		</div>
-		<div class="col-md-8">
-			<h5 class="card-header">{{ card.title }}</h5>
+<style>
+
+
+</style>
+<div class="card p-3 text-center border-info" style="max-width: 540px">
+	<div class="d-flex flex-row mb-3">
+		<img [alt]="card.title" height="70" src="https://i.imgur.com/ccMhxvC.png" width="70">
+		<div class="d-flex flex-column ml-2 justify-content-center">
+			<h5>{{ card.title }}Titulo</h5>
 			<div class="card-body">
-				<p class="card-text">
-					{{ card.content }}
-				</p>
-				<a class="btn btn-primary mb-3" (click)="handleClick($event)">{{
-					card.btn_content
-				}}</a>
-				<p class="card-footer text-muted">
-					<small class="text-muted">Last updated 3 mins ago</small>
-				</p>
+
+				<h6 *ngIf="card.content as content">
+					{{ (content.length > paragraph_length) ? (content | slice:0:paragraph_length) + ' ...' : (content) }}
+					Texto
+				</h6>
+				<h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</h6>
 			</div>
 		</div>
 	</div>
+
+
+	<div class="d-flex justify-content-between install mt-3">
+		<small class="text-muted">{{card.footer}}</small>
+		<a (click)="handleClick($event)" class="btn btn-primary mb-3">{{card.btn_content}} <i
+			class="fa fa-angle-right"></i></a>
+	</div>
+
 </div>

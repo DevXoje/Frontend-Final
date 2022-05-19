@@ -1,31 +1,27 @@
-import { DecimalPipe } from '@angular/common';
+import {DecimalPipe, formatCurrency} from '@angular/common';
 import {
 	Component,
 	EventEmitter,
 	Input,
 	OnChanges,
-	OnInit,
 	Output,
 	PipeTransform,
 	QueryList,
 	SimpleChanges,
 	ViewChildren,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
-import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Store } from '@ngxs/store';
-import { Observable, of } from 'rxjs';
-import {
-	SortableHeaderDirective,
-	SortColumn,
-	SortEvent,
-} from './directives/sortable.directive';
+import {FormControl} from '@angular/forms';
+import {Router} from '@angular/router';
+import {faPenToSquare, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {Store} from '@ngxs/store';
+import {Observable, of} from 'rxjs';
+import {SortableHeaderDirective, SortColumn, SortEvent,} from './directives/sortable.directive';
 
 type typeMocked = {
 	name: string;
 	population: number;
 };
+
 @Component({
 	selector: 'app-table',
 	templateUrl: './table.component.html',
@@ -39,22 +35,37 @@ export class TableComponent implements OnChanges {
 	@Input() datos: Observable<any[]> | undefined = new Observable<any[]>();
 	@Input() title: string = 'Lista';
 	@Output() onDelete: EventEmitter<number> = new EventEmitter<number>();
+	@Output() onAdd: EventEmitter<any> = new EventEmitter<any>();
 	@Output() onEdit: EventEmitter<number> = new EventEmitter<number>();
 	page = 1;
-	pageSize = 2;
+	pageSize = 3;
 	collectionSize = 0;
+	paginationOptions = [3, 10, 20];
 	iconPen = faPenToSquare;
 	iconTrash = faTrash;
 	@ViewChildren(SortableHeaderDirective)
 	headers?: QueryList<SortableHeaderDirective>;
-	constructor(private router: Router, private store: Store) {}
-	/*   constructor(pipe: DecimalPipe) {
-      this.countries$ = this.filter.valueChanges.pipe(
-        startWith(''),
-        map(text => search(text, pipe))
-      );
-    } */
-	onSort({ column, direction }: SortEvent) {
+
+	constructor(private router: Router, private store: Store) {
+	}
+
+	ngOnInit(): void {
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
+		if (changes['datos']) {
+			this.datos?.subscribe((data) => {
+				console.log(data);
+				if (data[0]) {
+					this.titulos = Object.keys(data[0]) as SortColumn[];
+					this.collectionSize = data.length;
+				}
+			});
+			this.refreshData();
+		}
+	}
+
+	onSort({column, direction}: SortEvent) {
 		this.DATA_DEFAULT =
 			this.DATA_DEFAULT && this.datos ? this.datos : this.DATA_DEFAULT;
 		// resetting other headers
@@ -75,24 +86,15 @@ export class TableComponent implements OnChanges {
 							a[column] < b[column]
 								? -1
 								: a[column] > b[column]
-								? 1
-								: 0;
+									? 1
+									: 0;
 						return direction === 'asc' ? res : -res;
 					})
 				);
 			});
 		}
 	}
-	ngOnInit(): void {}
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['datos']) {
-			this.datos?.subscribe((data) => {
-				this.titulos = Object.keys(data[0]) as SortColumn[];
-				this.collectionSize = data.length;
-			});
-			this.refreshData();
-		}
-	}
+
 	search(text: string, pipe: PipeTransform): any[] {
 		let resul: any[] = [];
 		this.datos?.subscribe((data) => {
@@ -105,11 +107,12 @@ export class TableComponent implements OnChanges {
 		});
 		return resul;
 	}
+
 	refreshData() {
 		this.DATA_DEFAULT = this.datos;
 		this.DATA_DEFAULT?.subscribe((data) => {
 			const dataSliced = data
-				.map((dato: any, i: number) => ({ id: i + 1, ...dato }))
+				.map((dato: any, i: number) => ({id: i + 1, ...dato}))
 				.slice(
 					(this.page - 1) * this.pageSize,
 					(this.page - 1) * this.pageSize + this.pageSize
@@ -117,7 +120,36 @@ export class TableComponent implements OnChanges {
 			this.DATA_DEFAULT = of(dataSliced);
 		});
 	}
+
 	checkPaginator() {
 		return this.collectionSize > this.pageSize;
+	}
+
+	// return type of data
+	checkType(data: any) {
+		let type = "";
+		// check patter to date
+		const regexDate = /^\d{4}-\d{2}-\d{2}/;
+		if (regexDate.test(data)) {
+			type = "date";
+		}
+		return type;
+	}
+
+	checkItemFormat(data: string) {
+		let output = data;
+		const regex = {
+			date: /^\d{4}-\d{2}-\d{2}/,
+			price: /^\d+\.\d{2}$/,
+		}
+		if (regex.date.test(data)) {
+			const date = new Date(data);
+			output = date.toLocaleDateString();
+		} else if (regex.price.test(data)) {
+			output = formatCurrency(parseInt(data), 'en-US', '€');//Todo: Falta establecer Locale en español
+		} else if (data == null || data == "") {
+			output = "------";
+		}
+		return output;
 	}
 }

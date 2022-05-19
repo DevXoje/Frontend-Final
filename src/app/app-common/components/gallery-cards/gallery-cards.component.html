@@ -1,13 +1,22 @@
-<div class="row row-cols-2 row-cols-md-4 g-4">
-	<div class="col" *ngFor="let card of datos | async">
-		<app-card
-			[card]="{
+<ng-container *ngIf="datos|async as datosSync;">
+	<div *ngIf="datosSync[0];else elseBlock" class="row">
+		<div *ngFor="let card of datosSync" class="col-md-4">
+			<app-card
+				(clicked)="handleClick($event)"
+				[card]="{
 				id: card.id,
 				title: card.name,
-				content: card.description,
+				content: card.content,
+				footer: card.footer,
+				disabled: card.disabled,
 				btn_content: btn_text
 			}"
-			(clicked)="handleClick($event)"
-		></app-card>
+			></app-card>
+		</div>
 	</div>
-</div>
+	<ng-template #elseBlock>
+		<div class="alert alert-warning" role="alert">
+			{{'No hay datos' }}
+		</div>
+	</ng-template>
+</ng-container>

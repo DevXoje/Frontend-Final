@@ -13,6 +13,8 @@ export type Product = {
 	category_id: number;
 	created_at: string;
 	updated_at: string;
+	stock: number;
+	disabled?: boolean;
 };
 export type ProductSearch =
 	| 'name'
@@ -22,6 +24,8 @@ export type ProductSearch =
 	| 'category_id'
 	| 'created_at'
 	| 'updated_at';
+
+//type algo=keyof Product ;
 
 export type ProductStateModel = {
 	products: Product[];

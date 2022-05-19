@@ -1,47 +1,52 @@
-import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { Observable, tap } from 'rxjs';
-import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
-import { Product, ProductStateModel } from '../domain/product.model';
-import { ProductService } from '../services/product.service';
-import { GetAllProducts, SetSelectedProduct } from './product.actions';
+import {Injectable} from '@angular/core';
+import {Action, Selector, State, StateContext} from '@ngxs/store';
+import {Observable, tap} from 'rxjs';
+import {HttpResponse} from 'src/app/app-common/services/HttpGenericAdapter';
+import {Product, ProductStateModel} from '../domain/product.model';
+import {ProductService} from '../services/product.service';
+import {GetAllProducts, SetSelectedProduct} from './product.actions';
 
 const defaults: ProductStateModel = {
 	products: [],
 	selectedProduct: {} as Product,
 };
+
 @State<ProductStateModel>({
 	name: 'product',
 	defaults,
 })
 @Injectable()
 export class ProductState {
-	constructor(private readonly productService: ProductService) {}
+	constructor(private readonly productService: ProductService) {
+	}
 
 	@Selector()
-	public static getProductList({ products }: ProductStateModel): Product[] {
+	public static getProductList({products}: ProductStateModel): Product[] {
 		return products;
 	}
 
 	@Selector()
-	public static getSelectedProduct({ selectedProduct }: ProductStateModel) {
+	public static getSelectedProduct({selectedProduct}: ProductStateModel) {
 		return selectedProduct;
 	}
 
 	@Action(GetAllProducts)
 	getAll({
-		getState,
-		patchState,
-	}: StateContext<ProductStateModel>): Observable<HttpResponse<Product[]>> {
+			   getState,
+			   patchState,
+		   }: StateContext<ProductStateModel>): Observable<HttpResponse<Product[]>> {
 		return this.productService.getAll().pipe(
-			tap((resp: HttpResponse<Product[]>) =>
-				patchState({
-					products: [...resp.data],
-					selectedProduct: getState().selectedProduct,
-				})
+			tap((resp: HttpResponse<Product[]>) => {
+					console.log('resp', resp);
+					patchState({
+						products: [...resp.data],
+						selectedProduct: getState().selectedProduct,
+					})
+				}
 			)
 		);
 	}
+
 	/* @Action(GetSortedProducts)
 	getSortedAll(
 		{ getState, patchState }: StateContext<ProductStateModel>,
@@ -59,11 +64,13 @@ export class ProductState {
 	} */
 	@Action(SetSelectedProduct)
 	public setSelectedProduct(
-		{ getState, patchState }: StateContext<ProductStateModel>,
+		{getState, patchState}: StateContext<ProductStateModel>,
 		toStoreProduct: SetSelectedProduct
 	): Observable<HttpResponse<Product>> {
 		return this.productService.getById(toStoreProduct.id).pipe(
 			tap((resp: HttpResponse<Product>) => {
+				console.log(resp)
+
 				patchState({
 					products: [...getState().products],
 					selectedProduct: resp.data,
@@ -71,6 +78,7 @@ export class ProductState {
 			})
 		);
 	}
+
 	/* 	@Action(SetSelectedProductToUpdate)
 	public setSelectedProductToUpdate(
 		{ getState, patchState }: StateContext<ProductStateModel>,

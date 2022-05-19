@@ -1,21 +1,20 @@
-import { HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { catchError, Observable, of, tap, throwError } from 'rxjs';
-import { HttpResponse } from 'src/app/app-common/services/HttpGenericAdapter';
-import {
-	Auth,
-	AuthStateModel,
-	LoginData,
-	LoginResponse,
-} from '../domain/auth.model';
-import { AuthService } from '../services/auth.service';
-import { TokenService } from '../services/token.service';
-import { GetAllUsers, Login, Logout, Restore, Signup } from './auth.actions';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Action, Selector, State, StateContext} from '@ngxs/store';
+import {catchError, Observable, of, tap, throwError} from 'rxjs';
+import {HttpResponse} from 'src/app/app-common/services/HttpGenericAdapter';
+import {Auth, AuthStateModel, LoginResponse,} from '../domain/auth.model';
+import {AuthService} from '../services/auth.service';
+import {TokenService} from '../services/token.service';
+import {DeleteUser, GetAllUsers, Login, Logout, Restore, Signup} from './auth.actions';
+import {CustomerService} from "../../customer/services/customer.service";
+import {Customer} from "../../customer/domain/customer.model";
+
 const defaults = {
 	users: [] as Auth[],
 	selectedUser: {} as Auth,
 };
+
 @State<AuthStateModel>({
 	name: 'auth',
 	defaults,
@@ -24,57 +23,64 @@ const defaults = {
 export class AuthState {
 	constructor(
 		private readonly authService: AuthService,
+		private readonly customerService: CustomerService,
 		private token: TokenService
-	) {}
+	) {
+	}
 
 	@Selector()
-	public static getAuthList({ users }: AuthStateModel): Auth[] {
+	public static getAuthList({users}: AuthStateModel): Auth[] {
 		return users;
 	}
 
 	@Selector()
-	public static getSelectedAuth({ selectedUser }: AuthStateModel) {
+	public static getSelectedAuth({selectedUser}: AuthStateModel) {
 		return selectedUser;
 	}
 
 	@Action(Login)
 	login(
-		{ getState, patchState }: StateContext<AuthStateModel>,
-		{ loginData }: Login
+		{getState, patchState}: StateContext<AuthStateModel>,
+		{loginData}: Login
 	): Observable<HttpResponse<LoginResponse>> {
 		return this.authService.login(loginData).pipe(
 			tap((resp: HttpResponse<LoginResponse>) => {
-				console.log(resp);
-
 				this.token.handleData(JSON.stringify(resp.data.token));
 				patchState({
 					users: [...getState().users],
 					selectedUser: resp.data.auth,
 				});
+			}),
+			catchError((err: HttpErrorResponse) => {
+				return throwError(() => new Error("Login Falla=> " + err.message));
 			})
 		);
 	}
+
 	@Action(Restore)
 	restore({
-		getState,
-		patchState,
-	}: StateContext<AuthStateModel>): Observable<HttpResponse<Auth>> {
+				getState,
+				patchState,
+			}: StateContext<AuthStateModel>): Observable<HttpResponse<Auth>> {
 		return this.authService.restore().pipe(
-			tap((auth: HttpResponse<Auth>) => {
+			tap((resp: HttpResponse<Auth>) => {
 				patchState({
 					users: [...getState().users],
-					selectedUser: auth.data,
+					selectedUser: resp.data,
 				});
+			}),
+			catchError((err: HttpErrorResponse) => {
+				return throwError(() => new Error("Restore Falla=> " + err.message));
 			})
 		);
 	}
 
 	@Action(Logout)
-	logout({ getState, patchState }: StateContext<AuthStateModel>) {
+	logout({getState, patchState}: StateContext<AuthStateModel>) {
 		return this.authService.logout().pipe(
 			tap(() =>
 				patchState({
-					users: [...getState().users],
+					users: [],
 					selectedUser: {} as Auth,
 				})
 			),
@@ -89,10 +95,11 @@ export class AuthState {
 			})
 		);
 	}
+
 	@Action(Signup)
 	signup(
-		{ getState, patchState }: StateContext<AuthStateModel>,
-		{ registerData }: Signup
+		{getState, patchState}: StateContext<AuthStateModel>,
+		{registerData}: Signup
 	): Observable<Auth> {
 		return this.authService.signup(registerData).pipe(
 			tap((auth: any) => {
@@ -106,13 +113,15 @@ export class AuthState {
 			})
 		);
 	}
+
 	@Action(GetAllUsers)
 	getAll({
-		getState,
-		patchState,
-	}: StateContext<AuthStateModel>): Observable<HttpResponse<Auth[]>> {
-		return this.authService.getAll().pipe(
+			   getState,
+			   patchState,
+		   }: StateContext<AuthStateModel>): Observable<HttpResponse<Auth[]>> {
+		return this.customerService.getAll().pipe(
 			tap((resp: HttpResponse<Auth[]>) => {
+				console.log(resp);
 				patchState({
 					users: [...resp.data],
 					selectedUser: getState().selectedUser,
@@ -127,6 +136,23 @@ export class AuthState {
 			}) */
 		);
 	}
+
+	@Action(DeleteUser)
+	deleteUser({
+				   getState,
+				   patchState,
+			   }: StateContext<AuthStateModel>, {id}: DeleteUser): Observable<HttpResponse<Customer>> {
+		return this.customerService.delete(id).pipe(
+			tap((resp: HttpResponse<Customer>) => {
+				patchState({
+					users: [...getState().users],
+					selectedUser: getState().selectedUser,
+				});
+			})
+		);
+	}
+
+
 	/* 	@Action(GetSelectedUser)
 	getSelectedUser({
 		getState,

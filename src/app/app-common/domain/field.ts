@@ -1,6 +1,7 @@
-import { ValidatorFn } from "@angular/forms";
+import {ValidatorFn} from "@angular/forms";
 
 type FieldType = 'text' | 'select' | 'number' | 'password' | 'email' | 'date' | 'file';
+
 export class Field<T> {
 	value: T | undefined;
 	key: string;
@@ -12,7 +13,7 @@ export class Field<T> {
 	type: FieldType;
 	options: { key: string, value: string }[];
 	validators: ValidatorFn[];
-
+	autocomplete: string;
 
 	constructor(options: {
 		value?: T;
@@ -25,6 +26,7 @@ export class Field<T> {
 		type?: FieldType;
 		options?: { key: string, value: string }[];
 		validators?: ValidatorFn[];
+		autocomplete?: string;
 	} = {}) {
 		this.value = options.value;
 		this.key = options.key || '';
@@ -36,5 +38,6 @@ export class Field<T> {
 		this.type = options.type || 'text';
 		this.options = options.options || [];
 		this.validators = options.validators || [];
+		this.autocomplete = options.autocomplete || "";
 	}
 }

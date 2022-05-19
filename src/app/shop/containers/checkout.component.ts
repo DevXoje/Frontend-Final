@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
 import { Order } from '../domain/shop.model';
+import { CompleteOrder } from '../state/shop.actions';
 import { OrderState } from '../state/shop.state';
 
 @Component({
@@ -11,10 +12,12 @@ import { OrderState } from '../state/shop.state';
 		<app-customer-checkout
 			(completed)="completeOrder($event)"
 		></app-customer-checkout>
-		<app-cart-checkout
+		<!-- 	<app-cart-checkout
 			[orderItems$]="order.order_items"
 			*ngIf="order$ | async as order"
-		></app-cart-checkout>
+		></app-cart-checkout> -->
+		<!-- <app-stripe-checkout></app-stripe-checkout> -->
+		<app-payment></app-payment>
 	`,
 })
 export class CheckoutComponent {
@@ -26,15 +29,9 @@ export class CheckoutComponent {
 		});
 	}
 
-	completeOrder(a: any) {
-		this.order$?.subscribe((order) => {
-			this.connectStripe();
-			console.log('completeOrder');
-			console.log('order', order);
-			console.log('evento', a);
+	completeOrder(_a: any) {
+		this.order$?.subscribe((_order) => {
+			this.store.dispatch(CompleteOrder);
 		});
-	}
-	connectStripe() {
-		console.log('connectStripe');
 	}
 }

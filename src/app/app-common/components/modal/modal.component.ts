@@ -16,7 +16,13 @@ import { Observable } from 'rxjs';
 export class ModalComponent {
 	@Input() title: string = 'title';
 	@Input() name: string = 'title';
-	@Input() content: string = 'content';
+	@Input() content?: HTMLElement;
+	@Input() data: any = {
+		title: 'title',
+		content: 'content',
+		name: 'name',
+	};
+
 	closeReasonObservable: Observable<string> = new Observable();
 
 	complete = ($event: any) => {

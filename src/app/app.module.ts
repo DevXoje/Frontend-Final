@@ -12,6 +12,7 @@ import { ProductState } from './product/state/product.state';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { APP_ROUTES } from './app.routes';
 import { OrderState } from './shop/state/shop.state';
+import { NgxStripeModule } from 'ngx-stripe';
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
@@ -23,6 +24,7 @@ import { OrderState } from './shop/state/shop.state';
 			developmentMode: !environment.production,
 		}),
 		NgxsReduxDevtoolsPluginModule.forRoot(),
+
 		/* JwtModule.forRoot({
 			config: {
 				tokenGetter: () => {
@@ -32,6 +34,7 @@ import { OrderState } from './shop/state/shop.state';
 				//disallowedRoutes: ["http://example.com/examplebadroute/"],
 			},
 		}), */
+
 	],
 	providers: [
 		{

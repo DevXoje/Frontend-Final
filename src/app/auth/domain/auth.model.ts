@@ -1,8 +1,5 @@
-import {
-	HttpGenericService,
-	HttpResponse,
-} from 'src/app/app-common/services/HttpGenericAdapter';
-import { Customer } from 'src/app/customer/domain/customer.model';
+import {HttpGenericService, HttpResponse,} from 'src/app/app-common/services/HttpGenericAdapter';
+import {Customer} from 'src/app/customer/domain/customer.model';
 
 export type LoginData = {
 	email: string;
@@ -20,10 +17,12 @@ export type Auth = LoginData & {
 	id: number;
 	role: string;
 	token: string;
+
 };
+
 export type AuthStateModel = {
 	users: Auth[];
-	selectedUser: Auth;
+	selectedUser: Auth | null;
 };
 export type AuthServiceInterface = HttpGenericService<Auth> & {
 	create(user: RegisterData): Promise<HttpResponse<Auth>>;

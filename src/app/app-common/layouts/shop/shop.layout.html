@@ -1,26 +1,10 @@
 <span>
 	<ng-content [select]="[topHeader]"></ng-content>
-	<button (click)="logoutHandler()">
-		<fa-icon [icon]="unauthIcon"></fa-icon> Logout
-	</button>
+
 	<div id="layoutSidenav_content">
 		<main>
-			<div class="container-fluid"><ng-content [select]="[content]"></ng-content></div>
+			<div class="container mt-5"><ng-content [select]="[content]"></ng-content></div>
 		</main>
 	</div>
-	<!-- <div id="layoutSidenav">
-		<div id="layoutSidenav_nav">
-			<app-side-nav
-				[sidenavStyle]="sidenavStyle"
-				[sideNavItems]="sideNavItems"
-				[sideNavSections]="sideNavSections"
-			></app-side-nav>
-		</div>
-		<div id="layoutSidenav_content">
-			<main>
-				<div class="container-fluid"><ng-content></ng-content></div>
-			</main>
-			<app-footer></app-footer>
-		</div>
-	</div> -->
+
 </span>

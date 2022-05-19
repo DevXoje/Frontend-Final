@@ -1,17 +1,13 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import {
-	HttpGenericAdapter,
-	HttpResponse,
-} from 'src/app/app-common/services/HttpGenericAdapter';
-import { Order } from 'src/app/shop/domain/shop.model';
-import { environment } from 'src/environments/environment';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {HttpGenericAdapter, HttpResponse,} from 'src/app/app-common/services/HttpGenericAdapter';
+import {Order} from 'src/app/shop/domain/shop.model';
+import {environment} from 'src/environments/environment';
 
-import { Customer, CustomerServiceInterface } from '../domain/customer.model';
+import {Customer, CustomerServiceInterface} from '../domain/customer.model';
 
 export class HttpCustomerAdapter
 	extends HttpGenericAdapter<Customer>
-	implements CustomerServiceInterface
-{
+	implements CustomerServiceInterface {
 	/* private authHttp: HttpAuthAdapter = new HttpAuthAdapter(
 		this.http,
 		environment.baseUrl + '/customers'
@@ -20,6 +16,7 @@ export class HttpCustomerAdapter
 	constructor(http: HttpClient, authUrl: string) {
 		super(http, authUrl);
 	}
+
 	async getLastOrder(customer_id: number): Promise<HttpResponse<Order>> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http
@@ -31,6 +28,7 @@ export class HttpCustomerAdapter
 		});
 		return payload as HttpResponse<Order>;
 	}
+
 	async getOrders(customer_id: number): Promise<HttpResponse<Order[]>> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http
@@ -42,6 +40,7 @@ export class HttpCustomerAdapter
 		});
 		return payload as HttpResponse<Order[]>;
 	}
+
 	async getProfile(): Promise<Customer> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http

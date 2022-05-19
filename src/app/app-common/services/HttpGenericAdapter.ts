@@ -1,7 +1,8 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 
 export class HttpGenericAdapter<Dato> {
-	constructor(protected http: HttpClient, protected url: string) {}
+	constructor(protected http: HttpClient, protected url: string) {
+	}
 
 	async getAll(): Promise<HttpResponse<Dato[]>> {
 		const payload = await new Promise((resolve, reject) => {
@@ -12,6 +13,7 @@ export class HttpGenericAdapter<Dato> {
 		});
 		return payload as HttpResponse<Dato[]>;
 	}
+
 	async getById(id: number): Promise<HttpResponse<Dato>> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.get<Dato>(`${this.url}/${id}`).subscribe({
@@ -21,6 +23,7 @@ export class HttpGenericAdapter<Dato> {
 		});
 		return payload as HttpResponse<Dato>;
 	}
+
 	async create(dato: Partial<Dato>): Promise<HttpResponse<Dato>> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.post(`${this.url}/create`, dato).subscribe({
@@ -30,6 +33,7 @@ export class HttpGenericAdapter<Dato> {
 		});
 		return payload as HttpResponse<Dato>;
 	}
+
 	async update(dato: Partial<Dato>): Promise<HttpResponse<Dato>> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http.put(`${this.url}`, dato).subscribe({
@@ -40,29 +44,17 @@ export class HttpGenericAdapter<Dato> {
 		return payload as HttpResponse<Dato>;
 	}
 
-	/*
-	async updateCart(user: Cart): Promise<Cart> {
+
+	async delete(id: number): Promise<HttpResponse<Dato>> {
 		const payload = await new Promise((resolve, reject) => {
-			this.http.put<Cart>(this.url + '/' + user.id, user).subscribe(
-				(user) => resolve(user),
-				(error) => {
-					console.error('Error: ', error);
-					reject(error)
-				});
+			this.http.delete<Dato>(this.url + '/' + id).subscribe({
+				next: (data) => resolve(data),
+				error: (err: HttpErrorResponse) => reject(err),
+			});
+
 		});
-		return payload as Cart;
+		return payload as HttpResponse<Dato>;
 	}
-	async deleteCart(id: number): Promise<Cart> {
-		const payload = await new Promise((resolve, reject) => {
-			this.http.delete<Cart>(this.url + '/' + id).subscribe(
-				(user) => resolve(user),
-				(error) => {
-					console.error('Error: ', error);
-					reject(error)
-				});
-		});
-		return payload as Cart;
-	} */
 }
 
 export type HttpResponse<Dato> = {
@@ -74,5 +66,6 @@ export type HttpGenericService<Dato> = {
 	getAll: () => Promise<HttpResponse<Dato[]>>;
 	getById: (id: number) => Promise<HttpResponse<Dato>>;
 	//create: (dato: Partial<Dato>) => Promise<HttpResponse<Dato>>;
-	//update: (dato: Partial<Dato>) => Promise<HttpResponse<Dato>>;
+	update: (dato: Partial<Dato>) => Promise<HttpResponse<Dato>>;
+	delete: (id: number) => Promise<HttpResponse<Dato>>;
 };

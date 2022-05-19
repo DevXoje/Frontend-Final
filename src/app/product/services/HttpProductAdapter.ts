@@ -1,10 +1,7 @@
 import {
 	HttpClient,
-	HttpErrorResponse,
-	HttpHeaders,
 } from '@angular/common/http';
 import {
-	HttpResponse,
 	HttpGenericAdapter,
 } from 'src/app/app-common/services/HttpGenericAdapter';
 
