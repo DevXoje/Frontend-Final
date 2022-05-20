@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Action, Selector, State, StateContext} from '@ngxs/store';
-import {Observable, tap} from 'rxjs';
+import {catchError, Observable, tap, throwError} from 'rxjs';
 import {HttpResponse} from 'src/app/app-common/services/HttpGenericAdapter';
 import {Product, ProductStateModel} from '../domain/product.model';
 import {ProductService} from '../services/product.service';
 import {GetAllProducts, SetSelectedProduct} from './product.actions';
+import {HttpErrorResponse} from "@angular/common/http";
 
 const defaults: ProductStateModel = {
 	products: [],
@@ -37,13 +38,16 @@ export class ProductState {
 		   }: StateContext<ProductStateModel>): Observable<HttpResponse<Product[]>> {
 		return this.productService.getAll().pipe(
 			tap((resp: HttpResponse<Product[]>) => {
-					console.log('resp', resp);
-					patchState({
-						products: [...resp.data],
-						selectedProduct: getState().selectedProduct,
-					})
-				}
-			)
+				console.log("GetAllProducts");
+
+				patchState({
+					products: [...resp.data],
+					selectedProduct: getState().selectedProduct,
+				})
+			}),
+			catchError((err: HttpErrorResponse) => {
+				return throwError(() => new Error("GetAllProducts Falla=> " + err.message));
+			})
 		);
 	}
 

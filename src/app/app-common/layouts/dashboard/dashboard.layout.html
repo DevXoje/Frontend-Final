@@ -13,19 +13,9 @@
 		</div>
 		<div class="app-header-navigation">
 			<div class="tabs">
-				<a class="active">
-					Overview
+				<a *ngFor="let item of nav" [ngClass]="{'active':item.active}">
+					{{item.text}}
 				</a>
-				<a class="">
-					Payments
-				</a>
-				<a>
-					Cards
-				</a>
-				<a>
-					Customers
-				</a>
-
 			</div>
 		</div>
 		<div class="app-header-actions">

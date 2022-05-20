@@ -1,3 +1,11 @@
-<div style="text-align:center" *ngIf="chartOptions|async as chart">
-	<apx-chart [series]="chart.series" [chart]="chart.chart" [xaxis]="chart.xaxis" [title]="chart.title"></apx-chart>
+<div *ngIf="chartOptions as chart" id="chart" style="text-align:center">
+	<apx-chart
+		[chart]="chart.chart"
+		[dataLabels]="chart.dataLabels"
+		[grid]="chart.grid"
+		[series]="chart.series"
+		[stroke]="chart.stroke"
+		[title]="chart.title"
+		[xaxis]="chart.xaxis"
+	></apx-chart>
 </div>

@@ -13,6 +13,24 @@ import {Auth} from "../../../auth/domain/auth.model";
 export class DashboardLayoutComponent {
 	@Select(AuthState.getSelectedAuth) auth$?: Observable<Auth>;
 
+	nav = [{
+		text: "Overview",
+		link: "/dashboard/home",
+		active: true
+	}, {
+		text: "Payments",
+		link: "/dashboard/home",
+		active: false
+	}, {
+		text: "Cards",
+		link: "/dashboard/home",
+		active: false
+	}, {
+		text: "Customers",
+		link: "/dashboard/home",
+		active: false
+	},]
+
 	constructor(private store: Store, private route: Router) {
 	}
 

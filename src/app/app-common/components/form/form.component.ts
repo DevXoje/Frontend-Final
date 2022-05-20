@@ -21,8 +21,9 @@ export class FormComponent implements OnInit, AfterViewInit {
 	ngOnInit() {
 		console.log('FormComponent.ngOnInit', this.fields);
 		this.form = this.fcs.toFormGroup(this.fields as Field<string>[]);
-		this.form.valueChanges.subscribe(() => {
-			this.form.addValidators(this.extraValidators);
+		this.form.valueChanges.subscribe({
+			next: (value) => this.form.addValidators(this.extraValidators),
+			error: (err) => console.error('FormComponent.ngOnInit.valueChanges.error', err),
 		});
 
 	}

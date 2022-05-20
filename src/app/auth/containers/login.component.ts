@@ -16,7 +16,7 @@ import {Validators} from "@angular/forms";
 	selector: 'app-login',
 	template: `
 		<app-auth-layout>
-			<div topHeader>
+			<div topHeader><!--TODO: Bootstrap alert para informar que se borro token-->
 				<h3 class="text-muted mb-2">Continue with</h3>
 				<div class="d-flex align-items-center">
 					<a class="box me-2 selectio" *ngFor="let icon of iconsLogin">

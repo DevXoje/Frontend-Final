@@ -10,6 +10,7 @@ import {Component, OnInit} from '@angular/core';
 			<app-table-products table2></app-table-products>
 
 		</app-dashboard-layout>
+		<app-chart-products></app-chart-products>
 		<!--<app-table-products></app-table-products>
 		<app-chart-products></app-chart-products>
 		<app-table-users></app-table-users>-->
