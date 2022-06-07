@@ -1,6 +1,6 @@
 import {ValidatorFn} from "@angular/forms";
 
-type FieldType = 'text' | 'select' | 'number' | 'password' | 'email' | 'date' | 'file';
+export type FieldType = 'text' | 'select' | 'number' | 'password' | 'email' | 'date' | 'file';
 
 export class Field<T> {
 	value: T | undefined;

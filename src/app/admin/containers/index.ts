@@ -1,5 +1,7 @@
-import { DashboardComponent } from "./dashboard.component";
+import {AdminResumeComponent} from "./resume.component";
+import {AdminComponent} from "./admin.component";
 
-export const containers = [DashboardComponent];
+export const containers = [AdminResumeComponent, AdminComponent];
 
-export * from "./dashboard.component";
+export * from "./admin.component";
+export * from "./resume.component";

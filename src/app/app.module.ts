@@ -1,39 +1,35 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgxsModule } from '@ngxs/store';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import { environment } from 'src/environments/environment';
-import { AppCommonModule } from './app-common/app-common.module';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {JWT_OPTIONS, JwtHelperService} from '@auth0/angular-jwt';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {NgxsModule} from '@ngxs/store';
+import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 
-import { AppComponent } from './app.component';
-import { AuthState } from './auth/state/auth.state';
-import { JwtHelperService, JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { ProductState } from './product/state/product.state';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { APP_ROUTES } from './app.routes';
-import { OrderState } from './shop/state/shop.state';
-import { NgxStripeModule } from 'ngx-stripe';
+import {environment} from 'src/environments/environment';
+import {AppCommonModule} from './app-common/app-common.module';
+
+import {ProductState} from './product/state';
+import {OrderState} from './shop/state';
+import {AuthState} from './auth/state';
+
+import {AppComponent} from './app.component';
+import {AppRoutingModule} from "./app-routing";
+
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
 		BrowserAnimationsModule,
-		APP_ROUTES,
+		AppRoutingModule,
 		AppCommonModule,
-		NgxsModule.forRoot([AuthState, ProductState, OrderState], {
+		NgxsModule.forRoot([
+			AuthState,
+			ProductState,
+			OrderState], {
 			developmentMode: !environment.production,
 		}),
 		NgxsReduxDevtoolsPluginModule.forRoot(),
 
-		/* JwtModule.forRoot({
-			config: {
-				tokenGetter: () => {
-					return localStorage.getItem('token');
-				},
-				//allowedDomains: ["example.com"],
-				//disallowedRoutes: ["http://example.com/examplebadroute/"],
-			},
-		}), */
 
 	],
 	providers: [
@@ -47,4 +43,5 @@ import { NgxStripeModule } from 'ngx-stripe';
 	],
 	bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+}

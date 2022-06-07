@@ -49,13 +49,9 @@ export class TableComponent implements OnChanges {
 	constructor(private router: Router, private store: Store) {
 	}
 
-	ngOnInit(): void {
-	}
-
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['datos']) {
 			this.datos?.subscribe((data) => {
-				console.log(data);
 				if (data[0]) {
 					this.titulos = Object.keys(data[0]) as SortColumn[];
 					this.collectionSize = data.length;
@@ -136,7 +132,7 @@ export class TableComponent implements OnChanges {
 		return type;
 	}
 
-	checkItemFormat(data: string) {
+	checkItemFormat(data: any) {
 		let output = data;
 		const regex = {
 			date: /^\d{4}-\d{2}-\d{2}/,
@@ -147,6 +143,9 @@ export class TableComponent implements OnChanges {
 			output = date.toLocaleDateString();
 		} else if (regex.price.test(data)) {
 			output = formatCurrency(parseInt(data), 'en-US', '€');//Todo: Falta establecer Locale en español
+		} else if (typeof data == 'object') {
+
+			output = "objeto";
 		} else if (data == null || data == "") {
 			output = "------";
 		}

@@ -6,7 +6,17 @@ import {HttpResponse} from 'src/app/app-common/services/HttpGenericAdapter';
 import {Auth, AuthStateModel, LoginResponse,} from '../domain/auth.model';
 import {AuthService} from '../services/auth.service';
 import {TokenService} from '../services/token.service';
-import {DeleteUser, GetAllUsers, Login, Logout, Restore, Signup} from './auth.actions';
+import {
+	CompleteUser,
+	DeleteUser,
+	GetAllUsers,
+	Login,
+	Logout,
+	Restore,
+	SetSelectedUser,
+	Signup,
+	UpdateUser
+} from './auth.actions';
 import {CustomerService} from "../../customer/services/customer.service";
 import {Customer} from "../../customer/domain/customer.model";
 
@@ -63,12 +73,12 @@ export class AuthState {
 				patchState,
 			}: StateContext<AuthStateModel>): Observable<HttpResponse<Auth>> {
 		return this.authService.restore().pipe(
-			tap((resp: HttpResponse<Auth>) => {
+			tap((resp: HttpResponse<Auth>) =>
 				patchState({
 					users: [...getState().users],
 					selectedUser: resp.data,
-				});
-			}),
+				})
+			),
 			catchError((err: HttpErrorResponse) => {
 				return throwError(() => new Error("Restore Falla=> " + err.message));
 			})
@@ -101,15 +111,19 @@ export class AuthState {
 		{getState, patchState}: StateContext<AuthStateModel>,
 		{registerData}: Signup
 	): Observable<Auth> {
-		return this.authService.signup(registerData).pipe(
-			tap((auth: any) => {
+		return this.authService.signup(registerData).pipe(//TODO: Tipar resp con el modelo de respuesta
+			//tap((auth: HttpResponse<Auth>) => {
+			tap((resp: any) => {
 				const state = getState();
-				console.log(auth);
+				console.log(resp);
 
 				/* patchState({
 					users: [...state.users],
 					selectedUser:
 				}); */
+			}),
+			catchError((err: HttpErrorResponse) => {
+				return throwError(() => new Error("Restore Falla=> " + err.message));
 			})
 		);
 	}
@@ -119,13 +133,15 @@ export class AuthState {
 			   getState,
 			   patchState,
 		   }: StateContext<AuthStateModel>): Observable<HttpResponse<Auth[]>> {
-		return this.customerService.getAll().pipe(
+		return this.authService.getAll().pipe(
 			tap((resp: HttpResponse<Auth[]>) => {
-				console.log(resp);
 				patchState({
 					users: [...resp.data],
 					selectedUser: getState().selectedUser,
 				});
+			}),
+			catchError((err: HttpErrorResponse) => {
+				return throwError(() => new Error("Restore Falla=> " + err.message));
 			})
 			/* tap((auth: Auth) => {
 				const state = getState();
@@ -153,22 +169,55 @@ export class AuthState {
 	}
 
 
-	/* 	@Action(GetSelectedUser)
+	@Action(SetSelectedUser)
 	getSelectedUser({
-		getState,
-		patchState,
-	}: StateContext<AuthStateModel>): Observable<Auth[]> {
-		return this.authService.getAll().pipe(
-			tap((users: Auth[]) => {
-				const state = getState();
+						getState,
+						patchState,
+					}: StateContext<AuthStateModel>,
+					{id}: SetSelectedUser): Observable<HttpResponse<Auth>> {
+		return this.authService.getById(id).pipe(
+			tap((resp: HttpResponse<Auth>) => {
 				patchState({
-					users: [...users],
-					selectedUser: state.selectedUser as Auth,
+					users: [...getState().users],
+					selectedUser: resp.data,
 				});
 			})
-
 		);
-	} */
+	}
+
+	@Action(UpdateUser)
+	updateAuth(
+		{getState, setState}: StateContext<AuthStateModel>,
+		{user}: UpdateUser
+	): Observable<HttpResponse<Auth>> {
+		return this.authService.update(user).pipe(
+			tap((resp: HttpResponse<Auth>) => {
+				setState(
+					{
+						users: [...getState().users],
+						selectedUser: resp.data,
+					}
+				);
+			})
+		);
+	}
+
+	@Action(CompleteUser)
+	completeUser(
+		{getState, setState}: StateContext<AuthStateModel>,
+		{user}: CompleteUser
+	): Observable<HttpResponse<Customer>> {
+		return this.customerService.complete(user).pipe(
+			tap((resp: HttpResponse<Customer>) => {
+				setState(
+					{
+						users: [...getState().users],
+						selectedUser: resp.data,
+					}
+				);
+			})
+		);
+	}
 
 	/* @Action(GetAuths)
 	getAuth({
@@ -183,18 +232,7 @@ export class AuthState {
 		);
 	}
 
-	@Action(UpdateAuth)
-	updateAuth(
-		{ getState, setState }: StateContext<AuthsStateModel>,
-		{ payload }: UpdateAuth
-	): Observable<Auth[]> {
-		return this.authService.updateAuth(payload).pipe(
-			tap((auths: Auth[]) => {
-				const state = getState();
-				setState({ ...state, auths });
-			})
-		);
-	}
+
 
 	@Action(DeleteAuth)
 	deleteAuth(

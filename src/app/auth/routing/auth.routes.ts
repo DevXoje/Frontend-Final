@@ -1,37 +1,34 @@
-import {RouterModule, Routes} from '@angular/router';
-import {EditComponent, LoginComponent, RegisterComponent} from '../containers';
-import {CustomerResolver} from '../../customer/routing/resolvers/customer.resolver';
-import {CustomerCheckoutComponent} from "../../customer/containers";
+import {Routes} from '@angular/router';
+import {AuthComponent, LoginComponent, RegisterComponent} from "../containers";
 
+const outlet = 'authOutlet';
 const authRoutes: Routes = [
-
 	{
 		path: 'login',
-		component: LoginComponent,
+		component: AuthComponent,
 
+		children: [
+			{
+				path: '',
+				component: LoginComponent,
+				outlet
+			}
+		]
 	},
 	{
 		path: 'register',
-		component: RegisterComponent,
-	},
-
-	{
-		path: 'customer',
-		loadChildren: () =>
-			import('../../customer/customer.module').then(
-				(m) => m.CustomerModule
-			),
-	},
-	{
-		path: 'edit/:id', component: EditComponent,
-		resolve: {
-			customerResp: CustomerResolver
-		}
-	},
-	{
-		path: 'checkout',
-		component: CustomerCheckoutComponent
+		component: AuthComponent,
+		children: [
+			{
+				path: '',
+				component: RegisterComponent,
+				outlet
+			}
+		]
 	}
+
+
 ];
 
-export const AUTH_ROUTES = RouterModule.forChild(authRoutes);
+export const AUTH_ROUTES = authRoutes;
+//export const AUTH_ROUTES = RouterModule.forChild(authRoutes);

@@ -10,9 +10,12 @@ export type Customer = Auth & {
 };
 export type CustomerServiceInterface = HttpGenericService<Customer> & {
 	getLastOrder(customer_id: number): Promise<HttpResponse<Order>>;
+	getAllOrders(customer_id: number): Promise<HttpResponse<Order[]>>;
 	getOrders(customer_id: number): Promise<HttpResponse<Order[]>>;
 	//getById(auth_id: number): Promise<HttpResponse<Customer>>;
 	getProfile(): Promise<Customer>;
+	complete(newData: Partial<Customer>): Promise<HttpResponse<Customer>>;
+
 };
 export type CustomerStateModel = {
 	customers: Customer[];

@@ -1,12 +1,12 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {JwtHelperService} from '@auth0/angular-jwt';
 import {from, Observable, of} from 'rxjs';
 import {HttpResponse} from 'src/app/app-common/services/HttpGenericAdapter';
 import {environment} from 'src/environments/environment';
 import {Auth, AuthServiceInterface, LoginData, LoginResponse, RegisterData,} from '../domain/auth.model';
 import {HttpAuthAdapter} from './HttpAuthAdapter';
-import {TokenService} from './token.service';
+import {Customer} from "../../customer/domain/customer.model";
+import {NavigationExtras} from "@angular/router";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -17,10 +17,12 @@ export class AuthService {
 	);
 
 	constructor(
-		public jwtHelper: JwtHelperService,
 		private http: HttpClient,
-		private token: TokenService
 	) {
+	}
+
+	update(user: Partial<Customer>) {
+		return from(this.authService.update(user));
 	}
 
 	login(user: LoginData): Observable<HttpResponse<LoginResponse>> {
@@ -49,11 +51,20 @@ export class AuthService {
 		return from(this.authService.getById(id));
 	}
 
-	getRouteByRole(role: string): string {
-		const routes: { [x: string]: string } = {admin: "/dashboard/main", customer: "/shop"};
-
+	getRouteByRole(role: string): any[] {
+		const data: NavigationExtras = {
+			queryParams: {
+				role: role
+			},
+			fragment: '',
+			queryParamsHandling: 'merge',
+			preserveFragment: false
+		};
+		const routes: any = {
+			admin: ['home', {outlets: {'admin-outlet': ['resume']}}],
+			customer: ['shop'],
+		};
 		return routes[role];
-
 	}
 
 	/* addAuth(book: Auth): Observable<Auth> {

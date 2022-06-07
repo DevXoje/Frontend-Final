@@ -1,8 +1,8 @@
 import {TableUsersComponent} from "./table-users.component";
-import {ProfileNavComponent} from "./profile-nav.component";
 import {FormUserComponent} from "./form-user.component";
+import {ModalLoginComponent} from "./modal-login.component";
 
-export const components = [TableUsersComponent, FormUserComponent, ProfileNavComponent];
+export const components = [TableUsersComponent, FormUserComponent, ModalLoginComponent];
 export * from "./table-users.component";
-export * from "./profile-nav.component";
 export * from "./form-user.component";
+export * from "./modal-login.component";

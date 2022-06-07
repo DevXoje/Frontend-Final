@@ -31,7 +31,8 @@ export class TableUsersComponent implements OnInit {
 	}
 
 	editHandler(id: number) {
-		this.router.navigate(['/auth/edit', id]);
+		console.log("editHandler", id);
+		//this.router.navigate(['/auth/edit', id]);
 	}
 
 	deleteHandler(id: any) {
@@ -45,6 +46,5 @@ export class TableUsersComponent implements OnInit {
 
 	addHandler() {
 		this.router.navigate(['/auth/register']);
-		console.log("add");
 	}
 }

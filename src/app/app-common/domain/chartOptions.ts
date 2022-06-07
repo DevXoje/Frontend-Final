@@ -20,7 +20,7 @@ export type ChartOptions = {
 };
 export type Options = {
 	title: string,
-	serie: Array<{ name: string, data: number[] }>,
+	serie: { name: string, data: number[] }[],
 	type: ChartType,
 	categories: any[]
 

@@ -27,18 +27,13 @@ export class TokenService {
 		}
 	}
 
-	isValidToken(): boolean {
+	isValidToken(): boolean {//TODO: check if token is expired, now not working well
 		return !this.jwtHelper.isTokenExpired(this.getToken());
 	}
 
 	payload(token: any) {
 		const jwtPayload = token.split('.')[1];
 		return JSON.parse(atob(jwtPayload));
-	}
-
-	// User state based on valid token
-	isLoggedIn() {
-		return this.isValidToken();
 	}
 
 	// Remove token

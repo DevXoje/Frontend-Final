@@ -1,9 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
-import {Store} from '@ngxs/store';
+import {Select, Store} from '@ngxs/store';
 import {TokenService} from './auth/services/token.service';
-import {Restore} from "./auth/state/auth.actions";
+import {AuthState, Restore} from "./auth/state";
 import {AuthService} from "./auth/services/auth.service";
+import {NotificationService} from "./app-common/services/notification.service";
+import {Observable} from "rxjs";
+import {Customer} from "./customer/domain/customer.model";
 
 @Component({
 	selector: 'app-root',
@@ -13,17 +16,19 @@ import {AuthService} from "./auth/services/auth.service";
 	`,
 })
 export class AppComponent implements OnInit {
+	@Select(AuthState.getSelectedAuth)
+	customer$?: Observable<Customer>;
+
 	constructor(
 		private store: Store,
 		private router: Router,
 		private token: TokenService,
 		private authService: AuthService,
+		private notificationService: NotificationService,
 	) {
 	}
 
-
 	ngOnInit() {
-
 		this.checkToRestore();
 	}
 
@@ -31,12 +36,16 @@ export class AppComponent implements OnInit {
 		if (this.token.getToken()) {
 			if (!this.token.isValidToken()) {
 				this.token.removeToken();
-				this.router.navigateByUrl('/shop');
+				this.router.navigate(this.authService.getRouteByRole("customer"));
+				this.notificationService.showWarning('Your session has expired. Please login again.', 'Session Expired');
 			} else {
 				this.store.dispatch(Restore).subscribe((store_data: any) => {
-					const selectedUser = store_data.auth.selectedUser;
-					let route = this.authService.getRouteByRole(selectedUser.role);
-					this.router.navigateByUrl(route);
+					this.customer$?.subscribe((customer: Customer) => {
+						let route = this.authService.getRouteByRole(customer.role);
+						this.router.navigate(route);
+						this.notificationService.showSuccess('Welcome back ' + customer.name, 'Welcome Again');
+
+					});
 				});
 			}
 		}

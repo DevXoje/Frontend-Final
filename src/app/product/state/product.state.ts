@@ -4,7 +4,7 @@ import {catchError, Observable, tap, throwError} from 'rxjs';
 import {HttpResponse} from 'src/app/app-common/services/HttpGenericAdapter';
 import {Product, ProductStateModel} from '../domain/product.model';
 import {ProductService} from '../services/product.service';
-import {GetAllProducts, SetSelectedProduct} from './product.actions';
+import {CreateProduct, DeleteProduct, GetAllProducts, SetSelectedProduct} from './product.actions';
 import {HttpErrorResponse} from "@angular/common/http";
 
 const defaults: ProductStateModel = {
@@ -31,6 +31,45 @@ export class ProductState {
 		return selectedProduct;
 	}
 
+	@Action(CreateProduct)
+	public createProduct({
+							 getState,
+							 patchState,
+						 }: StateContext<ProductStateModel>, toCreateProduct: CreateProduct): Observable<HttpResponse<Product>> {
+		return this.productService.create(toCreateProduct.product).pipe(
+			tap((response: HttpResponse<Product>) => {
+				console.log(response);
+				/*const state = getState();
+				patchState({
+					products: [...state.products, response.data],
+					selectedProduct: response.data,
+				});*/
+			}),
+			catchError((err: HttpErrorResponse) => {
+				return throwError(() => new Error("CreateProducts Falla=> " + err.message));
+			})
+		);
+	}
+
+	@Action(DeleteProduct)
+	public deleteProduct({
+							 getState,
+							 patchState,
+						 }: StateContext<ProductStateModel>, toCreateProduct: DeleteProduct): Observable<HttpResponse<Product>> {
+		return this.productService.delete(toCreateProduct.id).pipe(
+			tap((response: HttpResponse<Product>) => {
+				console.log(response);
+				patchState({
+					products: [...(getState().products).filter(product => product.id !== toCreateProduct.id)],
+					selectedProduct: null,
+				});
+			}),
+			catchError((err: HttpErrorResponse) => {
+				return throwError(() => new Error("CreateProducts Falla=> " + err.message));
+			})
+		);
+	}
+
 	@Action(GetAllProducts)
 	getAll({
 			   getState,
@@ -38,13 +77,13 @@ export class ProductState {
 		   }: StateContext<ProductStateModel>): Observable<HttpResponse<Product[]>> {
 		return this.productService.getAll().pipe(
 			tap((resp: HttpResponse<Product[]>) => {
-				console.log("GetAllProducts");
-
-				patchState({
-					products: [...resp.data],
-					selectedProduct: getState().selectedProduct,
-				})
-			}),
+					console.log(resp);
+					patchState({
+						products: [...resp.data],
+						selectedProduct: getState().selectedProduct,
+					})
+				}
+			),
 			catchError((err: HttpErrorResponse) => {
 				return throwError(() => new Error("GetAllProducts Falla=> " + err.message));
 			})
@@ -73,8 +112,6 @@ export class ProductState {
 	): Observable<HttpResponse<Product>> {
 		return this.productService.getById(toStoreProduct.id).pipe(
 			tap((resp: HttpResponse<Product>) => {
-				console.log(resp)
-
 				patchState({
 					products: [...getState().products],
 					selectedProduct: resp.data,

@@ -2,9 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Select, Store} from '@ngxs/store';
 import {Observable} from 'rxjs';
 import {Order} from '../domain/shop.model';
-import {OrderState} from '../state/shop.state';
+import {GetAllOrders, OrderState} from '../state';
 import {Router} from "@angular/router";
-import {GetAllOrders} from "../state/shop.actions";
 
 @Component({
 	selector: 'app-gallery-orders',
@@ -264,7 +263,7 @@ export class GalleryOrdersComponent implements OnInit {
 	}
 
 	ngOnInit(): void {
-		
+
 	}
 
 

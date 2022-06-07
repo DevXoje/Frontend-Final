@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
-import { StripeElementStyle } from '@stripe/stripe-js';
+import {Injectable} from '@angular/core';
+
 declare var Stripe: any;
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class BillingService {
-	private cardDtl = new Subject();
+
+
+	/*private cardDtl = new Subject();
 	getCardDetails$ = this.cardDtl.asObservable();
 
 	constructor(private http: HttpClient) {}
@@ -95,5 +95,5 @@ export class BillingService {
 				payment_method: intent.payment_method,
 			})
 			.then(cb, this);
-	}
+	}*/
 }

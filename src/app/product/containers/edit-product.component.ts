@@ -3,18 +3,19 @@ import {Select, Store} from '@ngxs/store';
 import {Observable} from 'rxjs';
 import {Field} from 'src/app/app-common/domain';
 import {Product} from '../domain/product.model';
-import {SetSelectedProductToUpdate} from '../state/product.actions';
-import {ProductState} from '../state/product.state';
+import {ProductState, SetSelectedProductToUpdate} from '../state';
 import {HttpResponse} from "../../app-common/services/HttpGenericAdapter";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
 	selector: 'app-edit-product',
 	template: `
+		<a routerLink="/dashboard">Return</a>
+
 		<div>
 			<h2>Edit Product</h2>
-			<app-form-product (sendPayload)="editHandler($event)"></app-form-product>
-			<!--<app-form [fields]="fields$ | async" (sendPayload)="editHandler($event)"></app-form>-->-
+			<app-form-product (sendPayload)="editHandler($event)" [product]="product"></app-form-product>
 			<figure>
 				<title>{{image.title}}</title>
 				<img src="" alt="">
@@ -22,16 +23,19 @@ import {HttpResponse} from "../../app-common/services/HttpGenericAdapter";
 		</div> `
 })
 export class EditProductComponent {//, TableCustom: edit,delete
-	@Select(ProductState.getSelectedProduct) customer$?: Observable<Product>;
+	@Select(ProductState.getSelectedProduct) product$?: Observable<Product>;
 	fields$?: Observable<Field<any>[]>;
-	fields: Field<string>[] = [];
 	image = {
 		title: '',
 		image: ''
 	}
+	product?: Product;
 
-	constructor(private store: Store) {
-
+	constructor(private store: Store, private route: ActivatedRoute) {
+		const resp = this.route.snapshot.data["productResp"] as HttpResponse<Product>
+		if (resp) {
+			this.product = resp.data;
+		}
 	}
 
 	editHandler(event: HttpResponse<Product>) {

@@ -1,0 +1,68 @@
+<div [formGroup]="form">
+	<label>{{ field.label|titlecase }}</label>
+
+	<div [ngSwitch]="field.controlType">
+		<!-- <input *ngSwitchCase="'textbox'" [formControlName]="field.key" [id]="field.key" [type]="field.type"> -->
+
+		<select
+			*ngSwitchCase="'dropdown'"
+			[formControlName]="field.key"
+			[id]="field.key"
+		>
+			<option *ngFor="let opt of field.options" [value]="opt.key">
+				{{ opt.value }}
+			</option>
+		</select>
+		<div *ngSwitchCase="'password'">
+			<input
+				(blur)="checkIsInvalid($event)"
+
+				[autocomplete]="field.autocomplete"
+				[formControlName]="field.key"
+				[id]="field.key"
+				[placeholder]="field.placeholder"
+				class="form-control"
+				type="password"
+			/>
+			<!--<app-password-strength [passwordToCheck]="form.value.password"></app-password-strength>-->
+		</div>
+		<div *ngSwitchCase="'image'">
+			<app-file-upload [field]="field" [form]="form">
+				<input
+					[formControlName]="field.key"
+					[id]="field.key" content
+					type="file"
+				/>
+			</app-file-upload>
+			<!--<img [src]="imageFile ? imageFile.link : 'localhost/image.png'" class="preview-image" width="50%">
+			<button (click)="image.click()" type="button">add</button>
+			<input
+				#image
+				(change)="imagesPreview($event)"
+				[formControlName]="field.key"
+				[id]="field.key"
+				class="form-control"
+				style="display: none;"
+				type="file"
+			>-->
+		</div>
+
+		<input
+			(blur)="checkIsInvalid($event)"
+			*ngSwitchDefault
+			[autocomplete]="field.autocomplete"
+			[formControlName]="field.key"
+			[id]="field.key"
+			[placeholder]="field.placeholder"
+			[type]="field.type"
+			class="form-control"
+		/>
+		<div class="invalid-feedback">
+			Please choose a {{field.key}}
+		</div>
+		<div class="valid-feedback">
+			Looks good!
+		</div>
+	</div>
+
+</div>

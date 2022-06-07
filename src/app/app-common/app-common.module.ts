@@ -13,7 +13,6 @@ import * as commonInterceptors from './routing/interceptors';
 
 import * as commonContainers from './containers';
 import * as commonComponents from './components';
-import * as commonLayouts from './layouts';
 
 const nativeModules = [
 	CommonModule,
@@ -27,9 +26,10 @@ const thirdsModules = [
 	FontAwesomeModule,
 	NgApexchartsModule,
 	ToastrModule.forRoot({
-		timeOut: 1000,
+		timeOut: 1500,
 		positionClass: 'toast-top-right',
 		preventDuplicates: true,
+		maxOpened: 1,
 	}),
 ];
 
@@ -37,13 +37,11 @@ const thirdsModules = [
 	declarations: [
 		...commonComponents.components,
 		...commonContainers.containers,
-		...commonLayouts.layouts,
 		SortableHeaderDirective,
 	],
 	imports: [...nativeModules, thirdsModules],
 	exports: [
 		...commonComponents.components,
-		...commonLayouts.layouts,
 		thirdsModules,
 		...nativeModules
 	],

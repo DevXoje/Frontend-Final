@@ -1,14 +1,13 @@
-import { DropDownInput } from './dropDownInput';
-import { Field } from './field';
-import { PasswordInput } from './passwordInput';
-import { TextInput } from './textInput';
+import {DropDownInput} from './fields/dropDownInput';
+import {Field} from './field';
+import {PasswordInput} from './fields/passwordInput';
+import {TextInput} from './fields/textInput';
 //import { TableElement } from './tableElement';
 
 
 export const models = [Field, DropDownInput, TextInput, PasswordInput];
 
 export * from './field';
-export * from './dropDownInput';
-export * from './textInput';
-export * from './passwordInput';
-
+export * from './fields/dropDownInput';
+export * from './fields/textInput';
+export * from './fields/passwordInput';

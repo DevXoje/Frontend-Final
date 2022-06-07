@@ -17,6 +17,18 @@ export class HttpCustomerAdapter
 		super(http, authUrl);
 	}
 
+	async complete(newData: Partial<Customer>): Promise<HttpResponse<Customer>> {
+		const payload = await new Promise((resolve, reject) => {
+			this.http
+				.post<Customer>(`${environment.baseUrl}/api/complete`, newData)
+				.subscribe({
+					next: (data) => resolve(data),
+					error: (err: HttpErrorResponse) => reject(err),
+				});
+		});
+		return payload as HttpResponse<Customer>;
+	}
+
 	async getLastOrder(customer_id: number): Promise<HttpResponse<Order>> {
 		const payload = await new Promise((resolve, reject) => {
 			this.http
@@ -52,4 +64,30 @@ export class HttpCustomerAdapter
 		});
 		return payload as Customer;
 	}
+
+	async getAllOrders(customer_id: number): Promise<HttpResponse<Order[]>> {
+		const payload = await new Promise((resolve, reject) => {
+			this.http
+				.get<Order>(`${this.url}/${customer_id}/orders`)
+				.subscribe({
+					next: (data) => resolve(data),
+					error: (err: HttpErrorResponse) => reject(err),
+				});
+		});
+		return payload as HttpResponse<Order[]>;
+	}
+
+	async confirmOrder(order_id: number): Promise<HttpResponse<Order>> {
+		const payload = await new Promise((resolve, reject) => {
+			this.http
+				.get<Order>(`${this.url}/orders`)
+				.subscribe({
+					next: (data) => resolve(data),
+					error: (err: HttpErrorResponse) => reject(err),
+				});
+		});
+		return payload as HttpResponse<Order>;
+	}
+
+
 }

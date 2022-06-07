@@ -1,27 +1,28 @@
-import {RouterModule, Routes} from '@angular/router';
-import {ServerErrorComponent} from "./app-common/containers";
+import {Route} from '@angular/router';
 
-const appRoutes: Routes = [
-	{path: 'error', component: ServerErrorComponent},
+const appRoutes: Route[] = [
 	{
-		path: 'auth',
-		loadChildren: () =>
-			import('./auth/auth.module').then(m => m.AuthModule)
-	},
-	{
-		path: 'dashboard',
-		loadChildren: () =>
-			import('./admin/admin.module').then((m) => m.AdminModule),
-	},
-
-	{
-		path: '**',
+		path: 'shop',
 		loadChildren: () =>
 			import('./shop/shop.module').then((m) => m.ShopModule),
+	}, {
+		path: 'auth',
+		loadChildren: () =>
+			import('./auth/auth.module').then(m => m.AuthModule),
+
 	},
-	/*{path: '**', component: NopagefoundComponent},
-	*/
+	{
+		path: '',
+		redirectTo: 'shop',//con shop peta
+		pathMatch: 'full',
+	},
+	{
+		path: '**',
+		redirectTo: 'shop',
+		pathMatch: 'full'
+	}
 
 ];
 
-export const APP_ROUTES = RouterModule.forRoot(appRoutes);
+export const APP_ROUTES = appRoutes;
+//export const APP_ROUTES = RouterModule.forRoot(appRoutes);

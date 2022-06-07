@@ -3,23 +3,22 @@ import {CommonModule} from '@angular/common';
 import {AppCommonModule} from '../app-common/app-common.module';
 
 import * as adminContainers from './containers';
-import {ProductModule} from '../product/product.module';
-import {AuthModule} from '../auth/auth.module';
-import {ADMIN_ROUTES} from "./admin.routes";
+import {DashboardLayoutComponent} from "./layout/dashboard.layout";
 import {ShopModule} from "../shop/shop.module";
+import {AdminRoutingModule} from "./routing/admin-routing";
 
 @NgModule({
 	declarations: [
-		...adminContainers.containers
+		...adminContainers.containers,
+		DashboardLayoutComponent
 	],
 	imports: [
 		CommonModule,
 		AppCommonModule,
-		ProductModule,
-		AuthModule,
-		ADMIN_ROUTES,
+		AdminRoutingModule,
 		ShopModule,
-	]
+	],
+	exports: []
 })
 export class AdminModule {
 }

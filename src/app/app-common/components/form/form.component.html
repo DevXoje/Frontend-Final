@@ -1,9 +1,12 @@
-<form (ngSubmit)="onSubmit()" [formGroup]="form">
+<form (ngSubmit)="onSubmit()" [formGroup]="form" class="needs-validation">
 	<div *ngFor="let field of fields" class="form-row">
-		<app-field [field]="field" [form]="form"></app-field>
+		<app-field *ngIf="isInForm(field.key)" [field]="field" [form]="form"></app-field>
 	</div>
 
 	<div class="form-row">
-		<button [disabled]="!form.valid||!extraValidators" type="submit">Save</button>
+		<button [disabled]="!isValid()" type="submit">Save</button>
 	</div>
 </form>
+<pre>
+{{ form.value | json }}
+</pre>

@@ -21,7 +21,6 @@ export class OrderService {
 	}
 
 	getAll(): Observable<HttpResponse<Order[]>> {
-		/* : Promise<>; */
 		return from(this.orderService.getAll());
 	}
 
@@ -32,6 +31,12 @@ export class OrderService {
 	getLastByUser(customer_id: number): Observable<HttpResponse<Order>> {
 		return this.customerService.getLastOrder(customer_id);
 	}
+
+
+	getAllOrders(customer_id: number): Observable<HttpResponse<Order[]>> {
+		return this.customerService.getAllOrders(customer_id);
+	}
+
 
 	/*getByUser(customer_id: number): Observable<HttpResponse<Order[]>> {
 		return this.customerService.getOrders(customer_id);
@@ -55,5 +60,17 @@ export class OrderService {
 
 	completeOrder(order: Order): Observable<Order> {
 		return from(this.orderService.completeOrder(order));
+	}
+
+	completeStripeOrder(): Observable<HttpResponse<Order>> {
+		return from(this.orderService.completeStripeOrder());
+	}
+
+	createPaymentIntent(): any {
+		return from(this.orderService.createPaymentIntent());
+	}
+
+	confirmOrder(id: number): Observable<HttpResponse<Order>> {
+		return from(this.orderService.confirmOrder(id));
 	}
 }

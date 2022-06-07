@@ -1,14 +1,10 @@
-import {
-	HttpGenericService,
-	HttpResponse,
-} from 'src/app/app-common/services/HttpGenericAdapter';
+import {HttpGenericService,} from 'src/app/app-common/services/HttpGenericAdapter';
 
 export type Product = {
 	id: number;
 	name: string;
 	description: string;
 	price: number;
-	quantity: number;
 	image: string;
 	category_id: number;
 	created_at: string;
@@ -20,7 +16,7 @@ export type ProductSearch =
 	| 'name'
 	| 'description'
 	| 'price'
-	| 'quantity'
+	| 'stock'
 	| 'category_id'
 	| 'created_at'
 	| 'updated_at';
@@ -29,7 +25,7 @@ export type ProductSearch =
 
 export type ProductStateModel = {
 	products: Product[];
-	selectedProduct: Product;
+	selectedProduct: Product | null;
 };
 
 export type ProductServiceInterface = HttpGenericService<Product> & {

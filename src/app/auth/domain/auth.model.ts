@@ -9,10 +9,6 @@ export type RegisterData = {
 	username: string;
 	password: string;
 };
-export type RestoreData = {
-	id?: number;
-	token: string;
-};
 export type Auth = LoginData & {
 	id: number;
 	role: string;
@@ -21,11 +17,10 @@ export type Auth = LoginData & {
 };
 
 export type AuthStateModel = {
-	users: Auth[];
-	selectedUser: Auth | null;
+	users: Auth[] | Customer[];
+	selectedUser: Auth | Customer | null;
 };
 export type AuthServiceInterface = HttpGenericService<Auth> & {
-	create(user: RegisterData): Promise<HttpResponse<Auth>>;
 	login(user: LoginData): Promise<HttpResponse<LoginResponse>>;
 	restore(): Promise<HttpResponse<Auth>>;
 };
@@ -34,3 +29,6 @@ export type LoginResponse = {
 	auth: Customer | Auth;
 	//name: string;
 };
+
+export const LoginFields = ["email", "password"];
+export const RegisterFields = [...LoginFields, "name", "password_confirmation"];

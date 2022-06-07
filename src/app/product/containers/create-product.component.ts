@@ -1,20 +1,19 @@
 import {Component, OnInit} from '@angular/core';
-import {Validators} from '@angular/forms';
 import {Select, Store} from '@ngxs/store';
-import {Observable, of} from 'rxjs';
-import {DropDownInput, Field, TextInput} from 'src/app/app-common/domain';
+import {Observable} from 'rxjs';
+import {Field} from 'src/app/app-common/domain';
 import {FieldControlService} from 'src/app/app-common/services/field-control.service';
 import {Product} from '../domain/product.model';
-import {SetSelectedProductToUpdate} from '../state/product.actions';
-import {ProductState} from '../state/product.state';
+import {CreateProduct, ProductState} from '../state';
 
 
 @Component({
 	selector: 'app-create-product',
 	template: `
+		<a routerLink="/dashboard">Return</a>
 		<div>
 			<h2>Create Product</h2>
-			<app-form [fields]="fields$ | async" (sendPayload)="editHandler($event)"></app-form>
+			<app-form-product (sendPayload)="createHandler($event)"></app-form-product>
 			<figure>
 				<title>{{image.title}}</title>
 				<img src="" alt="">
@@ -35,6 +34,7 @@ export class CreateProductComponent implements OnInit {//, TableCustom: edit,del
 	}
 
 	ngOnInit(): void {
+		/*
 		this.store.select(ProductState.getSelectedProduct).subscribe(product => {
 			this.fields = [
 				new TextInput({
@@ -60,34 +60,36 @@ export class CreateProductComponent implements OnInit {//, TableCustom: edit,del
 					order: 3
 				}),
 				new TextInput({
-					key: 'quantity',
-					label: 'quantity',
+					key: 'stock',
+					label: 'stock',
 					type: 'number',
-					placeholder: product.quantity,
+					placeholder: product.stock,
 					order: 4
 				}),
-				new TextInput({
+				new ImageInput({
 					key: 'image',
 					label: 'image',
 					type: 'file',
 					order: 5
 				}),
-				new DropDownInput({
+				/*new DropDownInput({
 					key: 'category',
 					label: 'category',
 					type: 'select',
 					//placeholder: placeholders.name,
 					options: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
 					order: 6
-				}),
-			];
-			this.fields$ = of(this.fields);
-		});
+				}),*
+	];
+		this.fields$ = of(this.fields);
+	});
 
+* */
 	}
 
-	editHandler(event: Product) {
-		this.store.dispatch(new SetSelectedProductToUpdate(event));
+	createHandler(event: any) {//TODO: tipar dato
+		console.log(event);
+		this.store.dispatch(new CreateProduct(event));
 	}
 
 }

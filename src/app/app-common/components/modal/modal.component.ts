@@ -1,11 +1,6 @@
-import { Component, Input } from '@angular/core';
-import {
-	ModalDismissReasons,
-	NgbActiveModal,
-	NgbModal,
-	NgbModalRef,
-} from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
+import {Component, ElementRef, Input, ViewChild} from '@angular/core';
+import {ModalDismissReasons, NgbActiveModal, NgbModal, NgbModalRef,} from '@ng-bootstrap/ng-bootstrap';
+import {Observable} from 'rxjs';
 
 @Component({
 	selector: 'app-modal',
@@ -14,6 +9,7 @@ import { Observable } from 'rxjs';
 	providers: [NgbActiveModal, NgbModal],
 })
 export class ModalComponent {
+	@ViewChild('modal') modal?: ElementRef<HTMLDivElement>;
 	@Input() title: string = 'title';
 	@Input() name: string = 'title';
 	@Input() content?: HTMLElement;
@@ -24,19 +20,22 @@ export class ModalComponent {
 	};
 
 	closeReasonObservable: Observable<string> = new Observable();
+	closeResult: string = '';
 
-	complete = ($event: any) => {
-		console.log($event);
-	};
-	cancel = ($event: any) => {
-		console.log($event);
-	};
 	constructor(
 		public activeModal: NgbActiveModal,
 		private modalService: NgbModal
-	) {}
+	) {
+	}
 
-	closeResult: string = '';
+	complete = ($event: any) => console.log($event);
+	cancel = ($event: any) => console.log($event);
+
+	/*open() {
+		this.modal?.nativeElement.classList.add('show');
+		//const modalRef = this.modalService.open(ModalComponent);
+	}*/
+
 	open(modalRef: NgbModalRef) {
 		modalRef.result.then(
 			(result) => {

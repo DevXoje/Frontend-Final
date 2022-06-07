@@ -5,13 +5,15 @@ import {Observable} from 'rxjs';
 import {Field} from 'src/app/app-common/domain/field';
 import {FieldControlService} from 'src/app/app-common/services/field-control.service';
 import {RegisterData} from '../domain/auth.model';
-import {UpdateCustomer} from "../../customer/state";
 import {Customer} from "../../customer/domain/customer.model";
+import {UpdateUser} from "../state";
 
 @Component({
 	selector: 'app-register',
 	template: `
-		<app-form-user [title]="'Edit User'" (sendPayload)="editHandler($event)"></app-form-user>
+		<app-form-user [title]="'Edit User'" (sendPayload)="editHandler($event)">
+
+		</app-form-user>
 	`,
 })
 export class EditComponent implements OnInit {
@@ -34,7 +36,7 @@ export class EditComponent implements OnInit {
 	}
 
 	editHandler(event: RegisterData) {
-		this.store.dispatch(new UpdateCustomer(event)).subscribe({
+		this.store.dispatch(new UpdateUser(event)).subscribe({
 			next: (response) => console.log(response),
 			error: (error) => console.error(error),
 		});

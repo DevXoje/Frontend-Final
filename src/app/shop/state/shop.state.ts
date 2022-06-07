@@ -7,7 +7,9 @@ import {OrderService} from '../services/order.service';
 import {
 	AddProductToOrder,
 	CompleteOrder,
+	ConfirmCompleteOrder,
 	GetAllOrders,
+	SetCustomerOrders,
 	SetLastOrder,
 	SetOrders,
 	SetSelectedOrder,
@@ -44,6 +46,7 @@ export class OrderState {
 		   }: StateContext<OrderStateModel>): Observable<HttpResponse<Order[]>> {
 		return this.orderService.getAll().pipe(
 			tap((resp: HttpResponse<Order[]>) => {
+				console.log('resp', resp);
 				patchState({
 					orders: [...resp.data],
 					selectedOrder: getState().selectedOrder,
@@ -107,6 +110,8 @@ export class OrderState {
 	): any {
 		return this.orderService.getLastByUser(toLastOrder.customer_id).pipe(
 			tap((resp: HttpResponse<Order>) => {
+				console.log(resp);
+
 				patchState({
 					orders: [...getState().orders],
 					selectedOrder: resp.data,
@@ -115,7 +120,39 @@ export class OrderState {
 		);
 	}
 
+	@Action(SetCustomerOrders)
+	public setCustomerOrders(
+		{getState, patchState}: StateContext<OrderStateModel>,
+		toSetCustomerOrders: SetCustomerOrders
+	): any {
+		return this.orderService.getAllOrders(toSetCustomerOrders.customer_id).pipe(
+			tap((resp: HttpResponse<Order[]>) => {
+				patchState({
+					orders: [...resp.data],
+					selectedOrder: getState().selectedOrder,
+				});
+			})
+		);
+	}
+
 	@Action(CompleteOrder)
+	public completeOrder({
+							 getState,
+							 patchState,
+						 }: StateContext<OrderStateModel>) {
+		return this.orderService.completeStripeOrder().pipe(
+			tap((resp: HttpResponse<Order>) => {
+					console.log(resp);
+					patchState({
+						orders: [...getState().orders],
+						selectedOrder: resp.data,
+					})
+				}
+			)
+		);
+	}
+
+	/*@Action(CompleteOrder)
 	public completeOrder({
 							 getState,
 							 patchState,
@@ -128,5 +165,21 @@ export class OrderState {
 				})
 			)
 		);
+	}*/
+
+	@Action(ConfirmCompleteOrder)
+	public confirmCompleteOrder(
+		{getState, patchState}: StateContext<OrderStateModel>,
+		toStoreOrder: SetSelectedOrder
+	): Observable<HttpResponse<Order>> {
+		return this.orderService.confirmOrder(toStoreOrder.id).pipe(
+			tap((resp: HttpResponse<Order>) => {
+				patchState({
+					orders: [...getState().orders],
+					selectedOrder: resp.data,
+				});
+			})
+		);
 	}
+
 }

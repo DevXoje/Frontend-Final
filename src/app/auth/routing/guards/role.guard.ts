@@ -7,7 +7,9 @@ import {AuthState} from "../../state";
 import {Observable, of} from "rxjs";
 import {Auth} from "../../domain/auth.model";
 
-@Injectable()
+@Injectable(
+
+)
 export class RoleGuard implements CanActivate {
 	@Select(AuthState.getSelectedAuth) auth$?: Observable<Auth>;
 
@@ -24,6 +26,8 @@ export class RoleGuard implements CanActivate {
 	}
 
 	canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+		console.log('RoleGuard');
+
 		let canPass: Observable<boolean> = new Observable<boolean>();
 		if (!this.token.isValidToken()) {
 			this.token.removeToken();

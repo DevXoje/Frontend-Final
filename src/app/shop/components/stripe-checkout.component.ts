@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { switchMap } from 'rxjs/operators';
+import {Component} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+import {switchMap} from 'rxjs/operators';
 
-import { StripeService } from 'ngx-stripe';
-import { environment } from 'src/environments/environment';
-import { RedirectToCheckoutOptions } from '@stripe/stripe-js';
+import {StripeService} from 'ngx-stripe';
+import {environment} from 'src/environments/environment';
+
 @Component({
 	selector: 'app-stripe-checkout',
 	template: `
@@ -38,13 +38,13 @@ export class StripeCheckoutComponent {
 	constructor(
 		private http: HttpClient,
 		private stripeService: StripeService
-	) {}
+	) {
+	}
 
 	checkout() {
 		// Check the server.js tab to see an example implementation
 		this.http
-			.post<any>(environment.baseUrl + '/create-checkout-session', {
-			})
+			.post<any>(environment.baseUrl + '/create-checkout-session', {})
 			.pipe(
 				switchMap((session) => {
 					console.log('session', session);

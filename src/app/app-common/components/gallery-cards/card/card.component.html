@@ -6,14 +6,11 @@
 	<div class="d-flex flex-row mb-3">
 		<img [alt]="card.title" height="70" src="https://i.imgur.com/ccMhxvC.png" width="70">
 		<div class="d-flex flex-column ml-2 justify-content-center">
-			<h5>{{ card.title }}Titulo</h5>
+			<h5>{{ card.title }}</h5>
 			<div class="card-body">
-
 				<h6 *ngIf="card.content as content">
 					{{ (content.length > paragraph_length) ? (content | slice:0:paragraph_length) + ' ...' : (content) }}
-					Texto
 				</h6>
-				<h6>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</h6>
 			</div>
 		</div>
 	</div>

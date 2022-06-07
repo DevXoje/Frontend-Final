@@ -27,7 +27,6 @@ export class ChartComponent implements OnInit, OnChanges {
 
 	constructor() {
 		if (this.options) {
-			console.log("options", this.options);
 			this.chartOptions = {
 				series: this.options.serie,
 				chart: {
@@ -66,7 +65,6 @@ export class ChartComponent implements OnInit, OnChanges {
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes["options"] && this.options) {
-			console.log("options", this.options);
 			this.chartOptions = {
 				series: this.options.serie,
 				chart: {

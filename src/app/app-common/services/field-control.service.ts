@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {of} from 'rxjs';
 import {DropDownInput, Field, TextInput} from '../domain';
 
@@ -8,9 +8,6 @@ export class FieldControlService {
 	constructor() {
 	}
 
-	getEditCustomerFields() {
-		const fields: Field<string>[] = [];
-	}
 
 	toFormGroup(fields: Field<string>[]) {
 		const group: any = {};
@@ -38,6 +35,7 @@ export class FieldControlService {
 					{key: 'good', value: 'Good'},
 					{key: 'unproven', value: 'Unproven'},
 				],
+				validators: [Validators.min(1)],
 				order: 3,
 			}),
 

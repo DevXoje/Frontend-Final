@@ -5,23 +5,28 @@ import {AppCommonModule} from '../app-common/app-common.module';
 
 import * as shopContainers from './containers';
 import * as shopComponents from './components';
-import {ProductModule} from '../product/product.module';
-import {CustomerModule} from '../customer/customer.module';
-import {SHOP_ROUTES} from './routing/shop.routes';
+import {ShopLayoutComponent} from "./layout/shop.layout";
+import {ShopRoutingModule} from "./routing/shop-routing";
+import {CustomerModule} from "../customer/customer.module";
+import {ProductModule} from "../product/product.module";
 
 @NgModule({
-	declarations: [...shopContainers.containers, ...shopComponents.components],
+	declarations: [...shopContainers.containers, ...shopComponents.components, ShopLayoutComponent],
 	imports: [
 		CommonModule,
 		AppCommonModule,
-		ProductModule,
+		//ProductModule,
 		CustomerModule,
-		SHOP_ROUTES,
+		ShopRoutingModule,
+		ProductModule,
 		/* NgxStripeModule.forRoot(environment.stripePK), */
 	],
 	exports: [
 		...shopComponents.components,
+		ShopLayoutComponent,
 	]
 })
 export class ShopModule {
+	constructor() {
+	}
 }

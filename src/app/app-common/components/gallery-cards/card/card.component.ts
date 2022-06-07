@@ -30,12 +30,8 @@ export class CardComponent implements OnChanges {
 
 	handleClick = (_e: MouseEvent) => this.clicked.emit(this.card.id);
 
-	printData(data: any) {
-		console.log(data);
-	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		// ToDo: check card has a disabled property
-		//console.log(changes);
 	}
 }

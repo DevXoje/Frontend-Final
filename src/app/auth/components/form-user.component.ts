@@ -4,68 +4,115 @@ import {Store} from '@ngxs/store';
 import {Observable, of} from 'rxjs';
 import {Field} from 'src/app/app-common/domain/field';
 import {FieldControlService} from 'src/app/app-common/services/field-control.service';
-import {SetSelectedCustomer} from "../../customer/state";
 import {PasswordInput, TextInput} from "../../app-common/domain";
 import {Validators} from "@angular/forms";
 import {HttpResponse} from "../../app-common/services/HttpGenericAdapter";
 import {Customer} from "../../customer/domain/customer.model";
+import {SetSelectedUser} from "../state";
 
 @Component({
 	selector: 'app-form-user',
 	template: `
-
-		<app-auth-layout>
-			<div topHeader>
-				<h3 class="text-muted mb-2">{{title|titlecase}}</h3>
-			</div>
-			<app-form
-				[fields]="fields$ | async"
-				(sendPayload)="sendPayload.emit($event)"
-				[extraValidators]="atLeastOneValidator"
-				content></app-form>
-		</app-auth-layout>
-
+		<app-form
+			[fields]="fields$ | async"
+			(sendPayload)="sendPayload.emit($event)"
+			[only]="only"
+			[exclude]="exclude"
+			content></app-form>
+		<!--[extraValidators]="atLeastOneValidator"-->
 	`,
 })
 export class FormUserComponent implements OnInit {
+	@Input() only: string[] = [];
+	@Input() exclude?: string[];
 	@Input() title: string = 'user';
 	fields$?: Observable<Field<any>[]> = of([
 		new TextInput({
 			key: 'name',
 			label: 'nombre',
 			type: 'text',
-			validators: [],
+			validators: [Validators.required],
 			order: 1,
+			autocomplete: 'name',
 		}),
 		new TextInput({
 			key: 'email',
 			label: 'Email',
 			type: 'email',
-			validators: [Validators.email],
+			validators: [Validators.required, Validators.email],
 			order: 2,
+			autocomplete: 'email',
 		}),
 		new TextInput({
 			key: 'address',
 			label: 'address',
 			type: 'text',
-			validators: [],
+			validators: [Validators.required],
 			order: 3,
+			autocomplete: 'street-address',
 		}),
 		new TextInput({
 			key: 'official_doc',
 			label: 'dni',
 			type: 'text',
-			validators: [Validators.pattern('[0-9]{8}')],
+			validators: [Validators.required],//TODO: validar que sea un dni
 			order: 4,
 		}),
 		new PasswordInput({
 			key: 'password',
 			label: 'Password',
 			type: 'password',
-
-			validators: [Validators.minLength(6)],
+			validators: [Validators.required],
 			order: 5,
 		}),
+		new PasswordInput({
+			key: 'password_confirmation',
+			label: 'Password confirm',
+			type: 'password',
+			validators: [Validators.required, this.fieldService.matchOtherValidator("password")],
+			order: 6,
+		}),
+		new TextInput({
+			key: 'city',
+			label: 'ciudad',
+			type: 'text',
+			validators: [Validators.required],
+			order: 7,
+			autocomplete: 'address-level2',
+		}),
+		new TextInput({
+			key: 'country',
+			label: 'pais',
+			type: 'text',
+			validators: [Validators.required],
+			order: 7,
+			autocomplete: 'country',
+		}),
+		new TextInput({
+			key: 'postal_code',
+			label: 'codigo postal',
+			type: 'text',
+			validators: [Validators.required],
+			order: 7,
+			autocomplete: 'postal-code',
+		}),
+		new TextInput({
+			key: 'state',
+			label: 'pais',
+			type: 'text',
+			validators: [Validators.required,],
+			order: 7,
+			autocomplete: 'country-name',
+		}),
+		new TextInput({
+			key: 'phone',
+			label: 'phone',
+			type: 'tel',
+			validators: [Validators.required],
+			order: 7,
+			autocomplete: 'tel',
+		}),
+
 	]);
 	//@Input() fields$: Observable<Field<any>[]> | null = null;
 	@Output() sendPayload = new EventEmitter<any>();
@@ -73,65 +120,24 @@ export class FormUserComponent implements OnInit {
 	customer?: Customer;
 
 	constructor(
-		fieldService: FieldControlService,
+		private fieldService: FieldControlService,
 		private store: Store,
 		private router: Router,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		//private customerService: CustomerService
 	) {
 		const resp = this.route.snapshot.data["customerResp"] as HttpResponse<Customer>
 		if (resp) {//Esto deberia gestionarlo edit customer
 			this.customer = resp.data;
-			this.store.dispatch(new SetSelectedCustomer(this.customer.id));
-
-			this.fields$ = of([
-				new TextInput({
-					key: 'name',
-					label: 'nombre',
-					type: 'text',
-					placeholder: this.customer.name,
-					validators: [],
-					order: 1,
-				}),
-				new TextInput({
-					key: 'email',
-					label: 'Email',
-					type: 'email',
-					placeholder: this.customer.email,
-					validators: [Validators.email],
-					order: 2,
-				}),
-				new TextInput({
-					key: 'address',
-					label: 'address',
-					type: 'text',
-					placeholder: this.customer.address,
-					validators: [],
-					order: 3,
-				}),
-				new TextInput({
-					key: 'official_doc',
-					label: 'dni',
-					type: 'text',
-					placeholder: this.customer.official_doc,
-					validators: [Validators.pattern('[0-9]{8}')],
-					order: 3,
-				}),
-				new PasswordInput({
-					key: 'password',
-					label: 'Password',
-					type: 'password',
-
-					validators: [Validators.minLength(6)],
-					order: 3,
-				}),
-			]);
+			this.store.dispatch(new SetSelectedUser(this.customer.id));
 		}
+		//this.fields$ = this.customerService.getFields(this.customer);
+
 
 	}
 
 	atLeastOneValidator = () => {
 		return (controlGroup: any) => {
-			console.log(controlGroup);
 			let controls = controlGroup.controls;
 			if (controls) {
 				let theOne = Object.keys(controls).find(key => controls[key].value !== '');
