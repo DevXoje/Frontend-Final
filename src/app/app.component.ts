@@ -13,6 +13,7 @@ import {Customer} from "./customer/domain/customer.model";
 	template: `
 		<app-loader></app-loader>
 		<router-outlet></router-outlet>
+		<!--<app-cookie-consent></app-cookie-consent>-->
 	`,
 })
 export class AppComponent implements OnInit {

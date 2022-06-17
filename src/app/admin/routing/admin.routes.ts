@@ -4,7 +4,7 @@ import {AdminComponent, AdminResumeComponent} from "../containers";
 const outlet = 'adminOutlet';
 const adminRoutes: Routes = [
 	{
-		path: 'home',
+		path: 'dashboard',
 		component: AdminComponent,
 		children: [
 			{
@@ -12,7 +12,8 @@ const adminRoutes: Routes = [
 				component: AdminResumeComponent,
 				outlet
 			}
-		]
+		],
+		
 	},
 	{
 		path: '',

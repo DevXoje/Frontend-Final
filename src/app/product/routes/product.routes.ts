@@ -3,6 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {CreateProductComponent, EditProductComponent} from "../containers";
 import {RoleGuard} from "../../auth/routing/guards";
 import {TableProductsComponent} from "../components";
+import {DetailsProductComponent} from "../components/details-product.component";
 
 const productRoutes: Routes = [
 
@@ -13,6 +14,11 @@ const productRoutes: Routes = [
 			productResp: ProductResolver,
 		},
 		canActivate: [RoleGuard],
+	},
+	{
+		path: 'details/:id',
+		component: DetailsProductComponent,
+		//resolve: {productResp: ProductResolver,},
 	},
 	{
 		path: 'create',

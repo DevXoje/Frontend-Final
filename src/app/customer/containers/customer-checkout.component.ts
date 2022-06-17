@@ -18,8 +18,6 @@ import {CustomerService} from '../services/customer.service';
 export class CustomerCheckoutComponent implements OnInit {
 	@Select(AuthState.getSelectedAuth)
 	auth$?: Observable<Customer>;
-	checkoutData$?: Observable<Customer>;
-	checkoutData?: Customer;
 	@Output() completed = new EventEmitter<any>();
 	fields: Field<string>[] = [];
 

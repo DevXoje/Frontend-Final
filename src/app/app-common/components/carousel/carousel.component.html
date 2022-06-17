@@ -1,4 +1,4 @@
-<ngb-carousel *ngIf="images">
+<ngb-carousel *ngIf="carousel">
 	<ng-template *ngFor="let item of carousel.items;" ngbSlide>
 		<div class="picsum-img-wrapper">
 			<img [src]="item.image" alt="Random first slide" class="carusel_item_image">
@@ -6,7 +6,7 @@
 		<div class="carousel-caption">
 			<h3>{{item.caption}}</h3>
 			<p>{{item.description}}</p>
-			<button class="btn btn-primary"> Add to cart</button>
+			<button class="btn btn-primary" ngbTooltip="Add to cart" placement="top"> Add to cart</button>
 		</div>
 	</ng-template>
 

@@ -1,14 +1,24 @@
+import {IconProp} from "@fortawesome/fontawesome-svg-core";
+
 export type Card = {
-	title?: string;
-	name?: string;
 	id: number;
+	title?: string;
 	content?: string;
-	btn_content?: string;
-	imagePath?: string;
-	image?: {
-		path: string;
-		alt?: string;
-	};
 	footer?: string;
+	image?: Image;
 	disabled?: boolean;
+	card_controls?: CardControl[];
 };
+
+export type CardControl = {
+	icon?: IconProp;
+	title?: string;
+	action: (event: any) => void;
+	disabled?: boolean
+}
+export type Image = {
+	path: string;
+	alt?: string;
+}
+
+

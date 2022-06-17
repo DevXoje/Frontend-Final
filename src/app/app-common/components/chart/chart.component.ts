@@ -1,11 +1,20 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {ChartComponent as ChartApexComponent} from 'ng-apexcharts';
-import {ChartOptions, Options} from '../../domain/chartOptions';
+import {ChartOptions} from '../../domain/chartOptions';
 
 
 @Component({
 	selector: 'app-chart',
-	templateUrl: './chart.component.html',
+	template: `
+		<div *ngIf="options as chart" id="chart" style="text-align:center">
+			<apx-chart
+				[series]="chart.series"
+				[chart]="chart.chart"
+				[labels]="chart.labels"
+				[responsive]="chart.responsive"
+
+			></apx-chart>
+		</div>`,
 	styles: [`
 		#chart {
 			max-width: 650px;
@@ -13,88 +22,17 @@ import {ChartOptions, Options} from '../../domain/chartOptions';
 		}`]
 })
 export class ChartComponent implements OnInit, OnChanges {
-	@Input() options: Options | null = {
-		title: "",
-		serie: [{name: "", data: []}],
-		type: "line",
-		categories: []
-	};
-	/*@Input() chartOptions: Observable<Partial<ChartOptions>>*/
-	chartOptions?: ChartOptions;
-
-
+	@Input() options?: ChartOptions | null;
 	@ViewChild("chart") chart?: ChartApexComponent;
 
 	constructor() {
-		if (this.options) {
-			this.chartOptions = {
-				series: this.options.serie,
-				chart: {
-					height: 350,
-					type: "bar",
-					zoom: {
-						enabled: false
-					}
-				},
-				dataLabels: {
-					enabled: false
-				},
-				stroke: {
-					curve: "straight"
-				},
-				title: {
-					text: this.options.title,
-					align: "left"
-				},
-				grid: {
-					row: {
-						colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-						opacity: 0.5
-					}
-				},
-				xaxis: {
-					categories: this.options.categories
-				}
-			};
-		}
-
 	}
 
 	ngOnInit(): void {
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes["options"] && this.options) {
-			this.chartOptions = {
-				series: this.options.serie,
-				chart: {
-					height: 350,
-					type: "bar",
-					zoom: {
-						enabled: false
-					}
-				},
-				dataLabels: {
-					enabled: false
-				},
-				stroke: {
-					curve: "straight"
-				},
-				title: {
-					text: this.options.title,
-					align: "left"
-				},
-				grid: {
-					row: {
-						colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-						opacity: 0.5
-					}
-				},
-				xaxis: {
-					categories: this.options.categories
-				}
-			};
-		}
+
 	}
 
 }

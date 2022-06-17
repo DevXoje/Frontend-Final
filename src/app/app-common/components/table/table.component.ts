@@ -5,7 +5,6 @@ import {
 	Input,
 	OnChanges,
 	Output,
-	PipeTransform,
 	QueryList,
 	SimpleChanges,
 	ViewChildren,
@@ -40,7 +39,7 @@ export class TableComponent implements OnChanges {
 	page = 1;
 	pageSize = 3;
 	collectionSize = 0;
-	paginationOptions = [3, 10, 20];
+	paginationOptions = [3, 4, 10];
 	iconPen = faPenToSquare;
 	iconTrash = faTrash;
 	@ViewChildren(SortableHeaderDirective)
@@ -55,11 +54,26 @@ export class TableComponent implements OnChanges {
 				if (data[0]) {
 					this.titulos = Object.keys(data[0]) as SortColumn[];
 					this.collectionSize = data.length;
+					this.paginationOptions = this.paginationOptions.filter(option => option <= this.collectionSize);
 				}
+				this.refreshData();
+
 			});
-			this.refreshData();
 		}
 	}
+
+	/*search(text: string, pipe: PipeTransform): any[] {
+		let resul: any[] = [];
+		this.datos?.subscribe((data) => {
+			resul = data.filter((dato) => {
+				const term = text.toLowerCase();
+				return dato.name.toLowerCase().includes(term);
+				//  || pipe.transform(dato.area).includes(term)
+				//  || pipe.transform(dato.population).includes(term);
+			});
+		});
+		return resul;
+	}*/
 
 	onSort({column, direction}: SortEvent) {
 		this.DATA_DEFAULT =
@@ -77,7 +91,7 @@ export class TableComponent implements OnChanges {
 		} else {
 			this.datos?.subscribe((data) => {
 				this.DATA_DEFAULT = of(
-					data.sort((a, b) => {
+					data.slice(this.pageSize).sort((a, b) => {
 						const res =
 							a[column] < b[column]
 								? -1
@@ -89,19 +103,6 @@ export class TableComponent implements OnChanges {
 				);
 			});
 		}
-	}
-
-	search(text: string, pipe: PipeTransform): any[] {
-		let resul: any[] = [];
-		this.datos?.subscribe((data) => {
-			resul = data.filter((dato) => {
-				const term = text.toLowerCase();
-				return dato.name.toLowerCase().includes(term);
-				//  || pipe.transform(dato.area).includes(term)
-				//  || pipe.transform(dato.population).includes(term);
-			});
-		});
-		return resul;
 	}
 
 	refreshData() {
@@ -136,13 +137,19 @@ export class TableComponent implements OnChanges {
 		let output = data;
 		const regex = {
 			date: /^\d{4}-\d{2}-\d{2}/,
-			price: /^\d+\.\d{2}$/,
+			price: /^\d+\.\d{1,2}$/,
+			image: /^(http|https):\/\/[^ "]+$/,
 		}
 		if (regex.date.test(data)) {
 			const date = new Date(data);
 			output = date.toLocaleDateString();
 		} else if (regex.price.test(data)) {
 			output = formatCurrency(parseInt(data), 'en-US', '€');//Todo: Falta establecer Locale en español
+		} else if (regex.image.test(data)) {
+
+			//output = element;
+			// output save html image
+			//output = new HTMLImageElement().src = data;
 		} else if (typeof data == 'object') {
 
 			output = "objeto";

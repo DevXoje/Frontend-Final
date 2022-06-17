@@ -21,7 +21,6 @@ export class ShopComponent implements OnInit {
 	customer$?: Observable<Auth>;
 
 	constructor(private store: Store) {
-		console.log('HomeComponent.constructor()');
 	}
 
 	ngOnInit(): void {

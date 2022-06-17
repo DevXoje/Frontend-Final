@@ -17,7 +17,8 @@ export class GalleryCardsComponent implements OnChanges {
 	@Output() outClicked: EventEmitter<any> = new EventEmitter<any>();
 
 	handleClick(e: any) {
-		this.outClicked.emit(e);
+		console.log('handleClick', e);
+		//this.outClicked.emit(e);
 	}
 
 	setDisabled(e: any) {

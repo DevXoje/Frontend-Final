@@ -61,7 +61,7 @@ export class AuthService {
 			preserveFragment: false
 		};
 		const routes: any = {
-			admin: ['home', {outlets: {'admin-outlet': ['resume']}}],
+			admin: ['/dashboard'],
 			customer: ['shop'],
 		};
 		return routes[role];

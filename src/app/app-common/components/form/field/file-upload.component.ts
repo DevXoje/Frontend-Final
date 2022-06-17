@@ -9,7 +9,7 @@ import {FormGroup} from "@angular/forms";
 			<ng-content [select]="[content]" (change)="handleChange($event)"></ng-content>
 
 
-			<img [src]="imageFile.link" class="preview-image" width="50%" *ngIf="imageFile">
+			<img [src]="imageFile.link" [alt]="imageFile.name" class="preview-image" width="50%" *ngIf="imageFile">
 
 			<!--<app-progress [progress]="progress"></app-progress>-->`,
 		styles: [``],

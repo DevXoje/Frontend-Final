@@ -5,7 +5,7 @@ import {Select, Store} from '@ngxs/store';
 import {Observable} from 'rxjs';
 import {NotificationService} from 'src/app/app-common/services/notification.service';
 import {Product} from 'src/app/product/domain/product.model';
-import {DeleteProduct, GetAllProducts, SetSelectedProduct} from 'src/app/product/state/product.actions';
+import {DeleteProduct, SetSelectedProduct} from 'src/app/product/state/product.actions';
 import {ProductState} from 'src/app/product/state/product.state';
 
 /* import { Auth } from 'src/app/auth/model/auth.model';
@@ -36,13 +36,10 @@ export class TableProductsComponent implements OnInit {//, TableCustom: edit,del
 	}
 
 	ngOnInit(): void {
-		this.store.dispatch(GetAllProducts);
-		//this.store.select(ProductState.getProductList)
 
 	}
 
 	editHandler(id: number) {
-		console.log('editHandler', id);
 		this.store.dispatch(new SetSelectedProduct(id));
 		//this.store.select(ProductState.getSelectedProduct);
 		this.router.navigate(['/products/edit', id]);
@@ -52,21 +49,16 @@ export class TableProductsComponent implements OnInit {//, TableCustom: edit,del
 
 	deleteHandler(id: number) {
 		if (this.openDeleteModal(id)) {
-			this.store.dispatch(new SetSelectedProduct(id)).subscribe({
+			this.store.dispatch(new DeleteProduct(id)).subscribe({
 				next: () => {
-					this.store.dispatch(new DeleteProduct(id)).subscribe({
-						next: () => {
-							this.notificationService.showWarning('Producto eliminado', 'Producto eliminado');
-
-						},
-						error: (err) => {
-							this.notificationService.showError('Error', err.error.message);
-
-						}
-					});
+					this.notificationService.showWarning('Producto eliminado', 'Producto eliminado');
+				},
+				error: (err) => {
+					this.notificationService.showError('Error', err.error.message);
 				}
-			})
+			});
 		}
+
 	}
 
 	addHandler() {

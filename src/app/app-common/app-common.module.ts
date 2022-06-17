@@ -43,7 +43,7 @@ const thirdsModules = [
 	exports: [
 		...commonComponents.components,
 		thirdsModules,
-		...nativeModules
+		...nativeModules,
 	],
 	providers: [
 		...commonInterceptors.interceptors,

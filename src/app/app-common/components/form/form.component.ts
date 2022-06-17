@@ -23,7 +23,7 @@ export class FormComponent implements OnInit, AfterViewInit {
 	}
 
 	isInExclude(name: string): boolean {
-		return (this.exclude && this.exclude.length > 0) ? this.exclude.includes(name) : true;
+		return (this.exclude && this.exclude.length > 0) ? this.exclude.includes(name) : false;
 	}
 
 	isInForm(name: string): boolean {

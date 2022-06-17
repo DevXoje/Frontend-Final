@@ -1,48 +1,45 @@
 <ng-container *ngIf="datos|async as datosSync">
 	<ng-container *ngIf="datosSync[0]; else withoutData">
-		<form>
-			<div class="mb-3 row">
-				<label class="col-xs-3 col-sm-auto col-form-label" for="table-filtering-search">Full text
-					search:</label>
-				<div class="col-xs-3 col-sm-auto">
-					<input [formControl]="filter" class="form-control" id="table-filtering-search" type="text">
-				</div>
-			</div>
-		</form>
-		<table class="table table-striped">
+		<table class="table table-striped table-hover">
 			<caption>{{title}}</caption>
 			<thead>
 			<tr>
-				<th scope="col">#</th>
 				<th (sort)="onSort($event)" *ngFor="let titulo of titulos" [sortable]="titulo" scope="col"
-				    style="cursor: pointer;">{{titulo}}</th>
+					style="cursor: pointer;">{{titulo}}</th>
+				<th scope="col">#</th>
+
 			</tr>
 			</thead>
 			<tbody>
 			<tr *ngFor="let item of DATA_DEFAULT|async; index as i" class="col">
+				<td *ngFor="let titulo of titulos">
+					{{checkItemFormat(item[titulo])}}
+					<!--<ngb-highlight [result]="checkItemFormat(item[titulo])" [term]="filter.value"></ngb-highlight>-->
+				</td>
 				<th scope="row">
 					<fa-icon (click)="onEdit.emit(item['id'])" [icon]="iconPen"></fa-icon>
 					<fa-icon (click)="onDelete.emit(item['id'])" [icon]="iconTrash"></fa-icon>
 				</th>
-				<td *ngFor="let titulo of titulos">
-					<ngb-highlight [result]="checkItemFormat(item[titulo])" [term]="filter.value"></ngb-highlight>
-				</td>
+
 			</tr>
 			</tbody>
 		</table>
 
-		<div class="d-flex justify-content-between p-2">
+		<div class="d-flex justify-content-between align-content-end p-2">
 			<ng-container *ngIf="checkPaginator()">
 				<ngb-pagination (pageChange)="refreshData()" [(page)]="page" [collectionSize]="collectionSize"
-				                [pageSize]="pageSize">
+								[pageSize]="pageSize">
 				</ngb-pagination>
 			</ng-container>
-			<button (click)="onAdd.emit()" class="btn btn-primary">Add</button>
 
-			<select (ngModelChange)="refreshData()" [(ngModel)]="pageSize" class="form-select" style="width: auto">
+			<select (ngModelChange)="refreshData()" *ngIf="paginationOptions.length>1" [(ngModel)]="pageSize"
+					class="form-select flex-end"
+					style="width: auto">
 				<option *ngFor="let opt of paginationOptions" [ngValue]="opt">{{opt}} items per page</option>
 			</select>
 		</div>
+		<button (click)="onAdd.emit()" class="btn btn-primary">Add</button>
+
 	</ng-container>
 </ng-container>
 <ng-template #withoutData>

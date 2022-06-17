@@ -10,6 +10,7 @@ import {PasswordStrengthComponent} from "./form/field/password-strength.componen
 import {FileUploadComponent,} from "./form/field/file-upload.component";
 import {CarouselComponent} from "./carousel/carousel.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
+import {CookieConsentComponent} from "./cookie-consent.component";
 
 const formComponents = [
 	FormComponent,
@@ -26,7 +27,8 @@ export const components = [
 	GalleryCardsComponent,
 	CardComponent,
 	CarouselComponent,
-	SidebarComponent
+	SidebarComponent,
+	CookieConsentComponent
 
 ];
 
@@ -41,3 +43,4 @@ export * from './loader.component';
 export * from './gallery-cards/gallery-cards.component';
 export * from './gallery-cards/card/card.component';
 export * from './carousel/carousel.component';
+export * from './sidebar/sidebar.component';

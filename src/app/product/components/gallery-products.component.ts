@@ -6,13 +6,12 @@ import {Auth} from 'src/app/auth/domain/auth.model';
 import {AuthState} from 'src/app/auth/state/auth.state';
 import {Product} from 'src/app/product/domain/product.model';
 import {Card} from 'src/app/app-common/domain/card';
-import {GetAllProducts} from 'src/app/product/state/product.actions';
 import {ProductState} from 'src/app/product/state/product.state';
-import {AddProductToOrder} from 'src/app/shop/state/shop.actions';
-import {faCodepen, faInstagram, faLinkedin, faTwitter} from "@fortawesome/free-brands-svg-icons";
 import {ModalLoginComponent} from "../../auth/components";
 import {ModalComponent} from "../../app-common/components";
 import {NotificationService} from "../../app-common/services/notification.service";
+import {faCartArrowDown, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
+import {Router} from "@angular/router";
 
 @Component({
 	selector: 'app-gallery-products',
@@ -20,7 +19,6 @@ import {NotificationService} from "../../app-common/services/notification.servic
 		<app-gallery-cards
 			[datos]="cards_product$"
 			[btn_text]="'Add to cart'"
-			(outClicked)="handleAddProduct($event)"
 		>
 		</app-gallery-cards>
 		<app-modal-login></app-modal-login>
@@ -32,85 +30,61 @@ export class GalleryProductsComponent implements OnChanges, OnInit, AfterViewIni
 	@Select(AuthState.getSelectedAuth) customer$?: Observable<Auth>;
 	cards_product$?: Observable<Card[]>;
 	@ViewChild(ModalLoginComponent) modal?: ModalLoginComponent;
-	iconInstagram = faInstagram;
-	iconTwitter = faTwitter;
-	iconLinkedin = faLinkedin;
-	iconCodepen = faCodepen;
 
 
-	modalData = {
-		title: 'Usuario no atenticado',
-		content: 'contenido',
-		name: 'nombre',
-	};
+	constructor(
+		private store: Store,
+		private modalService: NgbModal,
+		private notificationService: NotificationService,
+		private router: Router
+	) {
+	}
 
-	constructor(private store: Store, private modalService: NgbModal, private notificationService: NotificationService) {
-		this.store.dispatch(GetAllProducts);
-		this.store.select(ProductState.getProductList);
+	marshallToCard(product: Product): Card {
+		return {
+			id: product.id,
+			title: product.name,
+			//price: product.price,
+			image: {
+				path: product.image,
+				alt: product.name
+			},
+			content: product.description,
+			//disable: product.stock === 0,
+			footer: product.updated_ago,
+			card_controls: [
+				{
+					icon: faCartArrowDown,
+					action: () => console.log("add to cart"),
+					title: 'Add to cart',
+				},
+				{
+					icon: faPlusCircle,
+					action: () => console.log("view details"),
+					title: 'View details',
+				}
+			]
+		};
 	}
 
 	ngAfterViewInit(): void {
-		//console.log(this.modal);
 	}
 
 	ngOnInit(): void {
-		console.log("ngOnInit");
 		this.products$?.subscribe({
-			next: (products) => {
-				this.cards_product$ = of(products.map(product => {
-							return {
-								id: product.id,
-								title: product.name,
-								name: product.name,
-								price: product.price,
-								image: {
-									path: product.image,
-									alt: product.name
-								},
-								content: product.description,
-								//disable: product.stock === 0 ? true : false,
-								disable: product.stock === 0,
-								footer: "hace dias"
-							};
-						}
-					)
-				);
-
-			},
-			error: (err) => {
-				console.log(err);
-			}
+			next: (products) =>
+				this.cards_product$ = of(products.map(product => this.marshallToCard(product))),
+			error: (err) => console.log(err)
 		});
 	}
 
 	ngOnChanges(changes: SimpleChanges): void {
-		/*console.log("a")
-		const datos = changes['datos'].currentValue as Observable<any[]>;
-		datos.subscribe({
-				next: (value: Product[]) => {
-					if (value.length !== 0) {
-						console.log(value);
-						const values = value.filter(product => {
-							product.stock = 0;
-						});
-						values.forEach((element) => {
-
-							console.log("Last update", element.updated_at);
-							console.log("Stock", element.stock);
-						});
-					} else {
-						console.log('No hay datos');
-					}
-				},
-				error: (err) => {
-					console.log(err);
-				},
-			}
-		);*/
 	}
 
-	handleAddProduct(product_id: number) {
-		this.customer$?.subscribe((user) => {
+
+	handleAddProduct(product_id: number): void {
+		console.log(product_id);
+		/*this.customer$?.subscribe((user) => {
 				if (!user.id) this.popModal()
 				else this.store.dispatch(new AddProductToOrder(user.id, product_id)).subscribe({
 					next: (value) => {
@@ -126,11 +100,12 @@ export class GalleryProductsComponent implements OnChanges, OnInit, AfterViewIni
 					error: (err) => console.log(err)
 				});
 			}
-		);
+		);*/
 	}
 
-	handleSocial(social: any) {
-		alert(social);
+	handleDetailsProduct(product_id: number): void {
+		console.log(product_id);
+		//this.router.navigate(['/product', product_id]);
 	}
 
 	popModal() {
@@ -160,5 +135,4 @@ Modal fallando
 		);
 		modalComponent.open(modalRef);
 	}
-
 }

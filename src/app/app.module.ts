@@ -14,6 +14,7 @@ import {AuthState} from './auth/state';
 
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from "./app-routing";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -29,6 +30,7 @@ import {AppRoutingModule} from "./app-routing";
 			developmentMode: !environment.production,
 		}),
 		NgxsReduxDevtoolsPluginModule.forRoot(),
+  NgbModule,
 
 
 	],

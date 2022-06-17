@@ -1,5 +1,6 @@
 import {Routes} from '@angular/router';
 import {CancelComponent, CheckoutComponent, ShopComponent, ShopResumeComponent, SuccessComponent} from "../containers";
+import {ErrorComponent} from "../../app-common/containers";
 
 const outlet = 'shopOutlet';
 const shopRoutes: Routes = [
@@ -43,12 +44,11 @@ const shopRoutes: Routes = [
 	{
 		path: '',
 		redirectTo: 'home',
-		pathMatch: 'full',
+		pathMatch: 'full'
 	},
 	{
 		path: '**',
-		redirectTo: 'home',
-		pathMatch: 'full'
+		component: ErrorComponent
 	}
 	/*children: [
 			{

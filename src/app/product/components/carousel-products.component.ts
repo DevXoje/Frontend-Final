@@ -9,18 +9,16 @@ import {Carousel} from "../../app-common/domain/carousel";
 @Component({
 	selector: 'app-carousel-products',
 	template: `
-		<app-carousel [carousel1]="carousel"></app-carousel>
+		<app-carousel [carousel]="carousel"></app-carousel>
 	`
 })
 export class CarouselProductsComponent implements OnInit {//, TableCustom: edit,delete
 	@Select(ProductState.getProductList) products$?: Observable<Product[]>;
-
-	carousel: Carousel = {} as Carousel;
+	carousel?: Carousel;
 
 	constructor(
 		private store: Store,
 	) {
-
 	}
 
 	ngOnInit(): void {

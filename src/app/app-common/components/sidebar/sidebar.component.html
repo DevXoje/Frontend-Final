@@ -1,6 +1,9 @@
 <ng-template #content let-offcanvas>
+	<ng-content [select]="[contenido]">
+
+	</ng-content>
 	<div class="offcanvas-header">
-		<h4 class="offcanvas-title">Offcanvas title</h4>
+		<h4 class="offcanvas-title">{{sidebar.title}}</h4>
 		<button (click)="offcanvas.dismiss('Cross click')" aria-label="Close" class="btn-close" type="button"></button>
 	</div>
 	<div class="offcanvas-body">
@@ -11,4 +14,4 @@
 	</div>
 </ng-template>
 
-<button (click)="open(content)" class="btn btn-lg btn-outline-primary">Launch demo offcanvas</button>
+<button (click)="open(content)" class="btn btn-outline-primary">{{sidebar.btn_content}}</button>

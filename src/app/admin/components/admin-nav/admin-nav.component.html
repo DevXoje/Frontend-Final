@@ -1,0 +1,19 @@
+<nav class="navbar navbar-light bg-light">
+	<div class="container-fluid">
+		<a class="navbar-brand">
+			<img alt="" class="d-inline-block align-text-top" height="24"
+				 src="https://picsum.photos/id/500/900/500"
+				 width="30">
+			Bootstrap
+		</a>
+		<app-sidebar [sidebar]="sidebar">
+		</app-sidebar>
+	</div>
+	<button (click)="logoutHandler()" class="btn btn-sm btn-outline-secondary"
+			type="button">
+		<fa-icon [icon]="unauthIcon"></fa-icon>
+		Logout
+	</button>
+</nav>
+
+

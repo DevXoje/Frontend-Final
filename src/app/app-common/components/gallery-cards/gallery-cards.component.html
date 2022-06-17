@@ -3,14 +3,7 @@
 		<div *ngFor="let card of datosSync" class="col-md-4">
 			<app-card
 				(clicked)="handleClick($event)"
-				[card]="{
-				id: card.id,
-				title: card.name,
-				content: card.content,
-				footer: card.footer,
-				disabled: card.disabled,
-				btn_content: btn_text
-			}"
+				[card]="card"
 			></app-card>
 		</div>
 	</div>

@@ -1,5 +1,4 @@
 import {Component, Input, OnChanges, SimpleChanges,} from '@angular/core';
-import {faShoppingCart} from '@fortawesome/free-solid-svg-icons';
 import {Store} from '@ngxs/store';
 import {StripeError, Token} from '@stripe/stripe-js';
 import {StripeInstance} from 'ngx-stripe';
@@ -38,9 +37,6 @@ import {OrderService} from '../services/order.service';
 export class CartCheckoutComponent implements OnChanges {
 	@Input() orderItems$?: OrderItem[];
 	orderItemsToSend$?: Observable<OrderItem[]>;
-	//orderItems$: Observable<OrderItem[]> = new Observable<OrderItem[]>();
-	cartIcon = faShoppingCart;
-	cardReady = false;
 	extraData = {
 		"name": null,
 		"address_city": null,

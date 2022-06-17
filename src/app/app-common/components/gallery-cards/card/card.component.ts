@@ -8,17 +8,7 @@ import {Card} from 'src/app/app-common/domain/card';
 	providers: [NgbActiveModal, NgbModal],
 })
 export class CardComponent implements OnChanges {
-	@Input() card: Card = {
-		title: 'title',
-		name: 'name',
-		id: 1,
-		image: {
-			path: 'https://via.placeholder.com/240x500',
-			alt: '',
-		},
-		footer: "footer",
-		disabled: false,
-	};
+	@Input() card?: Card;
 	@Output() clicked: EventEmitter<any> = new EventEmitter<any>();
 	paragraph_length: number = 26;
 
@@ -28,7 +18,28 @@ export class CardComponent implements OnChanges {
 	) {
 	}
 
-	handleClick = (_e: MouseEvent) => this.clicked.emit(this.card.id);
+	handleClick = (e: MouseEvent) => {
+		const keyClass = "ng-reflect-ngb-tooltip";
+		const target = e.target as HTMLElement;
+		let isCorrectTarget = target.hasAttribute(keyClass);
+		let correctTarget = target;
+		let action: string;
+
+		/*	if (!isCorrectTarget) {
+				let parent: HTMLElement = target.parentElement as HTMLElement;
+				for (let i = 0; !isCorrectTarget; i++) {
+					parent = target.parentElement as HTMLElement;
+					isCorrectTarget = parent.hasAttribute(keyClass);
+				}
+				correctTarget = parent;
+			}*/
+		console.log(correctTarget);
+		console.log(correctTarget.attributes);
+		action = correctTarget.getAttribute(keyClass) as string;
+		const {id} = this.card as Card;
+		const payload = {id, action};
+		this.clicked.emit(payload);
+	};
 
 
 	ngOnChanges(changes: SimpleChanges): void {

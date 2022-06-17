@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Select, Store} from '@ngxs/store';
 import {Observable, of} from 'rxjs';
-import {Options} from 'src/app/app-common/domain/chartOptions';
+import {ChartOptions, ChartSeries, witXaxis} from 'src/app/app-common/domain/chartOptions';
 import {Product} from 'src/app/product/domain/product.model';
 import {GetAllProducts, ProductState} from 'src/app/product/state';
-import {ApexTitleSubtitle, ChartComponent} from "ng-apexcharts";
+import {ApexAxisChartSeries, ApexChart, ApexNonAxisChartSeries, ApexTitleSubtitle, ChartComponent} from "ng-apexcharts";
 
 
 @Component({
@@ -13,10 +13,12 @@ import {ApexTitleSubtitle, ChartComponent} from "ng-apexcharts";
 		<app-chart [options]="chartOptions|async"></app-chart>
 	`
 })
-export class ChartProductsComponent implements OnInit {//, TableCustom: edit,delete
+export class ChartProductsComponent implements OnInit, OnChanges {//, TableCustom: edit,delete
+	@Input() chartModel?: ApexChart;
 	@Select(ProductState.getProductList) products$?: Observable<Product[]>;
 	@ViewChild("chart") chart?: ChartComponent;
-	public chartOptions?: Observable<Options>;
+	public chartOptions?: Observable<ChartOptions>;
+
 
 	constructor(
 		private store: Store,
@@ -25,77 +27,69 @@ export class ChartProductsComponent implements OnInit {//, TableCustom: edit,del
 	}
 
 	ngOnInit(): void {
+
+	}
+
+	ngOnChanges(changes: SimpleChanges): void {
 		this.store.dispatch(GetAllProducts)
-		this.products$?.subscribe({
-			next: products => {
-				const title: ApexTitleSubtitle = {
-					text: 'Products',
-					align: 'left',
-					margin: 10,
-					offsetX: 0,
-					offsetY: 0,
-					floating: false,
-					style: {
-						fontSize: '16px',
-						fontWeight: 'bold',
-						color: '#263238'
-					}
+		if (changes["chartModel"] && this.chartModel !== undefined) {
+			const title: ApexTitleSubtitle = {
+				text: 'Products',
+				align: 'left',
+				margin: 10,
+				offsetX: 0,
+				offsetY: 0,
+				floating: false,
+				style: {
+					fontSize: '16px',
+					fontWeight: 'bold',
+					color: '#263238'
 				}
-				/*const options: ChartOptions = {
-					series: [
-						{
-							name: "Desktops",
-							data: [10, 41, 35, 51, 49, 62, 69, 91, 148]
-						}
-					],
-					chart: {
-						height: 350,
-						type: "line",
-						zoom: {
-							enabled: false
-						}
-					},
-					dataLabels: {
-						enabled: false
-					},
-					stroke: {
-						curve: "straight"
-					},
-					title: {
-						text: "Product Trends by Month",
-						align: "left"
-					},
-					grid: {
-						row: {
-							colors: ["#f3f3f3", "transparent"], // takes an array which will be repeated on columns
-							opacity: 0.5
-						}
-					},
-					xaxis: {
-						categories: [
-							"Jan",
-							"Feb",
-							"Mar",
-							"Apr",
-							"May",
-							"Jun",
-							"Jul",
-							"Aug",
-							"Sep"
-						]
+			}
+			const chart = this.chartModel as ApexChart;
+
+			//const options: ChartOptions = {};
+			this.products$?.subscribe({
+				next: products => {
+					const product_stock = products.map(product => {
+						return {
+							x: product.name,
+							y: product.stock
+						};
+					});
+					const productsAxisSeries: ApexAxisChartSeries = [
+						{data: product_stock}
+					];
+					const labels = products.map(product => product.name);
+					const productsNonAxisSeries: ApexNonAxisChartSeries = products.map(product => product.stock);
+					let series: ChartSeries = witXaxis(chart.type) ? productsAxisSeries : productsNonAxisSeries;
+
+
+					const options: ChartOptions = {
+						series,
+						chart,
+						labels,
+						dataLabels: {},
+						responsive: [
+							{
+								breakpoint: 480,
+								options: {
+									chart: {
+										width: 200
+									},
+									legend: {
+										position: "bottom"
+									}
+								}
+							}
+						],
+						title
 					}
-				};*/
-				const products_name = products.map(product => product.name);
-				const products_stock = products.map(product => product.stock);
-				this.chartOptions = of({
-					title: "Stock actual",
-					serie: [{name: "Stock", data: products_stock}],
-					type: "line",
-					categories: products_name,
-				});
-			},
-			error: e => console.error(e),
-		});
+					this.chartOptions = of(options);
+				},
+				error: e => console.error(e),
+			});
+		}
 	}
 
 

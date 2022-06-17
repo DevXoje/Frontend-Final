@@ -4,6 +4,9 @@ import {Component, OnInit} from '@angular/core';
 	selector: 'app-dashboard',
 	template: `
 		<app-dashboard-layout>
+
+			<app-admin-nav navigation></app-admin-nav>
+
 			<router-outlet name="adminOutlet"></router-outlet>
 		</app-dashboard-layout>
 	`

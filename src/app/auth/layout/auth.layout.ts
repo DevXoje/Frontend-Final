@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {faFacebook, faGoogle} from "@fortawesome/free-brands-svg-icons";
 
 @Component({
 	selector: 'app-auth-layout',
@@ -9,10 +8,6 @@ import {faFacebook, faGoogle} from "@fortawesome/free-brands-svg-icons";
 export class AuthLayoutComponent {
 	constructor() {
 	}
-
-	facebookIcon = faFacebook;
-
-	googleIcon = faGoogle;
 
 
 }

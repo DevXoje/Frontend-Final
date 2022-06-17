@@ -15,11 +15,9 @@ import {ProductModule} from "../product/product.module";
 	imports: [
 		CommonModule,
 		AppCommonModule,
-		//ProductModule,
 		CustomerModule,
 		ShopRoutingModule,
 		ProductModule,
-		/* NgxStripeModule.forRoot(environment.stripePK), */
 	],
 	exports: [
 		...shopComponents.components,

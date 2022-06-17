@@ -1,6 +1,13 @@
 export type Sidebar = {
-	id: string,
-	name: string,
-	icon: string,
-
+	title: string,
+	btn_content: string,
+	items?: SidebarItem[]
 };
+export type SidebarItem = {
+	title: string,
+	url: string,
+	icon: string,
+	active?: boolean
+};
+
+

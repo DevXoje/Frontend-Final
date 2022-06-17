@@ -5,7 +5,6 @@ import {FieldControlService} from 'src/app/app-common/services/field-control.ser
 import {NotificationService} from 'src/app/app-common/services/notification.service';
 import {LoginData} from '../domain/auth.model';
 import {Login} from '../state';
-import {faFacebook, faGoogle} from "@fortawesome/free-brands-svg-icons";
 import {AuthService} from "../services/auth.service";
 
 @Component({
@@ -38,13 +37,6 @@ import {AuthService} from "../services/auth.service";
 	`]
 })
 export class LoginComponent {
-	iconsLogin = [
-		faFacebook,
-		faGoogle,
-	];
-	facebookIcon = faFacebook;
-
-	googleIcon = faGoogle;
 
 	constructor(
 		fieldService: FieldControlService,

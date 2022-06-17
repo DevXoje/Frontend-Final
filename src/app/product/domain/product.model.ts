@@ -9,6 +9,7 @@ export type Product = {
 	category_id: number;
 	created_at: string;
 	updated_at: string;
+	updated_ago?: string;
 	stock: number;
 	disabled?: boolean;
 };

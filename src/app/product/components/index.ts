@@ -3,13 +3,15 @@ import {GalleryProductsComponent} from './gallery-products.component';
 import {TableProductsComponent} from './table-products.component';
 import {FormProductComponent} from "./form-product.component";
 import {CarouselProductsComponent} from "./carousel-products.component";
+import {DetailsProductComponent} from "./details-product.component";
 
 export const components = [
 	TableProductsComponent,
 	ChartProductsComponent,
 	GalleryProductsComponent,
 	FormProductComponent,
-	CarouselProductsComponent
+	CarouselProductsComponent,
+	DetailsProductComponent
 ];
 export * from './table-products.component';
 export * from './chart-products.component';

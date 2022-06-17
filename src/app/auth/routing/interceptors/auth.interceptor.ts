@@ -27,11 +27,11 @@ export class AuthInterceptor implements HttpInterceptor {
 		}
 		return next.handle(authReq).pipe(
 			catchError((err: HttpErrorResponse) => {
-				const errors: { [x: number]: void } = {
-					401: this.notificationService.showError("Unauthorized", "Credentials are invalid"),
-					403: this.notificationService.showError("Forbidden", "You don't have permission to access this resource"),
-					404: this.notificationService.showError("Not Found", "The requested resource was not found"),
-					500: this.notificationService.showError("Internal Server Error", "Something went wrong")
+				const errors: { [x: number]: Function } = {
+					401: () => this.notificationService.showError("Unauthorized", "Credentials are invalid"),
+					403: () => this.notificationService.showError("Forbidden", "You don't have permission to access this resource"),
+					404: () => this.notificationService.showError("Not Found", "The requested resource was not found"),
+					500: () => this.notificationService.showError("Internal Server Error", "Something went wrong"),
 				};
 				if (err.status in errors) {
 					errors[err.status];//TODO return this and not throw error
